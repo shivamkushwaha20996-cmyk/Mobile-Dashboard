@@ -36,42 +36,100 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
+    /* Animated Top Laser Gradient */
+    @keyframes laserFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .laser-bar {
+      background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6, #06b6d4);
+      background-size: 300% 300%;
+      animation: laserFlow 6s ease infinite;
+    }
+
+    /* Subtle Card Entrance Animation */
+    @keyframes cardFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-card-in {
+      animation: cardFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Ambient Glow on Banner */
+    .hero-glow-bg {
+      background: radial-gradient(circle at 15% 20%, rgba(14, 165, 233, 0.22) 0%, transparent 45%),
+                  radial-gradient(circle at 85% 80%, rgba(99, 102, 241, 0.22) 0%, transparent 45%),
+                  linear-gradient(135deg, #090e1a 0%, #0f172a 50%, #111a33 100%);
+    }
+
+    /* Shimmer Effect on Action Buttons */
+    @keyframes shimmerMove {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(200%); }
+    }
+    .btn-shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-shimmer::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+      transform: translateX(-100%);
+    }
+    .btn-shimmer:hover::after {
+      animation: shimmerMove 1s ease-in-out infinite;
+    }
+
+    /* Telemetry Tiles Interactive Glow */
+    .telemetry-tile {
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .telemetry-tile:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.18);
+      border-color: rgba(56, 189, 248, 0.55);
+    }
+
     /* Card Elevation */
     .rd-card {
-      transition: transform 0.16s ease, box-shadow 0.16s ease;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
     }
     .rd-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 22px -5px rgba(0, 0, 0, 0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 26px -6px rgba(0, 0, 0, 0.12);
     }
     .cat-btn.active {
       background-color: #0f172a !important;
       color: #ffffff !important;
       border-color: #0f172a !important;
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.25);
     }
   </style>
 </head>
 <body class="bg-[#EEF2F6] text-slate-800 min-h-full flex flex-col font-sans antialiased selection:bg-cyan-500 selection:text-white">
 
-  <!-- 1. Topmost Laser Accent Line -->
-  <div class="h-[3.5px] w-full bg-gradient-to-r from-cyan-400 via-sky-500 to-indigo-500"></div>
+  <!-- 1. Topmost Animated Laser Line -->
+  <div class="h-[4px] w-full laser-bar shadow-sm shadow-cyan-500/30"></div>
 
-  <!-- 2. Desktop Navigation Header (Rich Colored & Wider) -->
-  <header class="sticky top-0 z-40 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white border-b border-indigo-800/50 shadow-md">
-    <div class="w-full max-w-[1920px] mx-auto px-6 lg:px-10 h-16 flex items-center justify-between gap-4">
+  <!-- 2. Desktop Navigation Header -->
+  <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md text-white border-b border-slate-800 shadow-lg">
+    <div class="w-full max-w-[2100px] mx-auto px-4 sm:px-8 lg:px-12 h-16 flex items-center justify-between gap-4">
       
-      <!-- Brand & Project Title -->
+      <!-- Brand & Project Portal Identity -->
       <div class="flex items-center gap-3.5">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-sky-500 to-indigo-500 p-0.5 shadow-md shadow-cyan-500/20">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-sky-500 to-indigo-500 p-0.5 shadow-md shadow-cyan-500/25">
           <div class="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center">
             <i class="fa-solid fa-microchip text-cyan-400 text-lg"></i>
           </div>
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="text-sm font-extrabold tracking-tight text-white">Mobile R&D Engineering Portal</h1>
-            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">R&D LAB</span>
+            <h1 class="text-sm sm:text-base font-extrabold tracking-tight text-white">Mobile R&D Engineering Portal</h1>
+            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">R&D LAB</span>
           </div>
           <p class="text-[11px] text-slate-400 font-medium">Hardware Schematics, RF Verification & Defect Database</p>
         </div>
@@ -106,7 +164,7 @@
 
         <!-- Admin Control Slot -->
         <div id="adminAuthSlot">
-          <button id="openLoginModalBtn" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 transition cursor-pointer shadow-xs">
+          <button id="openLoginModalBtn" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-750 border border-slate-700 text-slate-200 transition cursor-pointer shadow-xs">
             <i class="fa-solid fa-lock text-cyan-400 text-[11px]"></i>
             <span>Admin</span>
           </button>
@@ -117,15 +175,17 @@
     </div>
   </header>
 
-  <!-- Main Workstation Area (Wider Width) -->
-  <div class="w-full max-w-[1920px] mx-auto px-6 lg:px-10 py-5 space-y-4 flex-1">
-    
-    <!-- 3. High-Visibility Coloured Model Banner Console -->
-    <section id="modelBanner" class="p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-950 border border-indigo-900/60 shadow-lg text-white">
-      <!-- Injected by JavaScript -->
-    </section>
+  <!-- 3. Expanded Full-Width Animated Telemetry Console -->
+  <section class="w-full bg-[#090e1a] border-b border-indigo-900/60 shadow-xl hero-glow-bg">
+    <div class="w-full max-w-[2100px] mx-auto px-4 sm:px-8 lg:px-12 py-7 text-white" id="modelBanner">
+      <!-- Injected by JavaScript with Dynamic Telemetry Tiles -->
+    </div>
+  </section>
 
-    <!-- Category Filter Tabs Bar (Includes new Block Diagram tab) -->
+  <!-- Main Workstation Area -->
+  <div class="w-full max-w-[2100px] mx-auto px-4 sm:px-8 lg:px-12 py-5 space-y-4 flex-1">
+
+    <!-- Category Filter Tabs Bar (Includes Block Diagram) -->
     <div class="flex items-center justify-between gap-4 border-b border-slate-200 pb-2.5">
       <div class="flex items-center gap-2 overflow-x-auto no-scrollbar" id="categoryTabs">
         <button data-cat="all" class="cat-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 transition cursor-pointer">All (A-S)</button>
@@ -242,7 +302,7 @@
 
   <!-- Single Clean Footer -->
   <footer class="border-t border-slate-200 py-3 bg-white text-center text-xs text-slate-500">
-    <div class="max-w-[1920px] mx-auto px-6 flex items-center justify-between">
+    <div class="max-w-[2100px] mx-auto px-6 flex items-center justify-between">
       <span>Mobile R&D Engineering Portal</span>
       <span class="font-mono text-[11px]">Direct Binary Storage • IndexedDB Engine</span>
     </div>
@@ -286,7 +346,7 @@
       });
     }
 
-    // SECTION PALETTES (Includes Cyan Palette for Block Diagram)
+    // SECTION PALETTES (Vibrant full-colored boxes, calm Indigo for quality)
     const categoryStyles = {
       "Block Diagram": {
         cardBg: "bg-[#F0FDFA] border-teal-200",
@@ -403,7 +463,7 @@
     let isAdminLoggedIn = sessionStorage.getItem("RND_AUTH") === "true";
 
     let appData = (() => {
-      const l = localStorage.getItem("MOBILE_RND_DB_DATA_V6");
+      const l = localStorage.getItem("MOBILE_RND_DB_DATA_V7");
       if (l) try { return JSON.parse(l); } catch(e){}
       return defaultDashboardData;
     })();
@@ -413,7 +473,7 @@
       if (isAdminLoggedIn) {
         slot.innerHTML = `
           <div class="flex items-center gap-2">
-            <button id="openUploadBtn" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-md shadow-cyan-500/20 transition cursor-pointer">
+            <button id="openUploadBtn" class="btn-shimmer flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-md shadow-cyan-500/25 transition cursor-pointer">
               <i class="fa-solid fa-cloud-arrow-up"></i>
               <span>Upload (>50MB)</span>
             </button>
@@ -433,7 +493,7 @@
         });
       } else {
         slot.innerHTML = `
-          <button id="openLoginModalBtn" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 transition cursor-pointer shadow-xs">
+          <button id="openLoginModalBtn" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-750 border border-slate-700 text-slate-200 transition cursor-pointer shadow-xs">
             <i class="fa-solid fa-lock text-cyan-400 text-[11px]"></i>
             <span>Admin</span>
           </button>
@@ -446,91 +506,98 @@
       }
     }
 
-    // High-Visibility Coloured Telemetry Banner
+    // High-Visibility Ultra-Wide Telemetry Console with Animations
     function renderBanner() {
       const meta = appData[currentModel].meta;
       document.getElementById("modelBanner").innerHTML = `
-        <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-5">
+        <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-6">
           
-          <!-- Left: Target Model Badge with Dual Beacon -->
-          <div class="flex items-center gap-4">
-            <div class="px-5 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 shadow-inner flex flex-col justify-center">
-              <span class="text-[10px] font-mono text-cyan-400 font-bold tracking-wider">PROJECT</span>
-              <span class="text-3xl font-black font-mono tracking-tight leading-none text-white">${currentModel}</span>
+          <!-- Left: Glowing Animated Project Beacon -->
+          <div class="flex items-center gap-5">
+            <div class="relative group">
+              <!-- Soft ambient glow ring behind badge -->
+              <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-indigo-500 rounded-2xl blur-md opacity-40 group-hover:opacity-75 transition duration-500"></div>
+              <div class="relative px-6 py-3.5 rounded-xl bg-slate-950/95 border border-cyan-500/40 shadow-2xl flex flex-col justify-center">
+                <span class="text-[10px] font-mono text-cyan-400 font-extrabold tracking-widest">DEVICE CODE</span>
+                <span class="text-3xl sm:text-4xl font-black font-mono tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-cyan-400">${currentModel}</span>
+              </div>
             </div>
             
-            <div class="space-y-1">
-              <div class="flex items-center gap-2.5">
-                <span class="text-base font-bold text-white">${meta.name}</span>
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-                  <span class="relative flex h-2 w-2">
+            <div class="space-y-1.5">
+              <div class="flex items-center gap-3">
+                <span class="text-lg font-bold text-white tracking-tight">${meta.name}</span>
+                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 shadow-sm shadow-emerald-500/10">
+                  <span class="relative flex h-2.5 w-2.5">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
                   </span>
                   ${meta.status}
                 </span>
               </div>
-              <p class="text-xs text-slate-300 font-mono">Verified Production Master Specifications</p>
+              <p class="text-xs text-slate-300 font-mono flex items-center gap-2">
+                <i class="fa-solid fa-shield-halved text-cyan-400 text-[11px]"></i>
+                <span>Hardware Master Specification Database</span>
+              </p>
             </div>
           </div>
 
-          <!-- Center: 4 Colored Telemetry Tiles -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 flex-1 max-w-4xl">
+          <!-- Center: 4 Floating Interactive Telemetry Tiles -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 flex-1 max-w-5xl">
             
             <!-- Tile 1: Processor -->
-            <div class="p-3 rounded-xl bg-slate-800/80 border border-cyan-500/30 flex items-center gap-3">
-              <div class="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 flex items-center justify-center text-sm shrink-0">
+            <div class="telemetry-tile p-3.5 rounded-xl bg-slate-800/80 backdrop-blur-md border border-cyan-500/30 flex items-center gap-3 shadow-inner">
+              <div class="w-9 h-9 rounded-lg bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 flex items-center justify-center text-base shrink-0 shadow-sm">
                 <i class="fa-solid fa-microchip"></i>
               </div>
               <div class="truncate">
-                <div class="text-[10px] uppercase font-bold text-cyan-300/80 font-mono">Processor</div>
+                <div class="text-[10px] uppercase font-bold text-cyan-300/80 font-mono tracking-wider">Processor</div>
                 <div class="text-xs font-bold text-white font-mono truncate" title="${meta.ap}">${meta.ap}</div>
               </div>
             </div>
 
             <!-- Tile 2: Modem / RF -->
-            <div class="p-3 rounded-xl bg-slate-800/80 border border-emerald-500/30 flex items-center gap-3">
-              <div class="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 flex items-center justify-center text-sm shrink-0">
+            <div class="telemetry-tile p-3.5 rounded-xl bg-slate-800/80 backdrop-blur-md border border-emerald-500/30 flex items-center gap-3 shadow-inner">
+              <div class="w-9 h-9 rounded-lg bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 flex items-center justify-center text-base shrink-0 shadow-sm">
                 <i class="fa-solid fa-tower-broadcast"></i>
               </div>
               <div class="truncate">
-                <div class="text-[10px] uppercase font-bold text-emerald-300/80 font-mono">Modem / RF</div>
+                <div class="text-[10px] uppercase font-bold text-emerald-300/80 font-mono tracking-wider">Modem / RF</div>
                 <div class="text-xs font-bold text-white font-mono truncate" title="${meta.modem}">${meta.modem}</div>
               </div>
             </div>
 
             <!-- Tile 3: SW Build -->
-            <div class="p-3 rounded-xl bg-slate-800/80 border border-indigo-500/30 flex items-center gap-3">
-              <div class="w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 flex items-center justify-center text-sm shrink-0">
+            <div class="telemetry-tile p-3.5 rounded-xl bg-slate-800/80 backdrop-blur-md border border-indigo-500/30 flex items-center gap-3 shadow-inner">
+              <div class="w-9 h-9 rounded-lg bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 flex items-center justify-center text-base shrink-0 shadow-sm">
                 <i class="fa-solid fa-code-branch"></i>
               </div>
               <div class="truncate">
-                <div class="text-[10px] uppercase font-bold text-indigo-300/80 font-mono">SW Build</div>
+                <div class="text-[10px] uppercase font-bold text-indigo-300/80 font-mono tracking-wider">SW Build</div>
                 <div class="text-xs font-bold text-white font-mono truncate" title="${meta.swVersion}">${meta.swVersion}</div>
               </div>
             </div>
 
             <!-- Tile 4: HQ Lead -->
-            <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-600/50 flex items-center gap-3">
-              <div class="w-8 h-8 rounded-lg bg-slate-700/60 border border-slate-500/40 text-slate-300 flex items-center justify-center text-sm shrink-0">
+            <div class="telemetry-tile p-3.5 rounded-xl bg-slate-800/80 backdrop-blur-md border border-slate-600/50 flex items-center gap-3 shadow-inner">
+              <div class="w-9 h-9 rounded-lg bg-slate-700/60 border border-slate-500/40 text-slate-300 flex items-center justify-center text-base shrink-0 shadow-sm">
                 <i class="fa-solid fa-user-tie"></i>
               </div>
               <div class="truncate">
-                <div class="text-[10px] uppercase font-bold text-slate-400 font-mono">HQ Lead</div>
+                <div class="text-[10px] uppercase font-bold text-slate-400 font-mono tracking-wider">HQ Lead</div>
                 <div class="text-xs font-bold text-white font-mono truncate" title="${meta.leadKorea}">${meta.leadKorea}</div>
               </div>
             </div>
 
           </div>
 
-          <!-- Right: Executive Action Cluster -->
-          <div class="flex items-center gap-2.5 shrink-0">
-            <button onclick="copyModelSummary()" title="Copy Specs" class="px-3.5 py-2.5 bg-slate-800/90 hover:bg-slate-750 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-xs">
-              <i class="fa-regular fa-copy text-xs"></i>
+          <!-- Right: Executive Action Cluster with Shimmer -->
+          <div class="flex items-center gap-3 shrink-0">
+            <button onclick="copyModelSummary()" title="Copy Specs" class="btn-shimmer px-4 py-2.5 bg-slate-800/90 hover:bg-slate-750 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold flex items-center gap-2 transition cursor-pointer shadow-md">
+              <i class="fa-regular fa-copy text-xs text-cyan-400"></i>
               <span class="hidden sm:inline">Copy Specs</span>
             </button>
-            <button onclick="downloadMasterBundle('${currentModel}')" class="px-4 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold rounded-xl text-xs flex items-center gap-2 transition cursor-pointer shadow-md shadow-cyan-500/20">
-              <i class="fa-solid fa-file-zipper"></i>
+            <button onclick="downloadMasterBundle('${currentModel}')" class="btn-shimmer px-5 py-2.5 bg-gradient-to-r from-cyan-400 via-sky-500 to-blue-600 hover:from-cyan-300 hover:to-blue-500 text-slate-950 font-extrabold rounded-xl text-xs flex items-center gap-2 transition cursor-pointer shadow-lg shadow-cyan-500/25">
+              <i class="fa-solid fa-file-zipper text-sm"></i>
               <span>Export JSON</span>
             </button>
           </div>
@@ -563,7 +630,7 @@
         return;
       }
 
-      filtered.forEach(([key, item]) => {
+      filtered.forEach(([key, item], index) => {
         const style = categoryStyles[item.category] || categoryStyles["General"];
         let bottomContent = "";
 
@@ -607,7 +674,8 @@
         `).join("") : "";
 
         const card = document.createElement("div");
-        card.className = `rd-card ${style.cardBg} rounded-xl border flex flex-col justify-between shadow-xs overflow-hidden h-[220px]`;
+        card.className = `rd-card ${style.cardBg} rounded-xl border flex flex-col justify-between shadow-xs overflow-hidden h-[220px] animate-card-in`;
+        card.style.animationDelay = `${Math.min(index * 30, 300)}ms`;
         card.innerHTML = `
           <div class="h-1.5 w-full ${style.topStripe}"></div>
 
@@ -808,7 +876,7 @@
           }
         }
 
-        localStorage.setItem("MOBILE_RND_DB_DATA_V6", JSON.stringify(appData));
+        localStorage.setItem("MOBILE_RND_DB_DATA_V7", JSON.stringify(appData));
         renderCards();
 
         saveBtn.disabled = false;
