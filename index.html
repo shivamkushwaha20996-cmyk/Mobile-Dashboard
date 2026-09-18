@@ -28,7 +28,7 @@
   </script>
 
   <style>
-    /* Clean Desktop Scrollbar */
+    /* Desktop Clean Scrollbar */
     ::-webkit-scrollbar { width: 7px; height: 7px; }
     ::-webkit-scrollbar-track { background: #e2e8f0; }
     ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
@@ -42,7 +42,7 @@
     }
     .rd-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 24px -4px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 22px -5px rgba(0, 0, 0, 0.1);
     }
     .cat-btn.active {
       background-color: #0f172a !important;
@@ -52,44 +52,46 @@
     }
   </style>
 </head>
-<body class="bg-[#EEF2F6] text-slate-800 min-h-full flex flex-col font-sans antialiased selection:bg-sky-500 selection:text-white">
+<body class="bg-[#EEF2F6] text-slate-800 min-h-full flex flex-col font-sans antialiased selection:bg-cyan-500 selection:text-white">
 
   <!-- 1. Topmost Laser Accent Line -->
-  <div class="h-[3px] w-full bg-gradient-to-r from-cyan-500 via-sky-600 to-indigo-600"></div>
+  <div class="h-[3.5px] w-full bg-gradient-to-r from-cyan-400 via-sky-500 to-indigo-500"></div>
 
-  <!-- 2. Desktop Navigation Header -->
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-sm">
-    <div class="max-w-[1720px] mx-auto px-6 h-16 flex items-center justify-between gap-4">
+  <!-- 2. Desktop Navigation Header (Rich Colored & Wider) -->
+  <header class="sticky top-0 z-40 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white border-b border-indigo-800/50 shadow-md">
+    <div class="w-full max-w-[1920px] mx-auto px-6 lg:px-10 h-16 flex items-center justify-between gap-4">
       
-      <!-- Brand & Project Portal Identity -->
+      <!-- Brand & Project Title -->
       <div class="flex items-center gap-3.5">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 via-blue-600 to-indigo-700 flex items-center justify-center text-white shadow-md shadow-sky-500/20">
-          <i class="fa-solid fa-microchip text-lg"></i>
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-sky-500 to-indigo-500 p-0.5 shadow-md shadow-cyan-500/20">
+          <div class="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center">
+            <i class="fa-solid fa-microchip text-cyan-400 text-lg"></i>
+          </div>
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="text-sm font-extrabold tracking-tight text-slate-900">Mobile R&D Engineering Portal</h1>
-            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200 shadow-2xs">HARDWARE LAB</span>
+            <h1 class="text-sm font-extrabold tracking-tight text-white">Mobile R&D Engineering Portal</h1>
+            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">R&D LAB</span>
           </div>
-          <p class="text-[11px] text-slate-500 font-medium">Hardware Topologies, RF Verification & Defect Database</p>
+          <p class="text-[11px] text-slate-400 font-medium">Hardware Schematics, RF Verification & Defect Database</p>
         </div>
       </div>
 
-      <!-- Controls: Engineered Model Selector, Search & Admin Lock -->
+      <!-- Controls: Model Selector, Search & Admin Lock -->
       <div class="flex items-center gap-3.5 flex-1 max-w-2xl justify-end">
         
-        <!-- Target Model Selector with Enhanced Visual Weight -->
+        <!-- Target Model Selector -->
         <div class="relative w-52">
-          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-sky-600">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-cyan-400">
             <i class="fa-solid fa-mobile-screen text-xs"></i>
           </div>
-          <select id="modelSelect" class="w-full pl-8 pr-8 py-2 bg-slate-50 hover:bg-white border-2 border-sky-500/30 hover:border-sky-500 rounded-lg text-xs font-mono font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500 transition cursor-pointer appearance-none shadow-xs">
-            <option value="A576">MODEL: A576</option>
-            <option value="A376">MODEL: A376</option>
-            <option value="A076">MODEL: A076</option>
-            <option value="A075">MODEL: A075</option>
-            <option value="A085">MODEL: A085</option>
-            <option value="S741">MODEL: S741</option>
+          <select id="modelSelect" class="w-full pl-8 pr-8 py-2 bg-slate-800/90 hover:bg-slate-800 border border-cyan-500/40 rounded-lg text-xs font-mono font-bold text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-pointer appearance-none shadow-xs">
+            <option value="A576">TARGET: A576</option>
+            <option value="A376">TARGET: A376</option>
+            <option value="A076">TARGET: A076</option>
+            <option value="A075">TARGET: A075</option>
+            <option value="A085">TARGET: A085</option>
+            <option value="S741">TARGET: S741</option>
           </select>
           <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
             <i class="fa-solid fa-chevron-down text-[10px]"></i>
@@ -99,13 +101,13 @@
         <!-- Quick Filter Search -->
         <div class="relative w-64 hidden sm:block">
           <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
-          <input type="text" id="searchInput" placeholder="Search spec, PBA, bands..." class="w-full pl-8 pr-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 transition shadow-2xs" />
+          <input type="text" id="searchInput" placeholder="Filter specs, PBA, bands..." class="w-full pl-8 pr-3 py-2 bg-slate-800/80 border border-slate-700 rounded-lg text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition shadow-xs" />
         </div>
 
         <!-- Admin Control Slot -->
         <div id="adminAuthSlot">
-          <button id="openLoginModalBtn" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 transition cursor-pointer shadow-2xs">
-            <i class="fa-solid fa-lock text-slate-500 text-[11px]"></i>
+          <button id="openLoginModalBtn" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 transition cursor-pointer shadow-xs">
+            <i class="fa-solid fa-lock text-cyan-400 text-[11px]"></i>
             <span>Admin</span>
           </button>
         </div>
@@ -115,18 +117,19 @@
     </div>
   </header>
 
-  <!-- Main Workstation Workspace -->
-  <div class="max-w-[1720px] w-full mx-auto px-6 py-4 space-y-4 flex-1">
+  <!-- Main Workstation Area (Wider Width) -->
+  <div class="w-full max-w-[1920px] mx-auto px-6 lg:px-10 py-5 space-y-4 flex-1">
     
-    <!-- 3. High-Visibility Model Telemetry Banner (Upgraded Visual Console) -->
-    <section id="modelBanner" class="p-4 rounded-xl bg-white border border-slate-200/90 shadow-xs">
-      <!-- Injected by JavaScript with Modular KPI Cards -->
+    <!-- 3. High-Visibility Coloured Model Banner Console -->
+    <section id="modelBanner" class="p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-950 border border-indigo-900/60 shadow-lg text-white">
+      <!-- Injected by JavaScript -->
     </section>
 
-    <!-- Category Filter Tabs Bar -->
+    <!-- Category Filter Tabs Bar (Includes new Block Diagram tab) -->
     <div class="flex items-center justify-between gap-4 border-b border-slate-200 pb-2.5">
       <div class="flex items-center gap-2 overflow-x-auto no-scrollbar" id="categoryTabs">
-        <button data-cat="all" class="cat-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 transition cursor-pointer">All (A-R)</button>
+        <button data-cat="all" class="cat-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 transition cursor-pointer">All (A-S)</button>
+        <button data-cat="Block Diagram" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-cyan-50 border border-cyan-300 text-cyan-900 hover:bg-cyan-100 transition cursor-pointer">Block Diagram</button>
         <button data-cat="Schematics" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-50 border border-blue-200 text-blue-800 hover:bg-blue-100 transition cursor-pointer">Circuit & SOC</button>
         <button data-cat="RF & Wireless" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-50 border border-emerald-200 text-emerald-800 hover:bg-emerald-100 transition cursor-pointer">RF & Antenna</button>
         <button data-cat="Process & Tech" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-amber-50 border border-amber-200 text-amber-800 hover:bg-amber-100 transition cursor-pointer">Process & OPST</button>
@@ -141,10 +144,10 @@
       </div>
     </div>
 
-    <!-- Desktop Grid: Strict A-R Order with Height-Matched Symmetrical Cards -->
+    <!-- Desktop Grid: Strict A-S Order with Height-Matched Symmetrical Cards -->
     <main>
       <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4.5">
-        <!-- Injected Cards in Strict A to R Sequence -->
+        <!-- Injected Cards in Strict A to S Sequence -->
       </div>
     </main>
 
@@ -155,7 +158,7 @@
     <div class="bg-white border border-slate-200 w-full max-w-sm rounded-2xl shadow-2xl p-6 space-y-4">
       <div class="text-center space-y-1">
         <div class="w-11 h-11 rounded-xl bg-slate-900 text-white mx-auto flex items-center justify-center text-base shadow-sm">
-          <i class="fa-solid fa-lock"></i>
+          <i class="fa-solid fa-lock text-cyan-400"></i>
         </div>
         <h2 class="text-sm font-bold text-slate-900 pt-1">Admin Authentication</h2>
         <p class="text-xs text-slate-500">Enter password to unlock upload management</p>
@@ -239,7 +242,7 @@
 
   <!-- Single Clean Footer -->
   <footer class="border-t border-slate-200 py-3 bg-white text-center text-xs text-slate-500">
-    <div class="max-w-[1720px] mx-auto px-6 flex items-center justify-between">
+    <div class="max-w-[1920px] mx-auto px-6 flex items-center justify-between">
       <span>Mobile R&D Engineering Portal</span>
       <span class="font-mono text-[11px]">Direct Binary Storage • IndexedDB Engine</span>
     </div>
@@ -283,8 +286,15 @@
       });
     }
 
-    // ORIGINAL FULL-BOX COLOR PALETTES (Calm Tech-Indigo used for Quality)
+    // SECTION PALETTES (Includes Cyan Palette for Block Diagram)
     const categoryStyles = {
+      "Block Diagram": {
+        cardBg: "bg-[#F0FDFA] border-teal-200",
+        topStripe: "bg-teal-600",
+        iconBox: "bg-teal-600 text-white",
+        tagBadge: "bg-teal-100/90 text-teal-950 border-teal-300",
+        btn: "bg-teal-600 hover:bg-teal-700 text-white shadow-xs"
+      },
       "Schematics": {
         cardBg: "bg-[#EFF6FF] border-blue-200",
         topStripe: "bg-blue-600",
@@ -329,28 +339,28 @@
       }
     };
 
-    // STRICT USER REQUIREMENT SEQUENCE (A to R)
-    const strictOrderKeys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"];
+    // STRICT USER REQUIREMENT SEQUENCE (A to S with Block Diagram)
+    const strictOrderKeys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S"];
 
     const defaultDashboardData = {
       A576: {
         meta: { name: "Galaxy A576", ap: "Exynos 1480 (4nm)", modem: "Sub-6GHz / MIMO 4x4", status: "Mass Production", leadKorea: "HQ R&D Team", swVersion: "A576XXU1AXB2" },
         items: {
-          A: { title: "Basic Model Details", category: "General", icon: "fa-circle-info", tag: "A: SPEC", tags: ["Dimensions", "Battery Spec", "Tolerances"], filename: "A576_Basic_Spec.pdf", size: "12.4 MB" },
-          B: { title: "Circuit Diagram", category: "Schematics", icon: "fa-diagram-project", tag: "B: CIRCUIT", tags: ["Schematic Topologies", "PCB Sets"], subItems: [
+          A: { title: "Basic Model Details", category: "General", icon: "fa-circle-info", tag: "A: SPEC", tags: ["Dimensions", "Battery Spec"], filename: "A576_Basic_Spec.pdf", size: "12.4 MB" },
+          B: { title: "Circuit Diagram", category: "Schematics", icon: "fa-diagram-project", tag: "B: CIRCUIT", tags: ["Schematic", "Main PBA", "SUB PBA"], subItems: [
             { name: "Main PBA", filename: "A576_Main_PBA_Schematic.pdf", size: "68.5 MB" },
             { name: "SUB PBA", filename: "A576_Sub_PBA_Audio_Charge.pdf", size: "18.2 MB" }
           ]},
-          C: { title: "Process Flow Chart", category: "Process & Tech", icon: "fa-arrows-split-up-and-left", tag: "C: FLOW", tags: ["Assembly Nodes", "Screw Torques"], subItems: [
+          C: { title: "Process Flow Chart", category: "Process & Tech", icon: "fa-arrows-split-up-and-left", tag: "C: FLOW", tags: ["Workflow", "Assembly Nodes"], subItems: [
             { name: "Sub Assembly", filename: "A576_Sub_Assembly_Flow.xlsx", size: "8.4 MB" },
             { name: "Main Line", filename: "A576_Main_Line_SOP.xlsx", size: "14.1 MB" }
           ]},
-          D: { title: "Common & Exclusive Parts", category: "General", icon: "fa-cubes", tag: "D: BOM", tags: ["Shared BOM", "Exclusive Parts"], filename: "A576_Part_Matrix.xlsx", size: "15.8 MB" },
+          D: { title: "Common and Exclusive Part Details", category: "General", icon: "fa-cubes", tag: "D: BOM", tags: ["BOM Compare", "Exclusive Part"], filename: "A576_Part_Matrix.xlsx", size: "15.8 MB" },
           E: { title: "New Technology Introduced", category: "Process & Tech", icon: "fa-wand-magic-sparkles", tag: "E: TECH", tags: ["LDS Antenna", "Graphite Layer", "PMIC"], filename: "A576_New_Tech_Brief.pdf", size: "22.6 MB" },
-          F: { title: "Base Model Defect History", category: "Quality & SW", icon: "fa-bug", tag: "F: RCA", tags: ["Pred. Failures", "Field RCA Summary"], filename: "A576_Base_Defects_RCA.xlsx", size: "31.2 MB" },
-          G: { title: "Other Subsidiary Defect Details", category: "Quality & SW", icon: "fa-triangle-exclamation", tag: "G: DEFECTS", tags: ["SMT Scrap Rate", "AOI Optical Log"], filename: "A576_Subsidiary_Defects.xlsx", size: "19.7 MB" },
-          H: { title: "OPST Sheet", category: "Process & Tech", icon: "fa-clipboard-check", tag: "H: OPST", tags: ["Cycle Times", "Station Balancing"], filename: "A576_OPST_Master.xlsx", size: "11.5 MB" },
-          I: { title: "SOC Table", category: "Schematics", icon: "fa-microchip", tag: "I: SOC", tags: ["Pinout Matrix", "Power Rails", "BGA Ball Map"], filename: "A576_SOC_Pin_Table.xlsx", size: "28.3 MB" },
+          F: { title: "Base Model Defect History", category: "Quality & SW", icon: "fa-bug", tag: "F: RCA", tags: ["Predecessor Failures", "Defect Log"], filename: "A576_Base_Defects_RCA.xlsx", size: "31.2 MB" },
+          G: { title: "Other Subsidiary Defect Details", category: "Quality & SW", icon: "fa-triangle-exclamation", tag: "G: DEFECTS", tags: ["Korea Office / SEVT / SEV Dev Stage Defects"], filename: "A576_Subsidiary_Defects.xlsx", size: "19.7 MB" },
+          H: { title: "OPST Sheet", category: "Process & Tech", icon: "fa-clipboard-check", tag: "H: OPST", tags: ["Open Short Test"], filename: "A576_OPST_Master.xlsx", size: "11.5 MB" },
+          I: { title: "SOC Table", category: "Schematics", icon: "fa-microchip", tag: "I: SOC", tags: ["Battery Percentage vs Voltage"], filename: "A576_SOC_Pin_Table.xlsx", size: "28.3 MB" },
           J: { title: "Key Parts Details", category: "Key Parts", icon: "fa-puzzle-piece", tag: "J: PARTS", tags: ["Vendor Specs", "Datasheets"], subItems: [
             { name: "Display", filename: "A576_Display_Spec.pdf", size: "54.2 MB" },
             { name: "Camera", filename: "A576_Camera_OIS_Spec.pdf", size: "62.8 MB" },
@@ -359,14 +369,18 @@
             { name: "Front", filename: "A576_Front_Glass.pdf", size: "16.7 MB" },
             { name: "Sensor", filename: "A576_6Axis_Sensor.pdf", size: "18.9 MB" }
           ]},
-          K: { title: "RF Port Map", category: "RF & Wireless", icon: "fa-network-wired", tag: "K: RF-PORT", tags: ["FEM Routing", "Switch Matrix", "Couplers"], filename: "A576_RF_Port_Mapping.pdf", size: "58.0 MB" },
-          L: { title: "Antenna Structure", category: "RF & Wireless", icon: "fa-tower-broadcast", tag: "L: ANTENNA", tags: ["3D Clearance", "MIMO / Sub-6", "Matching"], filename: "A576_Antenna_3D_Layout.dwg", size: "84.2 MB" },
-          M: { title: "Main and Roaming Bands", category: "RF & Wireless", icon: "fa-earth-americas", tag: "M: BANDS", tags: ["5G NR", "LTE FDD/TDD", "Global Bands"], filename: "A576_Bands_Master.xlsx", size: "9.2 MB" },
-          N: { title: "Work Specification", category: "General", icon: "fa-file-lines", tag: "N: STD", tags: ["Soldering Standard", "Inspection SOP"], filename: "A576_Work_Specification.pdf", size: "14.8 MB" },
-          O: { title: "Korea Member Details", category: "General", icon: "fa-id-card", tag: "O: HQ TEAM", tags: ["HQ Leads", "HW/RF Direct Lines"], filename: "A576_Korea_HQ_Roster.xlsx", size: "4.1 MB" },
-          P: { title: "MIPI Table", category: "Schematics", icon: "fa-bars-staggered", tag: "P: MIPI", tags: ["DSI / CSI", "Differential Length", "Timing"], filename: "A576_MIPI_Config.xlsx", size: "12.7 MB" },
+          K: { title: "RF Port Map", category: "RF & Wireless", icon: "fa-network-wired", tag: "K: RF-PORT", tags: ["RF Port Mapping", "FEM Routing"], filename: "A576_RF_Port_Mapping.pdf", size: "58.0 MB" },
+          L: { title: "Antenna Structure", category: "RF & Wireless", icon: "fa-tower-broadcast", tag: "L: ANTENNA", tags: ["MIMO LTE NR 2G WCDMA"], filename: "A576_Antenna_3D_Layout.dwg", size: "84.2 MB" },
+          M: { title: "Main and Roaming Bands Details", category: "RF & Wireless", icon: "fa-earth-americas", tag: "M: BANDS", tags: ["5G NR", "LTE FDD/TDD", "Global Bands"], filename: "A576_Bands_Master.xlsx", size: "9.2 MB" },
+          N: { title: "Work Specification", category: "General", icon: "fa-file-lines", tag: "N: STD", tags: ["Assembly Method", "Testing Method"], filename: "A576_Work_Specification.pdf", size: "14.8 MB" },
+          O: { title: "Korea Member Details", category: "General", icon: "fa-id-card", tag: "O: HQ TEAM", tags: ["Korea Member Stage Wise"], filename: "A576_Korea_HQ_Roster.xlsx", size: "4.1 MB" },
+          P: { title: "MIPI Table", category: "Schematics", icon: "fa-bars-staggered", tag: "P: MIPI", tags: [], filename: "A576_MIPI_Config.xlsx", size: "12.7 MB" },
           Q: { title: "SW Log Process", category: "Quality & SW", icon: "fa-terminal", tag: "Q: DEBUG", tags: ["Modem CP Dump", "Kernel Panic", "UART Guide"], filename: "A576_SW_Log_Guide.pdf", size: "17.4 MB" },
-          R: { title: "Common", category: "General", icon: "fa-folder-tree", tag: "R: ARCHIVE", tags: ["ECN Notices", "Regulatory Approvals"], filename: "A576_Common_Archive.zip", size: "95.0 MB" }
+          R: { title: "Common", category: "General", icon: "fa-folder-tree", tag: "R: ARCHIVE", tags: ["ECN Notices", "Engineering Archive"], filename: "A576_Common_Archive.zip", size: "95.0 MB" },
+          S: { title: "Block Diagram", category: "Block Diagram", icon: "fa-sitemap", tag: "S: DIAGRAM", tags: ["AP Block Diagram", "RF Block Diagram"], subItems: [
+            { name: "AP Block Diagram", filename: "A576_AP_Block_Diagram.pdf", size: "21.4 MB" },
+            { name: "RF Block Diagram", filename: "A576_RF_Block_Diagram.pdf", size: "28.7 MB" }
+          ]}
         }
       }
     };
@@ -389,7 +403,7 @@
     let isAdminLoggedIn = sessionStorage.getItem("RND_AUTH") === "true";
 
     let appData = (() => {
-      const l = localStorage.getItem("MOBILE_RND_DB_DATA");
+      const l = localStorage.getItem("MOBILE_RND_DB_DATA_V6");
       if (l) try { return JSON.parse(l); } catch(e){}
       return defaultDashboardData;
     })();
@@ -399,11 +413,11 @@
       if (isAdminLoggedIn) {
         slot.innerHTML = `
           <div class="flex items-center gap-2">
-            <button id="openUploadBtn" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-lg bg-sky-600 hover:bg-sky-500 text-white shadow-sm transition cursor-pointer">
+            <button id="openUploadBtn" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-md shadow-cyan-500/20 transition cursor-pointer">
               <i class="fa-solid fa-cloud-arrow-up"></i>
               <span>Upload (>50MB)</span>
             </button>
-            <button id="logoutBtn" title="Logout" class="p-2 text-xs font-semibold rounded-lg bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 transition cursor-pointer shadow-2xs">
+            <button id="logoutBtn" title="Logout" class="p-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition cursor-pointer shadow-xs">
               <i class="fa-solid fa-arrow-right-from-bracket"></i>
             </button>
           </div>
@@ -419,8 +433,8 @@
         });
       } else {
         slot.innerHTML = `
-          <button id="openLoginModalBtn" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-lg bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 transition cursor-pointer shadow-2xs">
-            <i class="fa-solid fa-lock text-slate-500 text-[11px]"></i>
+          <button id="openLoginModalBtn" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 transition cursor-pointer shadow-xs">
+            <i class="fa-solid fa-lock text-cyan-400 text-[11px]"></i>
             <span>Admin</span>
           </button>
         `;
@@ -432,90 +446,90 @@
       }
     }
 
-    // High-Visibility Upgraded Model Banner with Telemetry Tiles
+    // High-Visibility Coloured Telemetry Banner
     function renderBanner() {
       const meta = appData[currentModel].meta;
       document.getElementById("modelBanner").innerHTML = `
-        <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+        <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-5">
           
-          <!-- Left: Target Model Identity & Beacon -->
+          <!-- Left: Target Model Badge with Dual Beacon -->
           <div class="flex items-center gap-4">
-            <div class="px-4 py-2 rounded-xl bg-slate-900 text-white shadow-md flex flex-col justify-center">
-              <span class="text-[10px] font-mono text-slate-400 font-semibold tracking-wider">PROJECT</span>
-              <span class="text-2xl font-black font-mono tracking-tight leading-none text-sky-400">${currentModel}</span>
+            <div class="px-5 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 shadow-inner flex flex-col justify-center">
+              <span class="text-[10px] font-mono text-cyan-400 font-bold tracking-wider">PROJECT</span>
+              <span class="text-3xl font-black font-mono tracking-tight leading-none text-white">${currentModel}</span>
             </div>
             
             <div class="space-y-1">
               <div class="flex items-center gap-2.5">
-                <span class="text-sm font-bold text-slate-900">${meta.name}</span>
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-300 shadow-2xs">
+                <span class="text-base font-bold text-white">${meta.name}</span>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
                   <span class="relative flex h-2 w-2">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
                   </span>
                   ${meta.status}
                 </span>
               </div>
-              <p class="text-[11px] text-slate-500 font-mono">Verified Production Master Specifications</p>
+              <p class="text-xs text-slate-300 font-mono">Verified Production Master Specifications</p>
             </div>
           </div>
 
-          <!-- Center: 4 Hardware Telemetry KPI Tiles -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 flex-1 max-w-3xl">
+          <!-- Center: 4 Colored Telemetry Tiles -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 flex-1 max-w-4xl">
             
-            <!-- KPI 1: Processor -->
-            <div class="p-2.5 rounded-lg bg-sky-50/70 border border-sky-200/80 shadow-2xs flex items-center gap-2.5">
-              <div class="w-7 h-7 rounded-md bg-sky-600 text-white flex items-center justify-center text-xs shrink-0 shadow-2xs">
+            <!-- Tile 1: Processor -->
+            <div class="p-3 rounded-xl bg-slate-800/80 border border-cyan-500/30 flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 flex items-center justify-center text-sm shrink-0">
                 <i class="fa-solid fa-microchip"></i>
               </div>
               <div class="truncate">
-                <div class="text-[10px] uppercase font-bold text-sky-900/60 font-mono">Processor</div>
-                <div class="text-xs font-bold text-slate-900 font-mono truncate" title="${meta.ap}">${meta.ap}</div>
+                <div class="text-[10px] uppercase font-bold text-cyan-300/80 font-mono">Processor</div>
+                <div class="text-xs font-bold text-white font-mono truncate" title="${meta.ap}">${meta.ap}</div>
               </div>
             </div>
 
-            <!-- KPI 2: Modem / RF -->
-            <div class="p-2.5 rounded-lg bg-emerald-50/70 border border-emerald-200/80 shadow-2xs flex items-center gap-2.5">
-              <div class="w-7 h-7 rounded-md bg-emerald-600 text-white flex items-center justify-center text-xs shrink-0 shadow-2xs">
+            <!-- Tile 2: Modem / RF -->
+            <div class="p-3 rounded-xl bg-slate-800/80 border border-emerald-500/30 flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 flex items-center justify-center text-sm shrink-0">
                 <i class="fa-solid fa-tower-broadcast"></i>
               </div>
               <div class="truncate">
-                <div class="text-[10px] uppercase font-bold text-emerald-900/60 font-mono">Modem / RF</div>
-                <div class="text-xs font-bold text-slate-900 font-mono truncate" title="${meta.modem}">${meta.modem}</div>
+                <div class="text-[10px] uppercase font-bold text-emerald-300/80 font-mono">Modem / RF</div>
+                <div class="text-xs font-bold text-white font-mono truncate" title="${meta.modem}">${meta.modem}</div>
               </div>
             </div>
 
-            <!-- KPI 3: SW Build -->
-            <div class="p-2.5 rounded-lg bg-indigo-50/70 border border-indigo-200/80 shadow-2xs flex items-center gap-2.5">
-              <div class="w-7 h-7 rounded-md bg-indigo-600 text-white flex items-center justify-center text-xs shrink-0 shadow-2xs">
+            <!-- Tile 3: SW Build -->
+            <div class="p-3 rounded-xl bg-slate-800/80 border border-indigo-500/30 flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 flex items-center justify-center text-sm shrink-0">
                 <i class="fa-solid fa-code-branch"></i>
               </div>
               <div class="truncate">
-                <div class="text-[10px] uppercase font-bold text-indigo-900/60 font-mono">SW Build</div>
-                <div class="text-xs font-bold text-slate-900 font-mono truncate" title="${meta.swVersion}">${meta.swVersion}</div>
+                <div class="text-[10px] uppercase font-bold text-indigo-300/80 font-mono">SW Build</div>
+                <div class="text-xs font-bold text-white font-mono truncate" title="${meta.swVersion}">${meta.swVersion}</div>
               </div>
             </div>
 
-            <!-- KPI 4: HQ Lead -->
-            <div class="p-2.5 rounded-lg bg-slate-100 border border-slate-200 shadow-2xs flex items-center gap-2.5">
-              <div class="w-7 h-7 rounded-md bg-slate-700 text-white flex items-center justify-center text-xs shrink-0 shadow-2xs">
+            <!-- Tile 4: HQ Lead -->
+            <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-600/50 flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-slate-700/60 border border-slate-500/40 text-slate-300 flex items-center justify-center text-sm shrink-0">
                 <i class="fa-solid fa-user-tie"></i>
               </div>
               <div class="truncate">
-                <div class="text-[10px] uppercase font-bold text-slate-500 font-mono">HQ Lead</div>
-                <div class="text-xs font-bold text-slate-900 font-mono truncate" title="${meta.leadKorea}">${meta.leadKorea}</div>
+                <div class="text-[10px] uppercase font-bold text-slate-400 font-mono">HQ Lead</div>
+                <div class="text-xs font-bold text-white font-mono truncate" title="${meta.leadKorea}">${meta.leadKorea}</div>
               </div>
             </div>
 
           </div>
 
           <!-- Right: Executive Action Cluster -->
-          <div class="flex items-center gap-2 shrink-0">
-            <button onclick="copyModelSummary()" title="Copy Specs to Clipboard" class="px-3 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-2xs">
+          <div class="flex items-center gap-2.5 shrink-0">
+            <button onclick="copyModelSummary()" title="Copy Specs" class="px-3.5 py-2.5 bg-slate-800/90 hover:bg-slate-750 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-xs">
               <i class="fa-regular fa-copy text-xs"></i>
               <span class="hidden sm:inline">Copy Specs</span>
             </button>
-            <button onclick="downloadMasterBundle('${currentModel}')" class="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-sm">
+            <button onclick="downloadMasterBundle('${currentModel}')" class="px-4 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold rounded-xl text-xs flex items-center gap-2 transition cursor-pointer shadow-md shadow-cyan-500/20">
               <i class="fa-solid fa-file-zipper"></i>
               <span>Export JSON</span>
             </button>
@@ -588,9 +602,9 @@
           `;
         }
 
-        const tagsHtml = (item.tags || []).map(t => `
+        const tagsHtml = (item.tags && item.tags.length > 0) ? item.tags.map(t => `
           <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${style.tagBadge} border">${t}</span>
-        `).join("");
+        `).join("") : "";
 
         const card = document.createElement("div");
         card.className = `rd-card ${style.cardBg} rounded-xl border flex flex-col justify-between shadow-xs overflow-hidden h-[220px]`;
@@ -794,7 +808,7 @@
           }
         }
 
-        localStorage.setItem("MOBILE_RND_DB_DATA", JSON.stringify(appData));
+        localStorage.setItem("MOBILE_RND_DB_DATA_V6", JSON.stringify(appData));
         renderCards();
 
         saveBtn.disabled = false;
