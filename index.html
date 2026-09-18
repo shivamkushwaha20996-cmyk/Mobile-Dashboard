@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-[#EEF2F6]">
+<html lang="en" class="h-full bg-[#F1F5F9]">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,7 +9,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   
-  <!-- Fonts -->
+  <!-- Google Fonts: Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
@@ -36,28 +36,30 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
+    /* Symmetrical Card Elevation */
     .rd-card {
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
     }
     .rd-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.09);
+      box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.08);
+      border-color: #cbd5e1;
     }
-    .cat-btn.active {
+    .cat-pill.active {
       background-color: #0f172a !important;
       color: #ffffff !important;
       border-color: #0f172a !important;
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.18);
     }
   </style>
 </head>
-<body class="bg-[#EEF2F6] text-slate-800 min-h-full flex flex-col font-sans antialiased">
+<body class="bg-[#F1F5F9] text-slate-800 min-h-full flex flex-col font-sans antialiased">
 
   <!-- Desktop Top Navigation Header (Light-Tinted) -->
-  <header class="sticky top-0 z-40 bg-gradient-to-r from-sky-50/95 via-white/95 to-indigo-50/95 backdrop-blur-md border-b border-sky-200/80 shadow-xs">
+  <header class="sticky top-0 z-40 bg-gradient-to-r from-sky-50/95 via-white/95 to-slate-50/95 backdrop-blur-md border-b border-slate-200/90 shadow-2xs">
     <div class="max-w-[1720px] mx-auto px-6 h-16 flex items-center justify-between gap-4">
       
-      <!-- Brand & Title -->
+      <!-- Brand & Project Title -->
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white shadow-sm">
           <i class="fa-solid fa-microchip text-sky-400 text-lg"></i>
@@ -65,13 +67,13 @@
         <div>
           <div class="flex items-center gap-2">
             <h1 class="text-sm font-bold tracking-tight text-slate-900">Mobile R&D Engineering Portal</h1>
-            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-sky-100 text-sky-800 border border-sky-300">v4.2</span>
+            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-sky-100 text-sky-800 border border-sky-200">v4.5</span>
           </div>
-          <p class="text-[11px] text-slate-600 font-medium">Hardware Schematics, RF Verification & Defect Database</p>
+          <p class="text-[11px] text-slate-500 font-medium">Hardware Schematics, RF Topologies & Quality Records</p>
         </div>
       </div>
 
-      <!-- Controls: Model Selector, Search & Admin Lock -->
+      <!-- Controls: Target Model, Search & Admin Lock -->
       <div class="flex items-center gap-3 flex-1 max-w-2xl justify-end">
         
         <!-- Target Model Selector -->
@@ -108,36 +110,36 @@
     </div>
   </header>
 
-  <!-- Main Container -->
+  <!-- Main Workstation Area -->
   <div class="max-w-[1720px] w-full mx-auto px-6 py-4 space-y-4 flex-1">
     
-    <!-- Top Model Banner (Styled with a Soft Light-Accent Background) -->
-    <section id="modelBanner" class="p-4 rounded-xl bg-gradient-to-r from-sky-50/90 via-blue-50/40 to-indigo-50/70 border border-sky-200 shadow-2xs flex flex-wrap items-center justify-between gap-4">
+    <!-- Top Model Banner (Light Tinted, Balanced Symmetrical Strip) -->
+    <section id="modelBanner" class="p-4 rounded-xl bg-gradient-to-r from-sky-50/80 via-white to-indigo-50/60 border border-sky-200/90 shadow-2xs flex flex-wrap items-center justify-between gap-4">
       <!-- Injected by JavaScript -->
     </section>
 
     <!-- Category Filter Tabs -->
     <div class="flex items-center justify-between gap-4 border-b border-slate-200 pb-2.5">
       <div class="flex items-center gap-2 overflow-x-auto no-scrollbar" id="categoryTabs">
-        <button data-cat="all" class="cat-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 transition cursor-pointer">All (18)</button>
-        <button data-cat="Schematics" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-50 border border-blue-200 text-blue-800 hover:bg-blue-100 transition cursor-pointer">Circuit & SOC</button>
-        <button data-cat="RF & Wireless" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-50 border border-emerald-200 text-emerald-800 hover:bg-emerald-100 transition cursor-pointer">RF & Antenna</button>
-        <button data-cat="Key Parts" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-purple-50 border border-purple-200 text-purple-800 hover:bg-purple-100 transition cursor-pointer">Key Parts</button>
-        <button data-cat="Process & Tech" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-amber-50 border border-amber-200 text-amber-800 hover:bg-amber-100 transition cursor-pointer">Process & OPST</button>
-        <button data-cat="Quality & SW" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-indigo-50 border border-indigo-200 text-indigo-800 hover:bg-indigo-100 transition cursor-pointer">Defects & SW Logs</button>
-        <button data-cat="General" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-100 border border-slate-300 text-slate-800 hover:bg-slate-200 transition cursor-pointer">Specs & Team</button>
+        <button data-cat="all" class="cat-pill active px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 transition cursor-pointer">All (18)</button>
+        <button data-cat="Schematics" class="cat-pill px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-50/80 border border-blue-200 text-blue-800 hover:bg-blue-100 transition cursor-pointer">Circuit & SOC</button>
+        <button data-cat="RF & Wireless" class="cat-pill px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-50/80 border border-emerald-200 text-emerald-800 hover:bg-emerald-100 transition cursor-pointer">RF & Antenna</button>
+        <button data-cat="Key Parts" class="cat-pill px-3.5 py-1.5 rounded-lg text-xs font-bold bg-purple-50/80 border border-purple-200 text-purple-800 hover:bg-purple-100 transition cursor-pointer">Key Parts</button>
+        <button data-cat="Process & Tech" class="cat-pill px-3.5 py-1.5 rounded-lg text-xs font-bold bg-amber-50/80 border border-amber-200 text-amber-800 hover:bg-amber-100 transition cursor-pointer">Process & OPST</button>
+        <button data-cat="Quality & SW" class="cat-pill px-3.5 py-1.5 rounded-lg text-xs font-bold bg-indigo-50/80 border border-indigo-200 text-indigo-800 hover:bg-indigo-100 transition cursor-pointer">Defects & SW Logs</button>
+        <button data-cat="General" class="cat-pill px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-100 border border-slate-300 text-slate-800 hover:bg-slate-200 transition cursor-pointer">Specs & Team</button>
       </div>
 
-      <div class="hidden lg:flex items-center gap-2 text-[11px] font-mono text-slate-600 bg-white/80 px-2.5 py-1 rounded-lg border border-slate-200">
+      <div class="hidden lg:flex items-center gap-2 text-[11px] font-mono text-slate-500 bg-white px-2.5 py-1 rounded-lg border border-slate-200">
         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
         <span>IndexedDB Large-File Engine Active</span>
       </div>
     </div>
 
-    <!-- Multi-Colored Engineering Cards Grid -->
+    <!-- Symmetrical 3-Column Desktop Grid (6 Rows of 3 = 18 Perfect Cards) -->
     <main>
-      <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <!-- Injected Cards -->
+      <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4.5">
+        <!-- Injected Symmetrical Cards -->
       </div>
     </main>
 
@@ -276,49 +278,43 @@
       });
     }
 
-    // DISTINCT VIBRANT BOX COLOR STYLES (Red replaced with calm Tech Indigo)
+    // SYMMETRICAL ACCENT COLOR THEMES (Uniform White Base + Controlled Accent Ribbons)
     const categoryStyles = {
       "Schematics": {
-        cardBg: "bg-[#EFF6FF] border-blue-200",
-        topStripe: "bg-blue-600",
-        iconBox: "bg-blue-600 text-white",
-        tagBadge: "bg-blue-100/80 text-blue-900 border-blue-300",
-        btn: "bg-blue-600 hover:bg-blue-700 text-white shadow-xs"
+        leftBar: "border-l-4 border-l-blue-600",
+        iconBox: "bg-blue-50 text-blue-600 border border-blue-200",
+        tagBadge: "bg-blue-50 text-blue-700 border-blue-200",
+        btn: "bg-blue-600 hover:bg-blue-700 text-white"
       },
       "RF & Wireless": {
-        cardBg: "bg-[#ECFDF5] border-emerald-200",
-        topStripe: "bg-emerald-600",
-        iconBox: "bg-emerald-600 text-white",
-        tagBadge: "bg-emerald-100/80 text-emerald-900 border-emerald-300",
-        btn: "bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs"
+        leftBar: "border-l-4 border-l-emerald-600",
+        iconBox: "bg-emerald-50 text-emerald-600 border border-emerald-200",
+        tagBadge: "bg-emerald-50 text-emerald-700 border-emerald-200",
+        btn: "bg-emerald-600 hover:bg-emerald-700 text-white"
       },
       "Key Parts": {
-        cardBg: "bg-[#FAF5FF] border-purple-200",
-        topStripe: "bg-purple-600",
-        iconBox: "bg-purple-600 text-white",
-        tagBadge: "bg-purple-100/80 text-purple-900 border-purple-300",
-        btn: "bg-purple-600 hover:bg-purple-700 text-white shadow-xs"
+        leftBar: "border-l-4 border-l-purple-600",
+        iconBox: "bg-purple-50 text-purple-600 border border-purple-200",
+        tagBadge: "bg-purple-50 text-purple-700 border-purple-200",
+        btn: "bg-purple-600 hover:bg-purple-700 text-white"
       },
       "Process & Tech": {
-        cardBg: "bg-[#FFFBEB] border-amber-200",
-        topStripe: "bg-amber-500",
-        iconBox: "bg-amber-500 text-white",
-        tagBadge: "bg-amber-100/80 text-amber-900 border-amber-300",
-        btn: "bg-amber-600 hover:bg-amber-700 text-white shadow-xs"
+        leftBar: "border-l-4 border-l-amber-500",
+        iconBox: "bg-amber-50 text-amber-600 border border-amber-200",
+        tagBadge: "bg-amber-50 text-amber-800 border-amber-200",
+        btn: "bg-amber-600 hover:bg-amber-700 text-white"
       },
       "Quality & SW": {
-        cardBg: "bg-[#EEF2FF] border-indigo-200",
-        topStripe: "bg-indigo-600",
-        iconBox: "bg-indigo-600 text-white",
-        tagBadge: "bg-indigo-100/80 text-indigo-900 border-indigo-300",
-        btn: "bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs"
+        leftBar: "border-l-4 border-l-indigo-600",
+        iconBox: "bg-indigo-50 text-indigo-600 border border-indigo-200",
+        tagBadge: "bg-indigo-50 text-indigo-700 border-indigo-200",
+        btn: "bg-indigo-600 hover:bg-indigo-700 text-white"
       },
       "General": {
-        cardBg: "bg-[#F8FAFC] border-slate-300",
-        topStripe: "bg-slate-700",
-        iconBox: "bg-slate-700 text-white",
-        tagBadge: "bg-slate-200/80 text-slate-800 border-slate-300",
-        btn: "bg-slate-800 hover:bg-slate-900 text-white shadow-xs"
+        leftBar: "border-l-4 border-l-slate-500",
+        iconBox: "bg-slate-100 text-slate-700 border border-slate-200",
+        tagBadge: "bg-slate-100 text-slate-700 border-slate-200",
+        btn: "bg-slate-800 hover:bg-slate-900 text-white"
       }
     };
 
@@ -361,7 +357,7 @@
       }
     };
 
-    // Auto-clone for remaining models
+    // Auto clone for remaining models
     ["A376", "A076", "A075", "A085", "S741"].forEach((m) => {
       const cloned = JSON.parse(JSON.stringify(defaultDashboardData["A576"]));
       cloned.meta.name = `Galaxy ${m}`;
@@ -474,18 +470,20 @@
         let bottomContent = "";
 
         if (item.subItems) {
+          // Multi-item symmetrical compact matrix
+          const isCompactSix = item.subItems.length > 2;
           bottomContent = `
-            <div class="space-y-1.5 pt-2.5 border-t border-slate-200/80 mt-2.5">
-              <div class="space-y-1 max-h-36 overflow-y-auto pr-0.5">
+            <div class="pt-2 border-t border-slate-100 mt-2">
+              <div class="grid ${isCompactSix ? 'grid-cols-2 gap-1.5' : 'grid-cols-1 gap-1.5'} max-h-28 overflow-y-auto pr-0.5">
                 ${item.subItems.map((sub, idx) => `
-                  <div class="flex items-center justify-between p-1.5 px-2 rounded-md bg-white border border-slate-200 hover:border-slate-300 transition shadow-2xs">
-                    <div class="truncate mr-2">
-                      <div class="text-xs font-bold text-slate-800 truncate">${sub.name}</div>
-                      <div class="text-[10px] font-mono text-slate-500 truncate">${sub.filename}</div>
+                  <div class="flex items-center justify-between p-1.5 px-2 rounded-md bg-slate-50 border border-slate-200/80 hover:border-slate-300 transition">
+                    <div class="truncate mr-1.5">
+                      <div class="text-[11px] font-bold text-slate-800 truncate">${sub.name}</div>
+                      <div class="text-[9px] font-mono text-slate-400 truncate">${sub.size || 'FILE'}</div>
                     </div>
-                    <button onclick="handleDownload('${currentModel}_${key}_${idx}', '${sub.filename}')" class="shrink-0 px-2.5 py-1 ${style.btn} rounded text-[10px] font-mono font-bold flex items-center gap-1 transition cursor-pointer">
-                      <i class="fa-solid fa-arrow-down text-[9px]"></i>
-                      <span>${sub.size || 'GET'}</span>
+                    <button onclick="handleDownload('${currentModel}_${key}_${idx}', '${sub.filename}')" class="shrink-0 px-2 py-0.5 ${style.btn} rounded text-[10px] font-mono font-bold flex items-center gap-1 transition shadow-2xs cursor-pointer">
+                      <i class="fa-solid fa-arrow-down text-[8px]"></i>
+                      <span>GET</span>
                     </button>
                   </div>
                 `).join("")}
@@ -493,13 +491,14 @@
             </div>
           `;
         } else {
+          // Single standalone file row (Height-matched)
           bottomContent = `
-            <div class="pt-2.5 border-t border-slate-200/80 mt-2.5 flex items-center justify-between gap-2">
+            <div class="pt-2 border-t border-slate-100 mt-2 flex items-center justify-between gap-2">
               <div class="truncate">
                 <div class="text-[11px] text-slate-800 font-mono font-semibold truncate">${item.filename}</div>
-                <div class="text-[10px] text-slate-500 font-mono font-medium">${item.size || 'Master'}</div>
+                <div class="text-[10px] text-slate-400 font-mono">${item.size || 'Master'}</div>
               </div>
-              <button onclick="handleDownload('${currentModel}_${key}', '${item.filename}')" class="shrink-0 px-3 py-1.5 ${style.btn} rounded-lg text-xs font-bold flex items-center gap-1 transition cursor-pointer">
+              <button onclick="handleDownload('${currentModel}_${key}', '${item.filename}')" class="shrink-0 px-3 py-1.5 ${style.btn} rounded-lg text-xs font-bold flex items-center gap-1 transition shadow-2xs cursor-pointer">
                 <i class="fa-solid fa-arrow-down text-[10px]"></i>
                 <span>Download</span>
               </button>
@@ -508,31 +507,35 @@
         }
 
         const tagsHtml = (item.tags || []).map(t => `
-          <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${style.tagBadge} border">${t}</span>
+          <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded ${style.tagBadge} border">${t}</span>
         `).join("");
 
         const card = document.createElement("div");
-        card.className = `rd-card ${style.cardBg} rounded-xl border flex flex-col justify-between shadow-xs overflow-hidden`;
+        card.className = `rd-card bg-white rounded-xl border border-slate-200/90 ${style.leftBar} flex flex-col justify-between shadow-2xs p-3.5 h-[215px]`;
         card.innerHTML = `
-          <div class="h-1.5 w-full ${style.topStripe}"></div>
-          <div class="p-3.5 flex flex-col justify-between h-full">
-            <div>
-              <div class="flex items-center justify-between gap-2 mb-2">
-                <div class="flex items-center gap-2">
-                  <div class="w-7 h-7 rounded-lg ${style.iconBox} flex items-center justify-center text-xs shadow-xs">
-                    <i class="fa-solid ${item.icon}"></i>
-                  </div>
-                  <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-white text-slate-700 border border-slate-300 shadow-2xs">${item.tag || key}</span>
+          <div>
+            <!-- Header Row: Icon, Code & Category Pill -->
+            <div class="flex items-center justify-between gap-2 mb-1.5">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-md ${style.iconBox} flex items-center justify-center text-xs shadow-2xs">
+                  <i class="fa-solid ${item.icon}"></i>
                 </div>
-                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-600">${item.category}</span>
+                <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">${item.tag || key}</span>
               </div>
-              <h3 class="text-xs font-bold text-slate-900 leading-snug mb-2">${item.title}</h3>
-              <div class="flex flex-wrap gap-1 mb-1">
-                ${tagsHtml}
-              </div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">${item.category}</span>
             </div>
-            ${bottomContent}
+
+            <!-- Title -->
+            <h3 class="text-xs font-bold text-slate-900 leading-snug mb-1.5 truncate" title="${item.title}">${item.title}</h3>
+
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-1">
+              ${tagsHtml}
+            </div>
           </div>
+
+          <!-- Symmetrical Aligned Footer Area -->
+          ${bottomContent}
         `;
         grid.appendChild(card);
       });
@@ -612,9 +615,9 @@
         renderCards();
       });
 
-      document.querySelectorAll(".cat-btn").forEach(btn => {
+      document.querySelectorAll(".cat-pill").forEach(btn => {
         btn.addEventListener("click", () => {
-          document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+          document.querySelectorAll(".cat-pill").forEach(b => b.classList.remove("active"));
           btn.classList.add("active");
           activeCategory = btn.getAttribute("data-cat");
           renderCards();
@@ -713,4 +716,3 @@
   </script>
 </body>
 </html>
-
