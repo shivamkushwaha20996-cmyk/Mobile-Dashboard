@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-[#F1F5F9]">
+<html lang="en" class="h-full bg-[#EEF2F6]">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,7 +9,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   
-  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
@@ -36,27 +36,25 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* Symmetrical Card Elevation */
     .rd-card {
-      transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
     }
     .rd-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.08);
-      border-color: #cbd5e1;
+      box-shadow: 0 10px 22px -5px rgba(0, 0, 0, 0.1);
     }
-    .cat-pill.active {
+    .cat-btn.active {
       background-color: #0f172a !important;
       color: #ffffff !important;
       border-color: #0f172a !important;
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.18);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
     }
   </style>
 </head>
-<body class="bg-[#F1F5F9] text-slate-800 min-h-full flex flex-col font-sans antialiased">
+<body class="bg-[#EEF2F6] text-slate-800 min-h-full flex flex-col font-sans antialiased">
 
   <!-- Desktop Top Navigation Header (Light-Tinted) -->
-  <header class="sticky top-0 z-40 bg-gradient-to-r from-sky-50/95 via-white/95 to-slate-50/95 backdrop-blur-md border-b border-slate-200/90 shadow-2xs">
+  <header class="sticky top-0 z-40 bg-gradient-to-r from-sky-50/95 via-white/95 to-indigo-50/95 backdrop-blur-md border-b border-sky-200/80 shadow-xs">
     <div class="max-w-[1720px] mx-auto px-6 h-16 flex items-center justify-between gap-4">
       
       <!-- Brand & Project Title -->
@@ -67,9 +65,9 @@
         <div>
           <div class="flex items-center gap-2">
             <h1 class="text-sm font-bold tracking-tight text-slate-900">Mobile R&D Engineering Portal</h1>
-            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-sky-100 text-sky-800 border border-sky-200">v4.5</span>
+            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-sky-100 text-sky-800 border border-sky-300">v4.8</span>
           </div>
-          <p class="text-[11px] text-slate-500 font-medium">Hardware Schematics, RF Topologies & Quality Records</p>
+          <p class="text-[11px] text-slate-600 font-medium">Hardware Schematics, RF Verification & Quality Records</p>
         </div>
       </div>
 
@@ -113,33 +111,33 @@
   <!-- Main Workstation Area -->
   <div class="max-w-[1720px] w-full mx-auto px-6 py-4 space-y-4 flex-1">
     
-    <!-- Top Model Banner (Light Tinted, Balanced Symmetrical Strip) -->
-    <section id="modelBanner" class="p-4 rounded-xl bg-gradient-to-r from-sky-50/80 via-white to-indigo-50/60 border border-sky-200/90 shadow-2xs flex flex-wrap items-center justify-between gap-4">
+    <!-- Top Model Banner (Light-Tinted Accent Strip) -->
+    <section id="modelBanner" class="p-4 rounded-xl bg-gradient-to-r from-sky-50/90 via-white to-indigo-50/70 border border-sky-200/90 shadow-2xs flex flex-wrap items-center justify-between gap-4">
       <!-- Injected by JavaScript -->
     </section>
 
     <!-- Category Filter Tabs -->
     <div class="flex items-center justify-between gap-4 border-b border-slate-200 pb-2.5">
       <div class="flex items-center gap-2 overflow-x-auto no-scrollbar" id="categoryTabs">
-        <button data-cat="all" class="cat-pill active px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 transition cursor-pointer">All (18)</button>
-        <button data-cat="Schematics" class="cat-pill px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-50/80 border border-blue-200 text-blue-800 hover:bg-blue-100 transition cursor-pointer">Circuit & SOC</button>
-        <button data-cat="RF & Wireless" class="cat-pill px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-50/80 border border-emerald-200 text-emerald-800 hover:bg-emerald-100 transition cursor-pointer">RF & Antenna</button>
-        <button data-cat="Key Parts" class="cat-pill px-3.5 py-1.5 rounded-lg text-xs font-bold bg-purple-50/80 border border-purple-200 text-purple-800 hover:bg-purple-100 transition cursor-pointer">Key Parts</button>
-        <button data-cat="Process & Tech" class="cat-pill px-3.5 py-1.5 rounded-lg text-xs font-bold bg-amber-50/80 border border-amber-200 text-amber-800 hover:bg-amber-100 transition cursor-pointer">Process & OPST</button>
-        <button data-cat="Quality & SW" class="cat-pill px-3.5 py-1.5 rounded-lg text-xs font-bold bg-indigo-50/80 border border-indigo-200 text-indigo-800 hover:bg-indigo-100 transition cursor-pointer">Defects & SW Logs</button>
-        <button data-cat="General" class="cat-pill px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-100 border border-slate-300 text-slate-800 hover:bg-slate-200 transition cursor-pointer">Specs & Team</button>
+        <button data-cat="all" class="cat-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 transition cursor-pointer">All (18)</button>
+        <button data-cat="Schematics" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-50 border border-blue-200 text-blue-800 hover:bg-blue-100 transition cursor-pointer">Circuit & SOC</button>
+        <button data-cat="RF & Wireless" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-50 border border-emerald-200 text-emerald-800 hover:bg-emerald-100 transition cursor-pointer">RF & Antenna</button>
+        <button data-cat="Process & Tech" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-amber-50 border border-amber-200 text-amber-800 hover:bg-amber-100 transition cursor-pointer">Process & OPST</button>
+        <button data-cat="Quality & SW" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-indigo-50 border border-indigo-200 text-indigo-800 hover:bg-indigo-100 transition cursor-pointer">Defects & SW Logs</button>
+        <button data-cat="Key Parts" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-purple-50 border border-purple-200 text-purple-800 hover:bg-purple-100 transition cursor-pointer">Key Parts</button>
+        <button data-cat="General" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-100 border border-slate-300 text-slate-800 hover:bg-slate-200 transition cursor-pointer">Specs & Team</button>
       </div>
 
-      <div class="hidden lg:flex items-center gap-2 text-[11px] font-mono text-slate-500 bg-white px-2.5 py-1 rounded-lg border border-slate-200">
+      <div class="hidden lg:flex items-center gap-2 text-[11px] font-mono text-slate-600 bg-white/90 px-2.5 py-1 rounded-lg border border-slate-200">
         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
         <span>IndexedDB Large-File Engine Active</span>
       </div>
     </div>
 
-    <!-- Symmetrical 3-Column Desktop Grid (6 Rows of 3 = 18 Perfect Cards) -->
+    <!-- Symmetrical Multi-Colored Engineering Cards Grid -->
     <main>
       <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4.5">
-        <!-- Injected Symmetrical Cards -->
+        <!-- Injected Symmetrically Grouped Cards -->
       </div>
     </main>
 
@@ -278,45 +276,67 @@
       });
     }
 
-    // SYMMETRICAL ACCENT COLOR THEMES (Uniform White Base + Controlled Accent Ribbons)
+    // ORIGINAL VIBRANT FULL-BOX COLOR PALETTES (Calm Tech-Indigo used for Quality)
     const categoryStyles = {
       "Schematics": {
-        leftBar: "border-l-4 border-l-blue-600",
-        iconBox: "bg-blue-50 text-blue-600 border border-blue-200",
-        tagBadge: "bg-blue-50 text-blue-700 border-blue-200",
-        btn: "bg-blue-600 hover:bg-blue-700 text-white"
+        cardBg: "bg-[#EFF6FF] border-blue-200",
+        topStripe: "bg-blue-600",
+        iconBox: "bg-blue-600 text-white",
+        tagBadge: "bg-blue-100/80 text-blue-900 border-blue-300",
+        btn: "bg-blue-600 hover:bg-blue-700 text-white shadow-xs"
       },
       "RF & Wireless": {
-        leftBar: "border-l-4 border-l-emerald-600",
-        iconBox: "bg-emerald-50 text-emerald-600 border border-emerald-200",
-        tagBadge: "bg-emerald-50 text-emerald-700 border-emerald-200",
-        btn: "bg-emerald-600 hover:bg-emerald-700 text-white"
-      },
-      "Key Parts": {
-        leftBar: "border-l-4 border-l-purple-600",
-        iconBox: "bg-purple-50 text-purple-600 border border-purple-200",
-        tagBadge: "bg-purple-50 text-purple-700 border-purple-200",
-        btn: "bg-purple-600 hover:bg-purple-700 text-white"
+        cardBg: "bg-[#ECFDF5] border-emerald-200",
+        topStripe: "bg-emerald-600",
+        iconBox: "bg-emerald-600 text-white",
+        tagBadge: "bg-emerald-100/80 text-emerald-900 border-emerald-300",
+        btn: "bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs"
       },
       "Process & Tech": {
-        leftBar: "border-l-4 border-l-amber-500",
-        iconBox: "bg-amber-50 text-amber-600 border border-amber-200",
-        tagBadge: "bg-amber-50 text-amber-800 border-amber-200",
-        btn: "bg-amber-600 hover:bg-amber-700 text-white"
+        cardBg: "bg-[#FFFBEB] border-amber-200",
+        topStripe: "bg-amber-500",
+        iconBox: "bg-amber-500 text-white",
+        tagBadge: "bg-amber-100/80 text-amber-900 border-amber-300",
+        btn: "bg-amber-600 hover:bg-amber-700 text-white shadow-xs"
       },
       "Quality & SW": {
-        leftBar: "border-l-4 border-l-indigo-600",
-        iconBox: "bg-indigo-50 text-indigo-600 border border-indigo-200",
-        tagBadge: "bg-indigo-50 text-indigo-700 border-indigo-200",
-        btn: "bg-indigo-600 hover:bg-indigo-700 text-white"
+        cardBg: "bg-[#EEF2FF] border-indigo-200",
+        topStripe: "bg-indigo-600",
+        iconBox: "bg-indigo-600 text-white",
+        tagBadge: "bg-indigo-100/80 text-indigo-900 border-indigo-300",
+        btn: "bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs"
+      },
+      "Key Parts": {
+        cardBg: "bg-[#FAF5FF] border-purple-200",
+        topStripe: "bg-purple-600",
+        iconBox: "bg-purple-600 text-white",
+        tagBadge: "bg-purple-100/80 text-purple-900 border-purple-300",
+        btn: "bg-purple-600 hover:bg-purple-700 text-white shadow-xs"
       },
       "General": {
-        leftBar: "border-l-4 border-l-slate-500",
-        iconBox: "bg-slate-100 text-slate-700 border border-slate-200",
-        tagBadge: "bg-slate-100 text-slate-700 border-slate-200",
-        btn: "bg-slate-800 hover:bg-slate-900 text-white"
+        cardBg: "bg-[#F8FAFC] border-slate-300",
+        topStripe: "bg-slate-700",
+        iconBox: "bg-slate-700 text-white",
+        tagBadge: "bg-slate-200/80 text-slate-800 border-slate-300",
+        btn: "bg-slate-800 hover:bg-slate-900 text-white shadow-xs"
       }
     };
+
+    // SYMMETRICAL CATEGORY REORDERING: Grouped in clean 3-card color rows!
+    const symmetricalDisplayOrder = [
+      // Row 1: Schematics (3 Blue Cards)
+      "B", "I", "P",
+      // Row 2: RF & Wireless (3 Emerald Cards)
+      "K", "L", "M",
+      // Row 3: Process & Tech (3 Amber Cards)
+      "C", "E", "H",
+      // Row 4: Quality & SW Logs (3 Indigo Cards)
+      "F", "G", "Q",
+      // Row 5: Key Hardware Modules (Purple & Specs)
+      "J", "D", "A",
+      // Row 6: Organization & Standards (Slate Cards)
+      "N", "O", "R"
+    ];
 
     const defaultDashboardData = {
       A576: {
@@ -331,7 +351,7 @@
             { name: "Sub Assembly", filename: "A576_Sub_Assembly_Flow.xlsx", size: "8.4 MB" },
             { name: "Main Line", filename: "A576_Main_Line_SOP.xlsx", size: "14.1 MB" }
           ]},
-          D: { title: "Common and Exclusive Parts", category: "General", icon: "fa-cubes", tag: "BOM", tags: ["Shared BOM", "Exclusive Parts"], filename: "A576_Part_Matrix.xlsx", size: "15.8 MB" },
+          D: { title: "Common & Exclusive Parts", category: "General", icon: "fa-cubes", tag: "BOM", tags: ["Shared BOM", "Exclusive Parts"], filename: "A576_Part_Matrix.xlsx", size: "15.8 MB" },
           E: { title: "New Technology Introduced", category: "Process & Tech", icon: "fa-wand-magic-sparkles", tag: "TECH", tags: ["LDS Antenna", "Graphite Layer", "PMIC"], filename: "A576_New_Tech_Brief.pdf", size: "22.6 MB" },
           F: { title: "Base Model Defect History", category: "Quality & SW", icon: "fa-bug", tag: "RCA", tags: ["Pred. Failures", "Field RCA Summary"], filename: "A576_Base_Defects_RCA.xlsx", size: "31.2 MB" },
           G: { title: "Other Subsidiary Defect Details", category: "Quality & SW", icon: "fa-triangle-exclamation", tag: "DEFECTS", tags: ["SMT Scrap Rate", "AOI Optical Log"], filename: "A576_Subsidiary_Defects.xlsx", size: "19.7 MB" },
@@ -357,7 +377,7 @@
       }
     };
 
-    // Auto clone for remaining models
+    // Auto-clone for remaining models
     ["A376", "A076", "A075", "A085", "S741"].forEach((m) => {
       const cloned = JSON.parse(JSON.stringify(defaultDashboardData["A576"]));
       cloned.meta.name = `Galaxy ${m}`;
@@ -447,9 +467,13 @@
     function renderCards() {
       const grid = document.getElementById("cardsGrid");
       grid.innerHTML = "";
-      const entries = Object.entries(appData[currentModel].items);
+      
+      // Use symmetricalDisplayOrder so identical categories stay together side-by-side
+      const orderedEntries = symmetricalDisplayOrder
+        .map(key => [key, appData[currentModel].items[key]])
+        .filter(([key, item]) => item !== undefined);
 
-      const filtered = entries.filter(([key, item]) => {
+      const filtered = orderedEntries.filter(([key, item]) => {
         const matchesCat = activeCategory === "all" || item.category === activeCategory;
         const q = searchKeyword.toLowerCase();
         return matchesCat && (
@@ -471,15 +495,15 @@
 
         if (item.subItems) {
           // Multi-item symmetrical compact matrix
-          const isCompactSix = item.subItems.length > 2;
+          const isCompact = item.subItems.length > 2;
           bottomContent = `
-            <div class="pt-2 border-t border-slate-100 mt-2">
-              <div class="grid ${isCompactSix ? 'grid-cols-2 gap-1.5' : 'grid-cols-1 gap-1.5'} max-h-28 overflow-y-auto pr-0.5">
+            <div class="pt-2 border-t border-slate-200/80 mt-2">
+              <div class="grid ${isCompact ? 'grid-cols-2 gap-1.5' : 'grid-cols-1 gap-1.5'} max-h-28 overflow-y-auto pr-0.5">
                 ${item.subItems.map((sub, idx) => `
-                  <div class="flex items-center justify-between p-1.5 px-2 rounded-md bg-slate-50 border border-slate-200/80 hover:border-slate-300 transition">
+                  <div class="flex items-center justify-between p-1.5 px-2 rounded-md bg-white border border-slate-200 hover:border-slate-300 transition shadow-2xs">
                     <div class="truncate mr-1.5">
                       <div class="text-[11px] font-bold text-slate-800 truncate">${sub.name}</div>
-                      <div class="text-[9px] font-mono text-slate-400 truncate">${sub.size || 'FILE'}</div>
+                      <div class="text-[9px] font-mono text-slate-500 truncate">${sub.size || 'FILE'}</div>
                     </div>
                     <button onclick="handleDownload('${currentModel}_${key}_${idx}', '${sub.filename}')" class="shrink-0 px-2 py-0.5 ${style.btn} rounded text-[10px] font-mono font-bold flex items-center gap-1 transition shadow-2xs cursor-pointer">
                       <i class="fa-solid fa-arrow-down text-[8px]"></i>
@@ -491,12 +515,12 @@
             </div>
           `;
         } else {
-          // Single standalone file row (Height-matched)
+          // Single standalone file row
           bottomContent = `
-            <div class="pt-2 border-t border-slate-100 mt-2 flex items-center justify-between gap-2">
+            <div class="pt-2 border-t border-slate-200/80 mt-2 flex items-center justify-between gap-2">
               <div class="truncate">
                 <div class="text-[11px] text-slate-800 font-mono font-semibold truncate">${item.filename}</div>
-                <div class="text-[10px] text-slate-400 font-mono">${item.size || 'Master'}</div>
+                <div class="text-[10px] text-slate-500 font-mono font-medium">${item.size || 'Master'}</div>
               </div>
               <button onclick="handleDownload('${currentModel}_${key}', '${item.filename}')" class="shrink-0 px-3 py-1.5 ${style.btn} rounded-lg text-xs font-bold flex items-center gap-1 transition shadow-2xs cursor-pointer">
                 <i class="fa-solid fa-arrow-down text-[10px]"></i>
@@ -507,35 +531,40 @@
         }
 
         const tagsHtml = (item.tags || []).map(t => `
-          <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded ${style.tagBadge} border">${t}</span>
+          <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${style.tagBadge} border">${t}</span>
         `).join("");
 
         const card = document.createElement("div");
-        card.className = `rd-card bg-white rounded-xl border border-slate-200/90 ${style.leftBar} flex flex-col justify-between shadow-2xs p-3.5 h-[215px]`;
+        card.className = `rd-card ${style.cardBg} rounded-xl border flex flex-col justify-between shadow-xs overflow-hidden h-[215px]`;
         card.innerHTML = `
-          <div>
-            <!-- Header Row: Icon, Code & Category Pill -->
-            <div class="flex items-center justify-between gap-2 mb-1.5">
-              <div class="flex items-center gap-2">
-                <div class="w-6 h-6 rounded-md ${style.iconBox} flex items-center justify-center text-xs shadow-2xs">
-                  <i class="fa-solid ${item.icon}"></i>
+          <!-- Top Color Accent Stripe -->
+          <div class="h-1.5 w-full ${style.topStripe}"></div>
+
+          <div class="p-3.5 flex flex-col justify-between h-full">
+            <div>
+              <!-- Card Header -->
+              <div class="flex items-center justify-between gap-2 mb-1.5">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-lg ${style.iconBox} flex items-center justify-center text-xs shadow-xs">
+                    <i class="fa-solid ${item.icon}"></i>
+                  </div>
+                  <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-white text-slate-700 border border-slate-300 shadow-2xs">${item.tag || key}</span>
                 </div>
-                <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">${item.tag || key}</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-600">${item.category}</span>
               </div>
-              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">${item.category}</span>
+
+              <!-- Title -->
+              <h3 class="text-xs font-bold text-slate-900 leading-snug mb-1.5 truncate" title="${item.title}">${item.title}</h3>
+
+              <!-- Tags -->
+              <div class="flex flex-wrap gap-1">
+                ${tagsHtml}
+              </div>
             </div>
 
-            <!-- Title -->
-            <h3 class="text-xs font-bold text-slate-900 leading-snug mb-1.5 truncate" title="${item.title}">${item.title}</h3>
-
-            <!-- Tags -->
-            <div class="flex flex-wrap gap-1">
-              ${tagsHtml}
-            </div>
+            <!-- Action Area -->
+            ${bottomContent}
           </div>
-
-          <!-- Symmetrical Aligned Footer Area -->
-          ${bottomContent}
         `;
         grid.appendChild(card);
       });
@@ -615,9 +644,9 @@
         renderCards();
       });
 
-      document.querySelectorAll(".cat-pill").forEach(btn => {
+      document.querySelectorAll(".cat-btn").forEach(btn => {
         btn.addEventListener("click", () => {
-          document.querySelectorAll(".cat-pill").forEach(b => b.classList.remove("active"));
+          document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
           btn.classList.add("active");
           activeCategory = btn.getAttribute("data-cat");
           renderCards();
