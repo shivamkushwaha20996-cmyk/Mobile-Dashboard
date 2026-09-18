@@ -9,10 +9,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   
-  <!-- Fonts -->
+  <!-- Fonts: Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
@@ -28,7 +28,7 @@
   </script>
 
   <style>
-    /* Desktop Clean Scrollbar */
+    /* Clean Desktop Scrollbar */
     ::-webkit-scrollbar { width: 7px; height: 7px; }
     ::-webkit-scrollbar-track { background: #e2e8f0; }
     ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
@@ -36,12 +36,13 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
+    /* Card Elevation */
     .rd-card {
       transition: transform 0.16s ease, box-shadow 0.16s ease;
     }
     .rd-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 22px -5px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 24px -4px rgba(0, 0, 0, 0.1);
     }
     .cat-btn.active {
       background-color: #0f172a !important;
@@ -51,40 +52,46 @@
     }
   </style>
 </head>
-<body class="bg-[#EEF2F6] text-slate-800 min-h-full flex flex-col font-sans antialiased">
+<body class="bg-[#EEF2F6] text-slate-800 min-h-full flex flex-col font-sans antialiased selection:bg-sky-500 selection:text-white">
 
-  <!-- Desktop Top Navigation Header (Light-Tinted Gradient) -->
-  <header class="sticky top-0 z-40 bg-gradient-to-r from-sky-50/95 via-white/95 to-indigo-50/95 backdrop-blur-md border-b border-sky-200/80 shadow-xs">
+  <!-- 1. Topmost Laser Accent Line -->
+  <div class="h-[3px] w-full bg-gradient-to-r from-cyan-500 via-sky-600 to-indigo-600"></div>
+
+  <!-- 2. Desktop Navigation Header -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-sm">
     <div class="max-w-[1720px] mx-auto px-6 h-16 flex items-center justify-between gap-4">
       
-      <!-- Brand & Title -->
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white shadow-sm">
-          <i class="fa-solid fa-microchip text-sky-400 text-lg"></i>
+      <!-- Brand & Project Portal Identity -->
+      <div class="flex items-center gap-3.5">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 via-blue-600 to-indigo-700 flex items-center justify-center text-white shadow-md shadow-sky-500/20">
+          <i class="fa-solid fa-microchip text-lg"></i>
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="text-sm font-bold tracking-tight text-slate-900">Mobile R&D Engineering Portal</h1>
-            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-sky-100 text-sky-800 border border-sky-300">v5.0</span>
+            <h1 class="text-sm font-extrabold tracking-tight text-slate-900">Mobile R&D Engineering Portal</h1>
+            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200 shadow-2xs">HARDWARE LAB</span>
           </div>
-          <p class="text-[11px] text-slate-600 font-medium">Hardware Schematics, RF Verification & Master Records</p>
+          <p class="text-[11px] text-slate-500 font-medium">Hardware Topologies, RF Verification & Defect Database</p>
         </div>
       </div>
 
-      <!-- Controls: Model Selector, Search & Admin Lock -->
-      <div class="flex items-center gap-3 flex-1 max-w-2xl justify-end">
+      <!-- Controls: Engineered Model Selector, Search & Admin Lock -->
+      <div class="flex items-center gap-3.5 flex-1 max-w-2xl justify-end">
         
-        <!-- Target Model Selector -->
-        <div class="relative w-48">
-          <select id="modelSelect" class="w-full pl-3 pr-8 py-2 bg-white hover:bg-slate-50 border border-slate-300 rounded-lg text-xs font-mono font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500 transition cursor-pointer appearance-none shadow-2xs">
-            <option value="A576">TARGET: A576</option>
-            <option value="A376">TARGET: A376</option>
-            <option value="A076">TARGET: A076</option>
-            <option value="A075">TARGET: A075</option>
-            <option value="A085">TARGET: A085</option>
-            <option value="S741">TARGET: S741</option>
+        <!-- Target Model Selector with Enhanced Visual Weight -->
+        <div class="relative w-52">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-sky-600">
+            <i class="fa-solid fa-mobile-screen text-xs"></i>
+          </div>
+          <select id="modelSelect" class="w-full pl-8 pr-8 py-2 bg-slate-50 hover:bg-white border-2 border-sky-500/30 hover:border-sky-500 rounded-lg text-xs font-mono font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500 transition cursor-pointer appearance-none shadow-xs">
+            <option value="A576">MODEL: A576</option>
+            <option value="A376">MODEL: A376</option>
+            <option value="A076">MODEL: A076</option>
+            <option value="A075">MODEL: A075</option>
+            <option value="A085">MODEL: A085</option>
+            <option value="S741">MODEL: S741</option>
           </select>
-          <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-500">
+          <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
             <i class="fa-solid fa-chevron-down text-[10px]"></i>
           </div>
         </div>
@@ -92,13 +99,13 @@
         <!-- Quick Filter Search -->
         <div class="relative w-64 hidden sm:block">
           <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
-          <input type="text" id="searchInput" placeholder="Filter specs, PBA, bands..." class="w-full pl-8 pr-3 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 transition shadow-2xs" />
+          <input type="text" id="searchInput" placeholder="Search spec, PBA, bands..." class="w-full pl-8 pr-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 transition shadow-2xs" />
         </div>
 
-        <!-- Admin Slot -->
+        <!-- Admin Control Slot -->
         <div id="adminAuthSlot">
-          <button id="openLoginModalBtn" class="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 transition cursor-pointer shadow-2xs">
-            <i class="fa-solid fa-lock text-slate-500 text-[10px]"></i>
+          <button id="openLoginModalBtn" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 transition cursor-pointer shadow-2xs">
+            <i class="fa-solid fa-lock text-slate-500 text-[11px]"></i>
             <span>Admin</span>
           </button>
         </div>
@@ -108,15 +115,15 @@
     </div>
   </header>
 
-  <!-- Main Workstation Area -->
+  <!-- Main Workstation Workspace -->
   <div class="max-w-[1720px] w-full mx-auto px-6 py-4 space-y-4 flex-1">
     
-    <!-- Top Model Banner (Light-Tinted Accent Strip) -->
-    <section id="modelBanner" class="p-4 rounded-xl bg-gradient-to-r from-sky-50/90 via-white to-indigo-50/70 border border-sky-200/90 shadow-2xs flex flex-wrap items-center justify-between gap-4">
-      <!-- Injected by JavaScript -->
+    <!-- 3. High-Visibility Model Telemetry Banner (Upgraded Visual Console) -->
+    <section id="modelBanner" class="p-4 rounded-xl bg-white border border-slate-200/90 shadow-xs">
+      <!-- Injected by JavaScript with Modular KPI Cards -->
     </section>
 
-    <!-- Category Filter Tabs -->
+    <!-- Category Filter Tabs Bar -->
     <div class="flex items-center justify-between gap-4 border-b border-slate-200 pb-2.5">
       <div class="flex items-center gap-2 overflow-x-auto no-scrollbar" id="categoryTabs">
         <button data-cat="all" class="cat-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 transition cursor-pointer">All (A-R)</button>
@@ -128,7 +135,7 @@
         <button data-cat="General" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-100 border border-slate-300 text-slate-800 hover:bg-slate-200 transition cursor-pointer">Specs & Team</button>
       </div>
 
-      <div class="hidden lg:flex items-center gap-2 text-[11px] font-mono text-slate-600 bg-white/90 px-2.5 py-1 rounded-lg border border-slate-200">
+      <div class="hidden lg:flex items-center gap-2 text-[11px] font-mono text-slate-600 bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-2xs">
         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
         <span>IndexedDB Large-File Engine Active</span>
       </div>
@@ -327,7 +334,7 @@
 
     const defaultDashboardData = {
       A576: {
-        meta: { name: "Galaxy A576", ap: "Exynos 1480 Octa", status: "Mass Production", leadKorea: "HQ Team Lead", swVersion: "A576XXU1AXB2" },
+        meta: { name: "Galaxy A576", ap: "Exynos 1480 (4nm)", modem: "Sub-6GHz / MIMO 4x4", status: "Mass Production", leadKorea: "HQ R&D Team", swVersion: "A576XXU1AXB2" },
         items: {
           A: { title: "Basic Model Details", category: "General", icon: "fa-circle-info", tag: "A: SPEC", tags: ["Dimensions", "Battery Spec", "Tolerances"], filename: "A576_Basic_Spec.pdf", size: "12.4 MB" },
           B: { title: "Circuit Diagram", category: "Schematics", icon: "fa-diagram-project", tag: "B: CIRCUIT", tags: ["Schematic Topologies", "PCB Sets"], subItems: [
@@ -392,7 +399,7 @@
       if (isAdminLoggedIn) {
         slot.innerHTML = `
           <div class="flex items-center gap-2">
-            <button id="openUploadBtn" class="flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-lg bg-sky-600 hover:bg-sky-500 text-white shadow-sm transition cursor-pointer">
+            <button id="openUploadBtn" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-lg bg-sky-600 hover:bg-sky-500 text-white shadow-sm transition cursor-pointer">
               <i class="fa-solid fa-cloud-arrow-up"></i>
               <span>Upload (>50MB)</span>
             </button>
@@ -412,8 +419,8 @@
         });
       } else {
         slot.innerHTML = `
-          <button id="openLoginModalBtn" class="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 transition cursor-pointer shadow-2xs">
-            <i class="fa-solid fa-lock text-slate-500 text-[10px]"></i>
+          <button id="openLoginModalBtn" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-lg bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 transition cursor-pointer shadow-2xs">
+            <i class="fa-solid fa-lock text-slate-500 text-[11px]"></i>
             <span>Admin</span>
           </button>
         `;
@@ -425,28 +432,95 @@
       }
     }
 
+    // High-Visibility Upgraded Model Banner with Telemetry Tiles
     function renderBanner() {
       const meta = appData[currentModel].meta;
       document.getElementById("modelBanner").innerHTML = `
-        <div class="flex items-center gap-3">
-          <span class="text-2xl font-black font-mono text-slate-900 tracking-tight">${currentModel}</span>
-          <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
-            ${meta.status}
-          </span>
-          <span class="text-xs text-slate-600 font-semibold">${meta.name}</span>
-        </div>
-        
-        <div class="flex flex-wrap items-center gap-4 text-xs text-slate-700 font-medium">
-          <span><i class="fa-solid fa-microchip text-sky-600 mr-1"></i>AP: <strong>${meta.ap}</strong></span>
-          <span><i class="fa-solid fa-code-branch text-indigo-600 mr-1"></i>SW: <strong>${meta.swVersion}</strong></span>
-          <span><i class="fa-solid fa-user-tie text-slate-500 mr-1"></i>HQ Lead: <strong>${meta.leadKorea}</strong></span>
-        </div>
+        <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+          
+          <!-- Left: Target Model Identity & Beacon -->
+          <div class="flex items-center gap-4">
+            <div class="px-4 py-2 rounded-xl bg-slate-900 text-white shadow-md flex flex-col justify-center">
+              <span class="text-[10px] font-mono text-slate-400 font-semibold tracking-wider">PROJECT</span>
+              <span class="text-2xl font-black font-mono tracking-tight leading-none text-sky-400">${currentModel}</span>
+            </div>
+            
+            <div class="space-y-1">
+              <div class="flex items-center gap-2.5">
+                <span class="text-sm font-bold text-slate-900">${meta.name}</span>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-300 shadow-2xs">
+                  <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </span>
+                  ${meta.status}
+                </span>
+              </div>
+              <p class="text-[11px] text-slate-500 font-mono">Verified Production Master Specifications</p>
+            </div>
+          </div>
 
-        <div>
-          <button onclick="downloadMasterBundle('${currentModel}')" class="px-3.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-sm">
-            <i class="fa-solid fa-file-zipper"></i>
-            <span>Export Model JSON</span>
-          </button>
+          <!-- Center: 4 Hardware Telemetry KPI Tiles -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 flex-1 max-w-3xl">
+            
+            <!-- KPI 1: Processor -->
+            <div class="p-2.5 rounded-lg bg-sky-50/70 border border-sky-200/80 shadow-2xs flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-md bg-sky-600 text-white flex items-center justify-center text-xs shrink-0 shadow-2xs">
+                <i class="fa-solid fa-microchip"></i>
+              </div>
+              <div class="truncate">
+                <div class="text-[10px] uppercase font-bold text-sky-900/60 font-mono">Processor</div>
+                <div class="text-xs font-bold text-slate-900 font-mono truncate" title="${meta.ap}">${meta.ap}</div>
+              </div>
+            </div>
+
+            <!-- KPI 2: Modem / RF -->
+            <div class="p-2.5 rounded-lg bg-emerald-50/70 border border-emerald-200/80 shadow-2xs flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-md bg-emerald-600 text-white flex items-center justify-center text-xs shrink-0 shadow-2xs">
+                <i class="fa-solid fa-tower-broadcast"></i>
+              </div>
+              <div class="truncate">
+                <div class="text-[10px] uppercase font-bold text-emerald-900/60 font-mono">Modem / RF</div>
+                <div class="text-xs font-bold text-slate-900 font-mono truncate" title="${meta.modem}">${meta.modem}</div>
+              </div>
+            </div>
+
+            <!-- KPI 3: SW Build -->
+            <div class="p-2.5 rounded-lg bg-indigo-50/70 border border-indigo-200/80 shadow-2xs flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-md bg-indigo-600 text-white flex items-center justify-center text-xs shrink-0 shadow-2xs">
+                <i class="fa-solid fa-code-branch"></i>
+              </div>
+              <div class="truncate">
+                <div class="text-[10px] uppercase font-bold text-indigo-900/60 font-mono">SW Build</div>
+                <div class="text-xs font-bold text-slate-900 font-mono truncate" title="${meta.swVersion}">${meta.swVersion}</div>
+              </div>
+            </div>
+
+            <!-- KPI 4: HQ Lead -->
+            <div class="p-2.5 rounded-lg bg-slate-100 border border-slate-200 shadow-2xs flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-md bg-slate-700 text-white flex items-center justify-center text-xs shrink-0 shadow-2xs">
+                <i class="fa-solid fa-user-tie"></i>
+              </div>
+              <div class="truncate">
+                <div class="text-[10px] uppercase font-bold text-slate-500 font-mono">HQ Lead</div>
+                <div class="text-xs font-bold text-slate-900 font-mono truncate" title="${meta.leadKorea}">${meta.leadKorea}</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right: Executive Action Cluster -->
+          <div class="flex items-center gap-2 shrink-0">
+            <button onclick="copyModelSummary()" title="Copy Specs to Clipboard" class="px-3 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-2xs">
+              <i class="fa-regular fa-copy text-xs"></i>
+              <span class="hidden sm:inline">Copy Specs</span>
+            </button>
+            <button onclick="downloadMasterBundle('${currentModel}')" class="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-sm">
+              <i class="fa-solid fa-file-zipper"></i>
+              <span>Export JSON</span>
+            </button>
+          </div>
+
         </div>
       `;
     }
@@ -455,7 +529,6 @@
       const grid = document.getElementById("cardsGrid");
       grid.innerHTML = "";
       
-      // Strict sequence from A to R
       const orderedEntries = strictOrderKeys
         .map(key => [key, appData[currentModel].items[key]])
         .filter(([key, item]) => item !== undefined);
@@ -481,7 +554,6 @@
         let bottomContent = "";
 
         if (item.subItems) {
-          // Multi-item symmetrical compact matrix
           const isCompact = item.subItems.length > 2;
           bottomContent = `
             <div class="pt-2 border-t border-slate-200/80 mt-2">
@@ -502,7 +574,6 @@
             </div>
           `;
         } else {
-          // Single standalone file row
           bottomContent = `
             <div class="pt-2 border-t border-slate-200/80 mt-2 flex items-center justify-between gap-2">
               <div class="truncate">
@@ -524,12 +595,10 @@
         const card = document.createElement("div");
         card.className = `rd-card ${style.cardBg} rounded-xl border flex flex-col justify-between shadow-xs overflow-hidden h-[220px]`;
         card.innerHTML = `
-          <!-- Top Color Accent Stripe -->
           <div class="h-1.5 w-full ${style.topStripe}"></div>
 
           <div class="p-3.5 flex flex-col justify-between h-full">
             <div>
-              <!-- Card Header -->
               <div class="flex items-center justify-between gap-2 mb-1.5">
                 <div class="flex items-center gap-2">
                   <div class="w-7 h-7 rounded-lg ${style.iconBox} flex items-center justify-center text-xs shadow-xs">
@@ -540,16 +609,13 @@
                 <span class="text-[10px] font-bold uppercase tracking-wider text-slate-600">${item.category}</span>
               </div>
 
-              <!-- Title -->
               <h3 class="text-xs font-bold text-slate-900 leading-snug mb-1.5 truncate" title="${item.title}">${item.title}</h3>
 
-              <!-- Tags -->
               <div class="flex flex-wrap gap-1">
                 ${tagsHtml}
               </div>
             </div>
 
-            <!-- Action Area -->
             ${bottomContent}
           </div>
         `;
@@ -590,6 +656,14 @@
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
+    }
+
+    function copyModelSummary() {
+      const meta = appData[currentModel].meta;
+      const text = `Model: ${currentModel} (${meta.name})\nAP: ${meta.ap}\nModem: ${meta.modem}\nSW Build: ${meta.swVersion}\nLead: ${meta.leadKorea}\nStatus: ${meta.status}`;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Model summary copied to clipboard!");
+      });
     }
 
     function populateAdminCategories() {
