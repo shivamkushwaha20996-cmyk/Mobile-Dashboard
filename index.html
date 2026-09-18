@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#EEF2F6]">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mobile R&D Engineering Portal</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Desktop Clean Scrollbar */
+    ::-webkit-scrollbar { width: 7px; height: 7px; }
+    ::-webkit-scrollbar-track { background: #e2e8f0; }
+    ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .rd-card {
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .rd-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.09);
+    }
+    .cat-btn.active {
+      background-color: #0f172a !important;
+      color: #ffffff !important;
+      border-color: #0f172a !important;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
+    }
+  </style>
+</head>
+<body class="bg-[#EEF2F6] text-slate-800 min-h-full flex flex-col font-sans antialiased">
+
+  <!-- Desktop Top Navigation Header -->
+  <header class="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-xs">
+    <div class="max-w-[1720px] mx-auto px-6 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand & Status -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white shadow-sm">
+          <i class="fa-solid fa-microchip text-sky-400 text-lg"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-sm font-bold tracking-tight text-slate-900">Mobile R&D Engineering Portal</h1>
+            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-sky-100 text-sky-800 border border-sky-200">v3.5</span>
+          </div>
+          <p class="text-[11px] text-slate-500 font-medium">Hardware Schematics, RF Verification & Defect Database</p>
+        </div>
+      </div>
+
+      <!-- Controls: Model Selector, Search & Admin -->
+      <div class="flex items-center gap-3 flex-1 max-w-2xl justify-end">
+        
+        <!-- Target Model Selector -->
+        <div class="relative w-48">
+          <select id="modelSelect" class="w-full pl-3 pr-8 py-2 bg-slate-50 hover:bg-slate-100 border border-slate-300 rounded-lg text-xs font-mono font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500 transition cursor-pointer appearance-none">
+            <option value="A576">TARGET: A576</option>
+            <option value="A376">TARGET: A376</option>
+            <option value="A076">TARGET: A076</option>
+            <option value="A075">TARGET: A075</option>
+            <option value="A085">TARGET: A085</option>
+            <option value="S741">TARGET: S741</option>
+          </select>
+          <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-500">
+            <i class="fa-solid fa-chevron-down text-[10px]"></i>
+          </div>
+        </div>
+
+        <!-- Quick Filter Search -->
+        <div class="relative w-64 hidden sm:block">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+          <input type="text" id="searchInput" placeholder="Filter specs, PBA, bands..." class="w-full pl-8 pr-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 transition" />
+        </div>
+
+        <!-- Admin Control Slot -->
+        <div id="adminAuthSlot">
+          <button id="openLoginModalBtn" class="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 transition cursor-pointer">
+            <i class="fa-solid fa-lock text-slate-500 text-[10px]"></i>
+            <span>Admin</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="max-w-[1720px] w-full mx-auto px-6 py-4 space-y-4 flex-1">
+    
+    <!-- Top Model Banner -->
+    <section id="modelBanner" class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-4">
+      <!-- Injected by JavaScript -->
+    </section>
+
+    <!-- Category Filter Tabs -->
+    <div class="flex items-center justify-between gap-4 border-b border-slate-200 pb-2.5">
+      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar" id="categoryTabs">
+        <button data-cat="all" class="cat-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 transition cursor-pointer">All (18)</button>
+        <button data-cat="Schematics" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-50 border border-blue-200 text-blue-800 hover:bg-blue-100 transition cursor-pointer">Circuit & SOC</button>
+        <button data-cat="RF & Wireless" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-50 border border-emerald-200 text-emerald-800 hover:bg-emerald-100 transition cursor-pointer">RF & Antenna</button>
+        <button data-cat="Key Parts" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-purple-50 border border-purple-200 text-purple-800 hover:bg-purple-100 transition cursor-pointer">Key Parts</button>
+        <button data-cat="Process & Tech" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-amber-50 border border-amber-200 text-amber-800 hover:bg-amber-100 transition cursor-pointer">Process & OPST</button>
+        <button data-cat="Quality & SW" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-rose-50 border border-rose-200 text-rose-800 hover:bg-rose-100 transition cursor-pointer">Defects & SW Logs</button>
+        <button data-cat="General" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-100 border border-slate-300 text-slate-800 hover:bg-slate-200 transition cursor-pointer">Specs & Team</button>
+      </div>
+
+      <div class="hidden lg:flex items-center gap-2 text-[11px] font-mono text-slate-500">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>IndexedDB Large-File Engine Active</span>
+      </div>
+    </div>
+
+    <!-- Multi-Colored Engineering Cards Grid -->
+    <main>
+      <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <!-- Injected Cards -->
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Admin Login Modal -->
+  <div id="loginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 w-full max-w-sm rounded-2xl shadow-2xl p-6 space-y-4">
+      <div class="text-center space-y-1">
+        <div class="w-11 h-11 rounded-xl bg-slate-900 text-white mx-auto flex items-center justify-center text-base shadow-sm">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <h2 class="text-sm font-bold text-slate-900 pt-1">R&D Admin Authentication</h2>
+        <p class="text-xs text-slate-500">Enter password to unlock upload management</p>
+      </div>
+
+      <form id="adminLoginForm" class="space-y-3">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Admin Password</label>
+          <input type="password" id="adminPasswordInput" placeholder="Password..." class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500" required />
+          <p class="text-[11px] text-slate-400 mt-1 font-mono">Default Password: <strong>admin123</strong></p>
+        </div>
+        <div id="loginErrorMsg" class="text-xs text-rose-600 hidden font-semibold">Incorrect password. Please try again.</div>
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button type="button" id="closeLoginModalBtn" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 cursor-pointer">Cancel</button>
+          <button type="submit" class="px-5 py-2 text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition cursor-pointer">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Upload Modal -->
+  <div id="uploadModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 w-full max-w-xl rounded-2xl shadow-2xl p-6 space-y-4">
+      
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center text-sm font-bold">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+          </div>
+          <div>
+            <h2 class="text-sm font-bold text-slate-900">Upload Engineering Document</h2>
+            <p class="text-[11px] text-slate-500 font-mono">IndexedDB Direct Binary Engine (Supports >50 MB)</p>
+          </div>
+        </div>
+        <button id="closeUploadModalBtn" class="text-slate-400 hover:text-slate-700 p-1 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <form id="adminUploadForm" class="space-y-3.5 text-xs">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-700 font-semibold mb-1">Target Model</label>
+            <select id="adminModelSelect" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 font-mono focus:border-sky-500 focus:bg-white focus:outline-none">
+              <option value="A576">A576</option>
+              <option value="A376">A376</option>
+              <option value="A076">A076</option>
+              <option value="A075">A075</option>
+              <option value="A085">A085</option>
+              <option value="S741">S741</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-slate-700 font-semibold mb-1">Document Section</label>
+            <select id="adminCategorySelect" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:border-sky-500 focus:bg-white focus:outline-none"></select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-700 font-semibold mb-1">Revision Tag / Hardware Notes</label>
+          <input type="text" id="adminDocDesc" placeholder="e.g. Rev 2.1 updated matching network" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:border-sky-500 focus:bg-white focus:outline-none" />
+        </div>
+
+        <div>
+          <label class="block text-slate-700 font-semibold mb-1">Select File (PDF, XLSX, ZIP, BIN, DWG)</label>
+          <div id="dropZone" class="border-2 border-dashed border-slate-300 hover:border-sky-500 bg-slate-50 hover:bg-sky-50/40 rounded-xl p-5 text-center cursor-pointer transition">
+            <i class="fa-solid fa-file-pdf text-3xl text-sky-600 mb-1"></i>
+            <p class="text-xs text-slate-700 font-semibold" id="uploadFileNameDisplay">Drag & drop or click to browse</p>
+            <p class="text-[10px] text-slate-400 mt-0.5">Supports 50 MB to 500 MB+ Heavy Files</p>
+            <input type="file" id="adminFileInput" class="hidden" />
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+          <span id="uploadStatusText" class="text-[11px] text-slate-500 font-medium"></span>
+          <button type="submit" id="saveUploadBtn" class="px-5 py-2 bg-sky-600 hover:bg-sky-500 text-white font-semibold rounded-lg shadow-sm transition cursor-pointer">
+            Save to Database
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Single Clean Footer -->
+  <footer class="border-t border-slate-200 py-3 bg-white text-center text-xs text-slate-500">
+    <div class="max-w-[1720px] mx-auto px-6 flex items-center justify-between">
+      <span>Mobile R&D Engineering Portal</span>
+      <span class="font-mono text-[11px]">Direct Binary Storage • IndexedDB Engine</span>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
+  <script>
+    const DB_NAME = "MobileRD_Master_DB";
+    const DB_VERSION = 1;
+    const STORE_NAME = "heavy_files";
+
+    function openDB() {
+      return new Promise((resolve, reject) => {
+        const req = indexedDB.open(DB_NAME, DB_VERSION);
+        req.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) db.createObjectStore(STORE_NAME);
+        };
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    async function storeLargeFile(key, fileBlob, filename) {
+      const db = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, "readwrite");
+        tx.objectStore(STORE_NAME).put({ blob: fileBlob, filename: filename, size: fileBlob.size }, key);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => reject(tx.error);
+      });
+    }
+
+    async function getLargeFile(key) {
+      const db = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, "readonly");
+        const req = tx.objectStore(STORE_NAME).get(key);
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    // High-contrast, vibrant section color themes
+    const categoryStyles = {
+      "Schematics": {
+        cardBg: "bg-blue-50/70 border-blue-200",
+        topStripe: "bg-blue-600",
+        iconBox: "bg-blue-600 text-white",
+        tagBadge: "bg-blue-100 text-blue-800 border-blue-300",
+        btn: "bg-blue-600 hover:bg-blue-700 text-white shadow-xs"
+      },
+      "RF & Wireless": {
+        cardBg: "bg-emerald-50/70 border-emerald-200",
+        topStripe: "bg-emerald-600",
+        iconBox: "bg-emerald-600 text-white",
+        tagBadge: "bg-emerald-100 text-emerald-800 border-emerald-300",
+        btn: "bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs"
+      },
+      "Key Parts": {
+        cardBg: "bg-purple-50/70 border-purple-200",
+        topStripe: "bg-purple-600",
+        iconBox: "bg-purple-600 text-white",
+        tagBadge: "bg-purple-100 text-purple-800 border-purple-300",
+        btn: "bg-purple-600 hover:bg-purple-700 text-white shadow-xs"
+      },
+      "Process & Tech": {
+        cardBg: "bg-amber-50/70 border-amber-200",
+        topStripe: "bg-amber-500",
+        iconBox: "bg-amber-500 text-white",
+        tagBadge: "bg-amber-100 text-amber-800 border-amber-300",
+        btn: "bg-amber-600 hover:bg-amber-700 text-white shadow-xs"
+      },
+      "Quality & SW": {
+        cardBg: "bg-rose-50/70 border-rose-200",
+        topStripe: "bg-rose-600",
+        iconBox: "bg-rose-600 text-white",
+        tagBadge: "bg-rose-100 text-rose-800 border-rose-300",
+        btn: "bg-rose-600 hover:bg-rose-700 text-white shadow-xs"
+      },
+      "General": {
+        cardBg: "bg-slate-100/90 border-slate-300",
+        topStripe: "bg-slate-700",
+        iconBox: "bg-slate-700 text-white",
+        tagBadge: "bg-slate-200 text-slate-800 border-slate-300",
+        btn: "bg-slate-800 hover:bg-slate-900 text-white shadow-xs"
+      }
+    };
+
+    const defaultDashboardData = {
+      A576: {
+        meta: { name: "Galaxy A576", ap: "Exynos 1480 Octa", status: "Mass Production", leadKorea: "HQ Team Lead", swVersion: "A576XXU1AXB2" },
+        items: {
+          A: { title: "Basic Model Details", category: "General", icon: "fa-circle-info", tag: "SPEC", tags: ["Dimensions", "Battery Spec", "Tolerances"], filename: "A576_Basic_Spec.pdf", size: "12.4 MB" },
+          B: { title: "Circuit Diagram", category: "Schematics", icon: "fa-diagram-project", tag: "CIRCUIT", tags: ["Schematic Topologies", "PCB Sets"], subItems: [
+            { name: "Main PBA", filename: "A576_Main_PBA_Schematic.pdf", size: "68.5 MB" },
+            { name: "SUB PBA", filename: "A576_Sub_PBA_Audio_Charge.pdf", size: "18.2 MB" }
+          ]},
+          C: { title: "Process Flow Chart", category: "Process & Tech", icon: "fa-arrows-split-up-and-left", tag: "FLOW", tags: ["Assembly Nodes", "Screw Torques"], subItems: [
+            { name: "Sub Assembly", filename: "A576_Sub_Assembly_Flow.xlsx", size: "8.4 MB" },
+            { name: "Main Line", filename: "A576_Main_Line_SOP.xlsx", size: "14.1 MB" }
+          ]},
+          D: { title: "Common and Exclusive Parts", category: "General", icon: "fa-cubes", tag: "BOM", tags: ["Shared BOM", "Exclusive Parts"], filename: "A576_Part_Matrix.xlsx", size: "15.8 MB" },
+          E: { title: "New Technology Introduced", category: "Process & Tech", icon: "fa-wand-magic-sparkles", tag: "TECH", tags: ["LDS Antenna", "Graphite Layer", "PMIC"], filename: "A576_New_Tech_Brief.pdf", size: "22.6 MB" },
+          F: { title: "Base Model Defect History", category: "Quality & SW", icon: "fa-bug", tag: "RCA", tags: ["Pred. Failures", "Field RCA Summary"], filename: "A576_Base_Defects_RCA.xlsx", size: "31.2 MB" },
+          G: { title: "Other Subsidiary Defect Details", category: "Quality & SW", icon: "fa-triangle-exclamation", tag: "DEFECTS", tags: ["SMT Scrap Rate", "AOI Optical Log"], filename: "A576_Subsidiary_Defects.xlsx", size: "19.7 MB" },
+          H: { title: "OPST Sheet", category: "Process & Tech", icon: "fa-clipboard-check", tag: "OPST", tags: ["Cycle Times", "Station Balancing"], filename: "A576_OPST_Master.xlsx", size: "11.5 MB" },
+          I: { title: "SOC Table", category: "Schematics", icon: "fa-microchip", tag: "SOC", tags: ["Pinout Matrix", "Power Rails", "BGA Ball Map"], filename: "A576_SOC_Pin_Table.xlsx", size: "28.3 MB" },
+          J: { title: "Key Parts Details", category: "Key Parts", icon: "fa-puzzle-piece", tag: "PARTS", tags: ["Vendor Specs", "Datasheets"], subItems: [
+            { name: "Display", filename: "A576_Display_Spec.pdf", size: "54.2 MB" },
+            { name: "Camera", filename: "A576_Camera_OIS_Spec.pdf", size: "62.8 MB" },
+            { name: "Speaker", filename: "A576_Speaker_Data.pdf", size: "14.6 MB" },
+            { name: "Battery", filename: "A576_Battery_Cert.pdf", size: "21.3 MB" },
+            { name: "Front", filename: "A576_Front_Glass.pdf", size: "16.7 MB" },
+            { name: "Sensor", filename: "A576_6Axis_Sensor.pdf", size: "18.9 MB" }
+          ]},
+          K: { title: "RF Port Map", category: "RF & Wireless", icon: "fa-network-wired", tag: "RF-PORT", tags: ["FEM Routing", "Switch Matrix", "Couplers"], filename: "A576_RF_Port_Mapping.pdf", size: "58.0 MB" },
+          L: { title: "Antenna Structure", category: "RF & Wireless", icon: "fa-tower-broadcast", tag: "ANTENNA", tags: ["3D Clearance", "MIMO / Sub-6", "Matching"], filename: "A576_Antenna_3D_Layout.dwg", size: "84.2 MB" },
+          M: { title: "Main and Roaming Bands", category: "RF & Wireless", icon: "fa-earth-americas", tag: "BANDS", tags: ["5G NR", "LTE FDD/TDD", "Global Bands"], filename: "A576_Bands_Master.xlsx", size: "9.2 MB" },
+          N: { title: "Work Specification", category: "General", icon: "fa-file-lines", tag: "STD", tags: ["Soldering Standard", "Inspection SOP"], filename: "A576_Work_Specification.pdf", size: "14.8 MB" },
+          O: { title: "Korea Member Details", category: "General", icon: "fa-id-card", tag: "HQ TEAM", tags: ["HQ Leads", "HW/RF Direct Lines"], filename: "A576_Korea_HQ_Roster.xlsx", size: "4.1 MB" },
+          P: { title: "MIPI Table", category: "Schematics", icon: "fa-bars-staggered", tag: "MIPI", tags: ["DSI / CSI", "Differential Length", "Timing"], filename: "A576_MIPI_Config.xlsx", size: "12.7 MB" },
+          Q: { title: "SW Log Process", category: "Quality & SW", icon: "fa-terminal", tag: "DEBUG", tags: ["Modem CP Dump", "Kernel Panic", "UART Guide"], filename: "A576_SW_Log_Guide.pdf", size: "17.4 MB" },
+          R: { title: "Common", category: "General", icon: "fa-folder-tree", tag: "ARCHIVE", tags: ["ECN Notices", "Regulatory Approvals"], filename: "A576_Common_Archive.zip", size: "95.0 MB" }
+        }
+      }
+    };
+
+    ["A376", "A076", "A075", "A085", "S741"].forEach((m) => {
+      const cloned = JSON.parse(JSON.stringify(defaultDashboardData["A576"]));
+      cloned.meta.name = `Galaxy ${m}`;
+      cloned.meta.swVersion = `${m}XXU0AWA1`;
+      for (const k in cloned.items) {
+        if (cloned.items[k].filename) cloned.items[k].filename = cloned.items[k].filename.replace("A576", m);
+        if (cloned.items[k].subItems) cloned.items[k].subItems.forEach(s => s.filename = s.filename.replace("A576", m));
+      }
+      defaultDashboardData[m] = cloned;
+    });
+
+    let currentModel = "A576";
+    let activeCategory = "all";
+    let searchKeyword = "";
+    let isAdminLoggedIn = sessionStorage.getItem("RND_AUTH") === "true";
+
+    let appData = (() => {
+      const l = localStorage.getItem("MOBILE_RND_DB_DATA");
+      if (l) try { return JSON.parse(l); } catch(e){}
+      return defaultDashboardData;
+    })();
+
+    function renderAdminHeader() {
+      const slot = document.getElementById("adminAuthSlot");
+      if (isAdminLoggedIn) {
+        slot.innerHTML = `
+          <div class="flex items-center gap-2">
+            <button id="openUploadBtn" class="flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-lg bg-sky-600 hover:bg-sky-500 text-white shadow-sm transition cursor-pointer">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <span>Upload (>50MB)</span>
+            </button>
+            <button id="logoutBtn" title="Logout" class="p-2 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 transition cursor-pointer">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </button>
+          </div>
+        `;
+        document.getElementById("openUploadBtn").addEventListener("click", () => {
+          document.getElementById("uploadModal").classList.remove("hidden");
+        });
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+          isAdminLoggedIn = false;
+          sessionStorage.removeItem("RND_AUTH");
+          renderAdminHeader();
+          alert("Admin session logged out.");
+        });
+      } else {
+        slot.innerHTML = `
+          <button id="openLoginModalBtn" class="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 transition cursor-pointer">
+            <i class="fa-solid fa-lock text-slate-500 text-[10px]"></i>
+            <span>Admin</span>
+          </button>
+        `;
+        document.getElementById("openLoginModalBtn").addEventListener("click", () => {
+          document.getElementById("adminPasswordInput").value = "";
+          document.getElementById("loginErrorMsg").classList.add("hidden");
+          document.getElementById("loginModal").classList.remove("hidden");
+        });
+      }
+    }
+
+    function renderBanner() {
+      const meta = appData[currentModel].meta;
+      document.getElementById("modelBanner").innerHTML = `
+        <div class="flex items-center gap-3">
+          <span class="text-2xl font-black font-mono text-slate-900 tracking-tight">${currentModel}</span>
+          <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+            ${meta.status}
+          </span>
+          <span class="text-xs text-slate-500 font-medium">${meta.name}</span>
+        </div>
+        
+        <div class="flex flex-wrap items-center gap-4 text-xs text-slate-700 font-medium">
+          <span><i class="fa-solid fa-microchip text-sky-600 mr-1"></i>AP: <strong>${meta.ap}</strong></span>
+          <span><i class="fa-solid fa-code-branch text-indigo-600 mr-1"></i>SW: <strong>${meta.swVersion}</strong></span>
+          <span><i class="fa-solid fa-user-tie text-slate-500 mr-1"></i>HQ Lead: <strong>${meta.leadKorea}</strong></span>
+        </div>
+
+        <div>
+          <button onclick="downloadMasterBundle('${currentModel}')" class="px-3.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer">
+            <i class="fa-solid fa-file-zipper"></i>
+            <span>Export Model JSON</span>
+          </button>
+        </div>
+      `;
+    }
+
+    function renderCards() {
+      const grid = document.getElementById("cardsGrid");
+      grid.innerHTML = "";
+      const entries = Object.entries(appData[currentModel].items);
+
+      const filtered = entries.filter(([key, item]) => {
+        const matchesCat = activeCategory === "all" || item.category === activeCategory;
+        const q = searchKeyword.toLowerCase();
+        return matchesCat && (
+          item.title.toLowerCase().includes(q) ||
+          (item.tags && item.tags.some(t => t.toLowerCase().includes(q))) ||
+          (item.filename && item.filename.toLowerCase().includes(q)) ||
+          (item.subItems && item.subItems.some(s => s.name.toLowerCase().includes(q) || s.filename.toLowerCase().includes(q)))
+        );
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-full py-16 text-center text-slate-400 text-xs font-medium">No records matching search query.</div>`;
+        return;
+      }
+
+      filtered.forEach(([key, item]) => {
+        const style = categoryStyles[item.category] || categoryStyles["General"];
+        let bottomContent = "";
+
+        if (item.subItems) {
+          bottomContent = `
+            <div class="space-y-1.5 pt-2.5 border-t border-slate-200/80 mt-2.5">
+              <div class="space-y-1 max-h-36 overflow-y-auto pr-0.5">
+                ${item.subItems.map((sub, idx) => `
+                  <div class="flex items-center justify-between p-1.5 px-2 rounded-md bg-white border border-slate-200 hover:border-slate-300 transition shadow-2xs">
+                    <div class="truncate mr-2">
+                      <div class="text-xs font-bold text-slate-800 truncate">${sub.name}</div>
+                      <div class="text-[10px] font-mono text-slate-500 truncate">${sub.filename}</div>
+                    </div>
+                    <button onclick="handleDownload('${currentModel}_${key}_${idx}', '${sub.filename}')" class="shrink-0 px-2.5 py-1 ${style.btn} rounded text-[10px] font-mono font-bold flex items-center gap-1 transition cursor-pointer">
+                      <i class="fa-solid fa-arrow-down text-[9px]"></i>
+                      <span>${sub.size || 'GET'}</span>
+                    </button>
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+          `;
+        } else {
+          bottomContent = `
+            <div class="pt-2.5 border-t border-slate-200/80 mt-2.5 flex items-center justify-between gap-2">
+              <div class="truncate">
+                <div class="text-[11px] text-slate-800 font-mono font-semibold truncate">${item.filename}</div>
+                <div class="text-[10px] text-slate-500 font-mono font-medium">${item.size || 'Master'}</div>
+              </div>
+              <button onclick="handleDownload('${currentModel}_${key}', '${item.filename}')" class="shrink-0 px-3 py-1.5 ${style.btn} rounded-lg text-xs font-bold flex items-center gap-1 transition cursor-pointer">
+                <i class="fa-solid fa-arrow-down text-[10px]"></i>
+                <span>Download</span>
+              </button>
+            </div>
+          `;
+        }
+
+        const tagsHtml = (item.tags || []).map(t => `
+          <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${style.tagBadge} border">${t}</span>
+        `).join("");
+
+        const card = document.createElement("div");
+        card.className = `rd-card ${style.cardBg} rounded-xl border flex flex-col justify-between shadow-xs overflow-hidden`;
+        card.innerHTML = `
+          <div class="h-1.5 w-full ${style.topStripe}"></div>
+          <div class="p-3.5 flex flex-col justify-between h-full">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-lg ${style.iconBox} flex items-center justify-center text-xs shadow-xs">
+                    <i class="fa-solid ${item.icon}"></i>
+                  </div>
+                  <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-white text-slate-700 border border-slate-300 shadow-2xs">${item.tag || key}</span>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-600">${item.category}</span>
+              </div>
+              <h3 class="text-xs font-bold text-slate-900 leading-snug mb-2">${item.title}</h3>
+              <div class="flex flex-wrap gap-1 mb-1">
+                ${tagsHtml}
+              </div>
+            </div>
+            ${bottomContent}
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    async function handleDownload(storageKey, defaultFilename) {
+      try {
+        const record = await getLargeFile(storageKey);
+        if (record && record.blob) {
+          const url = URL.createObjectURL(record.blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = record.filename || defaultFilename;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+          return;
+        }
+      } catch (err) {}
+
+      const fallbackContent = `Mobile R&D Official Spec\nModel: ${currentModel}\nFile: ${defaultFilename}\nTimestamp: ${new Date().toISOString()}`;
+      const element = document.createElement("a");
+      element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(fallbackContent));
+      element.setAttribute("download", defaultFilename);
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
+
+    function downloadMasterBundle(model) {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData[model], null, 2));
+      const a = document.createElement("a");
+      a.href = dataStr;
+      a.download = `${model}_Engineering_Master.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    function populateAdminCategories() {
+      const sel = document.getElementById("adminCategorySelect");
+      sel.innerHTML = "";
+      Object.entries(appData[currentModel].items).forEach(([key, item]) => {
+        if (item.subItems) {
+          item.subItems.forEach((sub, idx) => {
+            const opt = document.createElement("option");
+            opt.value = `${key}:${idx}`;
+            opt.textContent = `[${key}] ${item.title} >> ${sub.name}`;
+            sel.appendChild(opt);
+          });
+        } else {
+          const opt = document.createElement("option");
+          opt.value = key;
+          opt.textContent = `[${key}] ${item.title}`;
+          sel.appendChild(opt);
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderAdminHeader();
+      renderBanner();
+      renderCards();
+      populateAdminCategories();
+
+      document.getElementById("modelSelect").addEventListener("change", (e) => {
+        currentModel = e.target.value;
+        document.getElementById("adminModelSelect").value = currentModel;
+        renderBanner();
+        renderCards();
+        populateAdminCategories();
+      });
+
+      document.getElementById("searchInput").addEventListener("input", (e) => {
+        searchKeyword = e.target.value;
+        renderCards();
+      });
+
+      document.querySelectorAll(".cat-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          activeCategory = btn.getAttribute("data-cat");
+          renderCards();
+        });
+      });
+
+      document.getElementById("adminLoginForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const pwd = document.getElementById("adminPasswordInput").value;
+        if (pwd === "admin123") {
+          isAdminLoggedIn = true;
+          sessionStorage.setItem("RND_AUTH", "true");
+          document.getElementById("loginModal").classList.add("hidden");
+          renderAdminHeader();
+          alert("Admin authenticated successfully! Upload button unlocked in the top header.");
+        } else {
+          document.getElementById("loginErrorMsg").classList.remove("hidden");
+        }
+      });
+      document.getElementById("closeLoginModalBtn").addEventListener("click", () => {
+        document.getElementById("loginModal").classList.add("hidden");
+      });
+
+      document.getElementById("closeUploadModalBtn").addEventListener("click", () => {
+        document.getElementById("uploadModal").classList.add("hidden");
+      });
+
+      const dropZone = document.getElementById("dropZone");
+      const fileInput = document.getElementById("adminFileInput");
+      const uploadLabel = document.getElementById("uploadFileNameDisplay");
+      let selectedFile = null;
+
+      dropZone.addEventListener("click", () => fileInput.click());
+      dropZone.addEventListener("dragover", (e) => { e.preventDefault(); dropZone.classList.add("border-sky-500", "bg-sky-50/40"); });
+      dropZone.addEventListener("dragleave", () => dropZone.classList.remove("border-sky-500", "bg-sky-50/40"));
+      dropZone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropZone.classList.remove("border-sky-500", "bg-sky-50/40");
+        if (e.dataTransfer.files.length) {
+          selectedFile = e.dataTransfer.files[0];
+          uploadLabel.textContent = `${selectedFile.name} (${(selectedFile.size / 1048576).toFixed(1)} MB)`;
+        }
+      });
+
+      fileInput.addEventListener("change", (e) => {
+        if (e.target.files.length) {
+          selectedFile = e.target.files[0];
+          uploadLabel.textContent = `${selectedFile.name} (${(selectedFile.size / 1048576).toFixed(1)} MB)`;
+        }
+      });
+
+      document.getElementById("adminUploadForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const targetModel = document.getElementById("adminModelSelect").value;
+        const catVal = document.getElementById("adminCategorySelect").value;
+        const desc = document.getElementById("adminDocDesc").value;
+        const statusText = document.getElementById("uploadStatusText");
+        const saveBtn = document.getElementById("saveUploadBtn");
+
+        saveBtn.disabled = true;
+        statusText.textContent = "Writing binary to IndexedDB...";
+
+        let storageKey = "";
+        let sizeDisplay = selectedFile ? (selectedFile.size / 1048576).toFixed(1) + " MB" : "";
+
+        if (catVal.includes(":")) {
+          const [k, idx] = catVal.split(":");
+          storageKey = `${targetModel}_${k}_${idx}`;
+          if (desc) appData[targetModel].items[k].tags = [desc];
+          if (selectedFile) {
+            appData[targetModel].items[k].subItems[idx].filename = selectedFile.name;
+            appData[targetModel].items[k].subItems[idx].size = sizeDisplay;
+            await storeLargeFile(storageKey, selectedFile, selectedFile.name);
+          }
+        } else {
+          storageKey = `${targetModel}_${catVal}`;
+          if (desc) appData[targetModel].items[catVal].tags = [desc];
+          if (selectedFile) {
+            appData[targetModel].items[catVal].filename = selectedFile.name;
+            appData[targetModel].items[catVal].size = sizeDisplay;
+            await storeLargeFile(storageKey, selectedFile, selectedFile.name);
+          }
+        }
+
+        localStorage.setItem("MOBILE_RND_DB_DATA", JSON.stringify(appData));
+        renderCards();
+
+        saveBtn.disabled = false;
+        statusText.textContent = "";
+        selectedFile = null;
+        uploadLabel.textContent = "Drag & drop or click to browse";
+        document.getElementById("uploadModal").classList.add("hidden");
+        alert("Success! High-capacity engineering file saved and ready for download.");
+      });
+    });
+  </script>
+</body>
+</html>
+
