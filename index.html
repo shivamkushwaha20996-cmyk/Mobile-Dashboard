@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mobile R&D Engineering Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    @layer utilities {
+      .bg-slate-750 { background-color: #26334d; }
+      .bg-slate-850 { background-color: #111a2e; }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    }
+    .cat-pill {
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      background-color: #1e293b;
+      color: #94a3b8;
+      white-space: nowrap;
+      transition: all 0.2s ease-in-out;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+    }
+    .cat-pill:hover { background-color: #334155; color: #f8fafc; }
+    .cat-pill.active {
+      background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+      color: #ffffff;
+      font-weight: 600;
+      box-shadow: 0 4px 14px 0 rgba(6, 182, 212, 0.35);
+      border-color: transparent;
+    }
+    .dashboard-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .dashboard-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.6);
+      border-color: rgba(99, 102, 241, 0.4);
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 backdrop-blur-xl bg-slate-900/80 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-fuchsia-500 p-0.5 shadow-lg shadow-cyan-500/20">
+          <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
+            <i class="fa-solid fa-microchip text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400 text-lg"></i>
+          </div>
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-2">
+            Mobile R&D Hub
+            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">v2.5</span>
+          </h1>
+          <p class="text-[11px] text-slate-400">Hardware & RF Technical Repository</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3 flex-1 max-w-xl justify-end">
+        <div class="relative w-36 sm:w-44">
+          <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-cyan-400 text-xs">
+            <i class="fa-solid fa-mobile-screen"></i>
+          </div>
+          <select id="modelSelect" class="w-full pl-8 pr-6 py-2 bg-slate-850 border border-cyan-500/40 rounded-xl text-xs sm:text-sm font-semibold text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-pointer">
+            <option value="A576">Model A576</option>
+            <option value="A376">Model A376</option>
+            <option value="A076">Model A076</option>
+            <option value="A075">Model A075</option>
+            <option value="A085">Model A085</option>
+            <option value="S741">Model S741</option>
+          </select>
+        </div>
+
+        <div class="relative w-56 hidden md:block">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs"></i>
+          <input type="text" id="searchInput" placeholder="Search spec, band, PBA..." class="w-full pl-8 pr-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition" />
+        </div>
+
+        <button id="adminToggleBtn" class="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl border border-fuchsia-500/40 text-fuchsia-300 bg-fuchsia-500/10 hover:bg-fuchsia-500/20 transition">
+          <i class="fa-solid fa-gear"></i>
+          <span class="hidden sm:inline">Admin</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Model Summary Banner -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 pb-1 w-full">
+    <div id="modelBanner" class="p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4"></div>
+  </section>
+
+  <!-- Category Nav Pills -->
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 w-full">
+    <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-slate-800 text-xs font-medium no-scrollbar" id="categoryFilterTabs">
+      <button data-cat="all" class="cat-pill active">All Categories (18)</button>
+      <button data-cat="Schematics" class="cat-pill">Circuit & SOC</button>
+      <button data-cat="RF & Wireless" class="cat-pill">RF, Antenna & Bands</button>
+      <button data-cat="Key Parts" class="cat-pill">Key Parts (Display, Cam...)</button>
+      <button data-cat="Process & Tech" class="cat-pill">Process & Tech</button>
+      <button data-cat="Quality & SW" class="cat-pill">Defects & SW Logs</button>
+      <button data-cat="General" class="cat-pill">Specs & Korea Team</button>
+    </div>
+  </nav>
+
+  <!-- Main Repository Grid -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex-1 w-full">
+    <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+  </main>
+
+  <!-- Admin Modal -->
+  <div id="adminModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-750 w-full max-w-2xl rounded-2xl p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-cloud-arrow-up text-fuchsia-400 text-base"></i>
+          <h2 class="text-sm font-bold text-white">R&D Admin File Manager</h2>
+        </div>
+        <button id="closeAdminModal" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <form id="adminUploadForm" class="space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div>
+            <label class="block text-slate-300 mb-1">Target Model</label>
+            <select id="adminModelSelect" class="w-full p-2 bg-slate-800 border border-slate-700 rounded-lg text-white">
+              <option value="A576">A576</option>
+              <option value="A376">A376</option>
+              <option value="A076">A076</option>
+              <option value="A075">A075</option>
+              <option value="A085">A085</option>
+              <option value="S741">S741</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1">Document Section</label>
+            <select id="adminCategorySelect" class="w-full p-2 bg-slate-800 border border-slate-700 rounded-lg text-white"></select>
+          </div>
+        </div>
+
+        <div class="text-xs">
+          <label class="block text-slate-300 mb-1">Update Notes</label>
+          <input type="text" id="adminDocDesc" placeholder="e.g., Rev 1.2 updated by HW Team" class="w-full p-2 bg-slate-800 border border-slate-700 rounded-lg text-white" />
+        </div>
+
+        <div class="text-xs">
+          <label class="block text-slate-300 mb-1">Upload New File</label>
+          <input type="file" id="adminFileInput" class="w-full p-2 bg-slate-800 border border-dashed border-slate-700 rounded-lg text-slate-300 cursor-pointer" />
+        </div>
+
+        <div class="flex items-center justify-end pt-3 border-t border-slate-800 gap-3">
+          <button type="submit" class="px-5 py-2 bg-gradient-to-r from-fuchsia-600 to-indigo-600 hover:from-fuchsia-500 hover:to-indigo-500 text-white text-xs font-bold rounded-lg shadow-lg shadow-indigo-500/25 transition">
+            Save & Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="mt-auto border-t border-slate-800 py-4 text-center text-xs text-slate-500">
+    <p>Mobile R&D Engineering Dashboard • GitHub Hosted Internal Knowledge Base</p>
+  </footer>
+
+  <script>
+    const defaultDashboardData = {
+      A576: {
+        meta: { name: "Project A576", ap: "Exynos 1480 Octa-Core", status: "Mass Production", leadKorea: "HQ Team Lead", swVersion: "A576XXU1AXB2" },
+        items: {
+          A: { title: "Basic Model Details", category: "General", icon: "fa-circle-info", color: "cyan", description: "Dimensions, battery capacity, color SKUs, structure layout.", filename: "A576_Basic_Model_Spec_v1.0.pdf" },
+          B: { title: "Circuit Diagram", category: "Schematics", icon: "fa-diagram-project", color: "indigo", description: "Schematics & layout topology for all boards.", subItems: [{ name: "Main PBA", filename: "A576_Main_PBA_Schematic_Rev2.1.pdf", size: "14.2 MB" }, { name: "SUB PBA", filename: "A576_Sub_PBA_Charging_Audio_Rev1.4.pdf", size: "4.8 MB" }] },
+          C: { title: "Process Flow Chart", category: "Process & Tech", icon: "fa-arrows-split-up-and-left", color: "amber", description: "Assembly line station sequence and testing nodes.", subItems: [{ name: "Sub Assembly", filename: "A576_Sub_Assembly_Process_Flow.xlsx", size: "2.1 MB" }, { name: "Main Line", filename: "A576_Main_Line_Assembly_SOP.xlsx", size: "5.4 MB" }] },
+          D: { title: "Common and Exclusive Part Details", category: "General", icon: "fa-cubes", color: "emerald", description: "Comparison matrix of shared vs exclusive BOM items.", filename: "A576_Common_Exclusive_Parts_Matrix.xlsx" },
+          E: { title: "New Technology Introduced", category: "Process & Tech", icon: "fa-wand-magic-sparkles", color: "fuchsia", description: "LDS antenna upgrades, high-speed thermal graphite layer, new PMIC.", filename: "A576_New_Technology_Brief.pdf" },
+          F: { title: "Base Model Defect History", category: "Quality & SW", icon: "fa-bug", color: "rose", description: "Historical field issue database from predecessor model with RCA.", filename: "A576_Base_Defect_History_Report.xlsx" },
+          G: { title: "Other Subsidiary Defect Details", category: "Quality & SW", icon: "fa-triangle-exclamation", color: "orange", description: "Global factory SMT and automated optical inspection scrap rates.", filename: "A576_Subsidiary_Factory_Defect_Log.xlsx" },
+          H: { title: "OPST Sheet", category: "Process & Tech", icon: "fa-clipboard-check", color: "teal", description: "Operation Standard Time per station & line balancing audit.", filename: "A576_OPST_Cycle_Time_Master.xlsx" },
+          I: { title: "SOC Table", category: "Schematics", icon: "fa-microchip", color: "blue", description: "Pinout mapping, power domains, thermal dissipation limits, ball maps.", filename: "A576_SOC_Pin_Voltage_Table.xlsx" },
+          J: { title: "Key Parts Details", category: "Key Parts", icon: "fa-puzzle-piece", color: "purple", description: "Technical datasheets and vendor calibration matrices.", subItems: [{ name: "Display", filename: "A576_Display_AMOLED_Spec.pdf", size: "3.2 MB" }, { name: "Camera", filename: "A576_50MP_OIS_Camera_Spec.pdf", size: "6.1 MB" }, { name: "Speaker", filename: "A576_Stereo_Speaker_Data.pdf", size: "1.8 MB" }, { name: "Battery", filename: "A576_5000mAh_Battery_Spec.pdf", size: "2.4 MB" }, { name: "Front", filename: "A576_Front_Glass_Enclosure.pdf", size: "4.0 MB" }, { name: "Sensor", filename: "A576_6Axis_G-Sensor_Spec.pdf", size: "2.1 MB" }] },
+          K: { title: "RF Port Map", category: "RF & Wireless", icon: "fa-network-wired", color: "sky", description: "Transceiver to front-end module (FEM) RF routing, duplexers, switch ports.", filename: "A576_RF_Port_Mapping_v2.0.pdf" },
+          L: { title: "Antenna Structure", category: "RF & Wireless", icon: "fa-tower-broadcast", color: "emerald", description: "MIMO, Sub-6GHz, WLAN/BT, and NFC antenna 3D layout and clearances.", filename: "A576_Antenna_Mechanical_Structure_3D.dwg" },
+          M: { title: "Main and Roaming Bands Details", category: "RF & Wireless", icon: "fa-earth-americas", color: "indigo", description: "5G NR, LTE FDD/TDD, WCDMA carrier frequencies per region.", filename: "A576_Supported_Bands.xlsx" },
+          N: { title: "Work Specification", category: "General", icon: "fa-file-lines", color: "slate", description: "R&D design verification work standards and soldering profiles.", filename: "A576_Work_Specification_Standard.pdf" },
+          O: { title: "Korea Member Details", category: "General", icon: "fa-id-card", color: "fuchsia", description: "HQ Project Leader, HW/RF lead designers, SW contacts.", filename: "A576_Korea_HQ_Project_Team.xlsx" },
+          P: { title: "MIPI Table", category: "Schematics", icon: "fa-bars-staggered", color: "blue", description: "DSI (Display) & CSI (Camera) lane rates and differential trace lengths.", filename: "A576_MIPI_Lane_Config.xlsx" },
+          Q: { title: "SW Log Process", category: "Quality & SW", icon: "fa-terminal", color: "yellow", description: "Modem CP crash log dump procedure, AP kernel debug, UART capture.", filename: "A576_SW_Log_Capture_SOP.pdf" },
+          R: { title: "Common", category: "General", icon: "fa-folder-tree", color: "zinc", description: "Shared ECN, general standards, regulatory certification documents.", filename: "A576_Common_Engineering_Archive.zip" }
+        }
+      }
+    };
+
+    ["A376", "A076", "A075", "A085", "S741"].forEach(model => {
+      const cloned = JSON.parse(JSON.stringify(defaultDashboardData["A576"]));
+      cloned.meta.name = `Project ${model}`;
+      cloned.meta.swVersion = `${model}XXU0AWA1`;
+      for (const key in cloned.items) {
+        if (cloned.items[key].filename) cloned.items[key].filename = cloned.items[key].filename.replace("A576", model);
+        if (cloned.items[key].subItems) cloned.items[key].subItems.forEach(s => s.filename = s.filename.replace("A576", model));
+      }
+      defaultDashboardData[model] = cloned;
+    });
+
+    let currentModel = "A576";
+    let activeCategory = "all";
+    let searchKeyword = "";
+    let appData = (() => {
+      const l = localStorage.getItem("MOBILE_RND_DASHBOARD_DATA");
+      if (l) try { return JSON.parse(l); } catch(e){}
+      return defaultDashboardData;
+    })();
+
+    const colorClasses = {
+      cyan: "from-cyan-500/20 to-cyan-500/5 text-cyan-400 border-cyan-500/30",
+      indigo: "from-indigo-500/20 to-indigo-500/5 text-indigo-400 border-indigo-500/30",
+      amber: "from-amber-500/20 to-amber-500/5 text-amber-400 border-amber-500/30",
+      emerald: "from-emerald-500/20 to-emerald-500/5 text-emerald-400 border-emerald-500/30",
+      fuchsia: "from-fuchsia-500/20 to-fuchsia-500/5 text-fuchsia-400 border-fuchsia-500/30",
+      rose: "from-rose-500/20 to-rose-500/5 text-rose-400 border-rose-500/30",
+      orange: "from-orange-500/20 to-orange-500/5 text-orange-400 border-orange-500/30",
+      teal: "from-teal-500/20 to-teal-500/5 text-teal-400 border-teal-500/30",
+      blue: "from-blue-500/20 to-blue-500/5 text-blue-400 border-blue-500/30",
+      purple: "from-purple-500/20 to-purple-500/5 text-purple-400 border-purple-500/30",
+      sky: "from-sky-500/20 to-sky-500/5 text-sky-400 border-sky-500/30",
+      slate: "from-slate-500/20 to-slate-500/5 text-slate-400 border-slate-500/30",
+      yellow: "from-yellow-500/20 to-yellow-500/5 text-yellow-400 border-yellow-500/30",
+      zinc: "from-zinc-500/20 to-zinc-500/5 text-zinc-400 border-zinc-500/30"
+    };
+
+    function renderBanner() {
+      const meta = appData[currentModel].meta;
+      document.getElementById("modelBanner").innerHTML = `
+        <div class="space-y-1">
+          <div class="flex items-center gap-2.5">
+            <span class="text-2xl sm:text-3xl font-black tracking-tight text-white">${currentModel}</span>
+            <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              ${meta.status}
+            </span>
+            <span class="text-xs text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded-md border border-slate-700">${meta.name}</span>
+          </div>
+          <p class="text-xs text-slate-300 flex flex-wrap gap-x-4 gap-y-1 pt-1">
+            <span><i class="fa-solid fa-microchip text-indigo-400 mr-1.5"></i><strong>AP:</strong> ${meta.ap}</span>
+            <span><i class="fa-solid fa-user-tie text-fuchsia-400 mr-1.5"></i><strong>HQ Lead:</strong> ${meta.leadKorea}</span>
+            <span><i class="fa-solid fa-code-branch text-cyan-400 mr-1.5"></i><strong>SW Build:</strong> ${meta.swVersion}</span>
+          </p>
+        </div>
+        <div class="pt-2 md:pt-0">
+          <button onclick="downloadAllBundle('${currentModel}')" class="w-full sm:w-auto px-4 py-2 bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white text-xs font-bold rounded-xl shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2 transition">
+            <i class="fa-solid fa-cloud-arrow-down"></i>
+            <span>Download All Data Bundle</span>
+          </button>
+        </div>
+      `;
+    }
+
+    function renderCards() {
+      const grid = document.getElementById("cardsGrid");
+      grid.innerHTML = "";
+      const entries = Object.entries(appData[currentModel].items);
+      const filtered = entries.filter(([key, item]) => {
+        const matchesCat = activeCategory === "all" || item.category === activeCategory;
+        const q = searchKeyword.toLowerCase();
+        return matchesCat && (item.title.toLowerCase().includes(q) || item.description.toLowerCase().includes(q) || (item.filename && item.filename.toLowerCase().includes(q)));
+      });
+
+      filtered.forEach(([key, item]) => {
+        const cardTheme = colorClasses[item.color] || colorClasses.indigo;
+        let actionHtml = "";
+        if (item.subItems) {
+          actionHtml = `
+            <div class="space-y-1.5 pt-2 border-t border-slate-800">
+              <p class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Sub-Modules & Files</p>
+              <div class="grid grid-cols-1 gap-1.5">
+                ${item.subItems.map(sub => `
+                  <div class="flex items-center justify-between p-1.5 px-2 rounded-lg bg-slate-900/90 border border-slate-800">
+                    <div class="truncate mr-2">
+                      <div class="text-xs font-semibold text-slate-200">${sub.name}</div>
+                      <div class="text-[10px] text-slate-400 truncate">${sub.filename}</div>
+                    </div>
+                    <button onclick="triggerDownload('${sub.filename}')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-400 rounded-md text-[11px] font-semibold flex items-center gap-1 transition">
+                      <i class="fa-solid fa-download"></i><span>${sub.size || "Get"}</span>
+                    </button>
+                  </div>
+                `).join("")}
+              </div>
+            </div>`;
+        } else {
+          actionHtml = `
+            <div class="pt-2 border-t border-slate-800 flex items-center justify-between gap-3">
+              <div class="truncate text-slate-400 text-xs flex items-center gap-1.5">
+                <i class="fa-regular fa-file-lines text-slate-500"></i>
+                <span class="truncate text-[11px]">${item.filename}</span>
+              </div>
+              <button onclick="triggerDownload('${item.filename}')" class="shrink-0 px-2.5 py-1 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rounded-lg text-xs font-semibold flex items-center gap-1 transition">
+                <i class="fa-solid fa-download"></i><span>Download</span>
+              </button>
+            </div>`;
+        }
+
+        const card = document.createElement("div");
+        card.className = "dashboard-card relative flex flex-col justify-between p-4 rounded-2xl bg-slate-900 border border-slate-800/80 shadow-md";
+        card.innerHTML = `
+          <div class="space-y-2.5 pb-2.5">
+            <div class="flex items-start justify-between gap-2">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br ${cardTheme} border flex items-center justify-center">
+                  <i class="fa-solid ${item.icon} text-xs"></i>
+                </div>
+                <div>
+                  <span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">Section ${key}</span>
+                  <h3 class="text-xs sm:text-sm font-bold text-white mt-0.5">${item.title}</h3>
+                </div>
+              </div>
+              <span class="text-[9px] font-medium text-slate-400 bg-slate-800/60 px-2 py-0.5 rounded-full border border-slate-700 shrink-0">${item.category}</span>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">${item.description}</p>
+          </div>
+          ${actionHtml}
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function triggerDownload(filename) {
+      const element = document.createElement("a");
+      const content = `Mobile R&D Official Document\nModel: ${currentModel}\nFile: ${filename}\nStatus: Verified R&D Master Release`;
+      element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(content));
+      element.setAttribute("download", filename);
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
+
+    function downloadAllBundle(model) {
+      const element = document.createElement("a");
+      element.setAttribute("href", "data:application/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData[model], null, 2)));
+      element.setAttribute("download", `${model}_RD_Master_Bundle.json`);
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
+
+    function populateAdminCategories() {
+      const sel = document.getElementById("adminCategorySelect");
+      sel.innerHTML = "";
+      Object.entries(appData[currentModel].items).forEach(([key, item]) => {
+        if (item.subItems) {
+          item.subItems.forEach((sub, idx) => {
+            const opt = document.createElement("option");
+            opt.value = `${key}:${idx}`;
+            opt.textContent = `[${key}] ${item.title} >> ${sub.name}`;
+            sel.appendChild(opt);
+          });
+        } else {
+          const opt = document.createElement("option");
+          opt.value = key;
+          opt.textContent = `[${key}] ${item.title}`;
+          sel.appendChild(opt);
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderBanner();
+      renderCards();
+      populateAdminCategories();
+
+      document.getElementById("modelSelect").addEventListener("change", (e) => {
+        currentModel = e.target.value;
+        document.getElementById("adminModelSelect").value = currentModel;
+        renderBanner();
+        renderCards();
+        populateAdminCategories();
+      });
+
+      document.getElementById("searchInput").addEventListener("input", (e) => {
+        searchKeyword = e.target.value;
+        renderCards();
+      });
+
+      document.querySelectorAll(".cat-pill").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".cat-pill").forEach(p => p.classList.remove("active"));
+          btn.classList.add("active");
+          activeCategory = btn.getAttribute("data-cat");
+          renderCards();
+        });
+      });
+
+      document.getElementById("adminToggleBtn").addEventListener("click", () => document.getElementById("adminModal").classList.remove("hidden"));
+      document.getElementById("closeAdminModal").addEventListener("click", () => document.getElementById("adminModal").classList.add("hidden"));
+
+      document.getElementById("adminUploadForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const targetModel = document.getElementById("adminModelSelect").value;
+        const catVal = document.getElementById("adminCategorySelect").value;
+        const desc = document.getElementById("adminDocDesc").value;
+        const fileInput = document.getElementById("adminFileInput");
+
+        if (catVal.includes(":")) {
+          const [k, idx] = catVal.split(":");
+          if (desc) appData[targetModel].items[k].description = desc;
+          if (fileInput.files.length) appData[targetModel].items[k].subItems[idx].filename = fileInput.files[0].name;
+        } else {
+          if (desc) appData[targetModel].items[catVal].description = desc;
+          if (fileInput.files.length) appData[targetModel].items[catVal].filename = fileInput.files[0].name;
+        }
+
+        localStorage.setItem("MOBILE_RND_DASHBOARD_DATA", JSON.stringify(appData));
+        renderCards();
+        document.getElementById("adminModal").classList.add("hidden");
+        alert("Model section updated successfully!");
+      });
+    });
+  </script>
+</body>
+</html>
+
