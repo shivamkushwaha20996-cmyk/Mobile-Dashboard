@@ -463,7 +463,7 @@
     let isAdminLoggedIn = sessionStorage.getItem("RND_AUTH") === "true";
 
     let appData = (() => {
-      const l = localStorage.getItem("MOBILE_RND_DB_DATA_V7");
+      const l = localStorage.getItem("MOBILE_RND_DB_DATA_V8");
       if (l) try { return JSON.parse(l); } catch(e){}
       return defaultDashboardData;
     })();
@@ -506,7 +506,6 @@
       }
     }
 
-    // High-Visibility Ultra-Wide Telemetry Console with Animations
     function renderBanner() {
       const meta = appData[currentModel].meta;
       document.getElementById("modelBanner").innerHTML = `
@@ -515,7 +514,6 @@
           <!-- Left: Glowing Animated Project Beacon -->
           <div class="flex items-center gap-5">
             <div class="relative group">
-              <!-- Soft ambient glow ring behind badge -->
               <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-indigo-500 rounded-2xl blur-md opacity-40 group-hover:opacity-75 transition duration-500"></div>
               <div class="relative px-6 py-3.5 rounded-xl bg-slate-950/95 border border-cyan-500/40 shadow-2xl flex flex-col justify-center">
                 <span class="text-[10px] font-mono text-cyan-400 font-extrabold tracking-widest">DEVICE CODE</span>
@@ -544,7 +542,6 @@
           <!-- Center: 4 Floating Interactive Telemetry Tiles -->
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 flex-1 max-w-5xl">
             
-            <!-- Tile 1: Processor -->
             <div class="telemetry-tile p-3.5 rounded-xl bg-slate-800/80 backdrop-blur-md border border-cyan-500/30 flex items-center gap-3 shadow-inner">
               <div class="w-9 h-9 rounded-lg bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 flex items-center justify-center text-base shrink-0 shadow-sm">
                 <i class="fa-solid fa-microchip"></i>
@@ -555,7 +552,6 @@
               </div>
             </div>
 
-            <!-- Tile 2: Modem / RF -->
             <div class="telemetry-tile p-3.5 rounded-xl bg-slate-800/80 backdrop-blur-md border border-emerald-500/30 flex items-center gap-3 shadow-inner">
               <div class="w-9 h-9 rounded-lg bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 flex items-center justify-center text-base shrink-0 shadow-sm">
                 <i class="fa-solid fa-tower-broadcast"></i>
@@ -566,7 +562,6 @@
               </div>
             </div>
 
-            <!-- Tile 3: SW Build -->
             <div class="telemetry-tile p-3.5 rounded-xl bg-slate-800/80 backdrop-blur-md border border-indigo-500/30 flex items-center gap-3 shadow-inner">
               <div class="w-9 h-9 rounded-lg bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 flex items-center justify-center text-base shrink-0 shadow-sm">
                 <i class="fa-solid fa-code-branch"></i>
@@ -577,7 +572,6 @@
               </div>
             </div>
 
-            <!-- Tile 4: HQ Lead -->
             <div class="telemetry-tile p-3.5 rounded-xl bg-slate-800/80 backdrop-blur-md border border-slate-600/50 flex items-center gap-3 shadow-inner">
               <div class="w-9 h-9 rounded-lg bg-slate-700/60 border border-slate-500/40 text-slate-300 flex items-center justify-center text-base shrink-0 shadow-sm">
                 <i class="fa-solid fa-user-tie"></i>
@@ -675,7 +669,7 @@
 
         const card = document.createElement("div");
         card.className = `rd-card ${style.cardBg} rounded-xl border flex flex-col justify-between shadow-xs overflow-hidden h-[220px] animate-card-in`;
-        card.style.animationDelay = `${Math.min(index * 30, 300)}ms`;
+        card.style.animationDelay = `${Math.min(index * 25, 250)}ms`;
         card.innerHTML = `
           <div class="h-1.5 w-full ${style.topStripe}"></div>
 
@@ -876,7 +870,7 @@
           }
         }
 
-        localStorage.setItem("MOBILE_RND_DB_DATA_V7", JSON.stringify(appData));
+        localStorage.setItem("MOBILE_RND_DB_DATA_V8", JSON.stringify(appData));
         renderCards();
 
         saveBtn.disabled = false;
