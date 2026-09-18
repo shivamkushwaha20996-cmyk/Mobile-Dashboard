@@ -53,11 +53,11 @@
 </head>
 <body class="bg-[#EEF2F6] text-slate-800 min-h-full flex flex-col font-sans antialiased">
 
-  <!-- Desktop Top Navigation Header (Light-Tinted) -->
+  <!-- Desktop Top Navigation Header (Light-Tinted Gradient) -->
   <header class="sticky top-0 z-40 bg-gradient-to-r from-sky-50/95 via-white/95 to-indigo-50/95 backdrop-blur-md border-b border-sky-200/80 shadow-xs">
     <div class="max-w-[1720px] mx-auto px-6 h-16 flex items-center justify-between gap-4">
       
-      <!-- Brand & Project Title -->
+      <!-- Brand & Title -->
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white shadow-sm">
           <i class="fa-solid fa-microchip text-sky-400 text-lg"></i>
@@ -65,13 +65,13 @@
         <div>
           <div class="flex items-center gap-2">
             <h1 class="text-sm font-bold tracking-tight text-slate-900">Mobile R&D Engineering Portal</h1>
-            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-sky-100 text-sky-800 border border-sky-300">v4.8</span>
+            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-sky-100 text-sky-800 border border-sky-300">v5.0</span>
           </div>
-          <p class="text-[11px] text-slate-600 font-medium">Hardware Schematics, RF Verification & Quality Records</p>
+          <p class="text-[11px] text-slate-600 font-medium">Hardware Schematics, RF Verification & Master Records</p>
         </div>
       </div>
 
-      <!-- Controls: Target Model, Search & Admin Lock -->
+      <!-- Controls: Model Selector, Search & Admin Lock -->
       <div class="flex items-center gap-3 flex-1 max-w-2xl justify-end">
         
         <!-- Target Model Selector -->
@@ -95,7 +95,7 @@
           <input type="text" id="searchInput" placeholder="Filter specs, PBA, bands..." class="w-full pl-8 pr-3 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 transition shadow-2xs" />
         </div>
 
-        <!-- Admin Control Slot -->
+        <!-- Admin Slot -->
         <div id="adminAuthSlot">
           <button id="openLoginModalBtn" class="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 transition cursor-pointer shadow-2xs">
             <i class="fa-solid fa-lock text-slate-500 text-[10px]"></i>
@@ -119,7 +119,7 @@
     <!-- Category Filter Tabs -->
     <div class="flex items-center justify-between gap-4 border-b border-slate-200 pb-2.5">
       <div class="flex items-center gap-2 overflow-x-auto no-scrollbar" id="categoryTabs">
-        <button data-cat="all" class="cat-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 transition cursor-pointer">All (18)</button>
+        <button data-cat="all" class="cat-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 transition cursor-pointer">All (A-R)</button>
         <button data-cat="Schematics" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-50 border border-blue-200 text-blue-800 hover:bg-blue-100 transition cursor-pointer">Circuit & SOC</button>
         <button data-cat="RF & Wireless" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-50 border border-emerald-200 text-emerald-800 hover:bg-emerald-100 transition cursor-pointer">RF & Antenna</button>
         <button data-cat="Process & Tech" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-amber-50 border border-amber-200 text-amber-800 hover:bg-amber-100 transition cursor-pointer">Process & OPST</button>
@@ -134,10 +134,10 @@
       </div>
     </div>
 
-    <!-- Symmetrical Multi-Colored Engineering Cards Grid -->
+    <!-- Desktop Grid: Strict A-R Order with Height-Matched Symmetrical Cards -->
     <main>
       <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4.5">
-        <!-- Injected Symmetrically Grouped Cards -->
+        <!-- Injected Cards in Strict A to R Sequence -->
       </div>
     </main>
 
@@ -276,7 +276,7 @@
       });
     }
 
-    // ORIGINAL VIBRANT FULL-BOX COLOR PALETTES (Calm Tech-Indigo used for Quality)
+    // ORIGINAL FULL-BOX COLOR PALETTES (Calm Tech-Indigo used for Quality)
     const categoryStyles = {
       "Schematics": {
         cardBg: "bg-[#EFF6FF] border-blue-200",
@@ -322,42 +322,29 @@
       }
     };
 
-    // SYMMETRICAL CATEGORY REORDERING: Grouped in clean 3-card color rows!
-    const symmetricalDisplayOrder = [
-      // Row 1: Schematics (3 Blue Cards)
-      "B", "I", "P",
-      // Row 2: RF & Wireless (3 Emerald Cards)
-      "K", "L", "M",
-      // Row 3: Process & Tech (3 Amber Cards)
-      "C", "E", "H",
-      // Row 4: Quality & SW Logs (3 Indigo Cards)
-      "F", "G", "Q",
-      // Row 5: Key Hardware Modules (Purple & Specs)
-      "J", "D", "A",
-      // Row 6: Organization & Standards (Slate Cards)
-      "N", "O", "R"
-    ];
+    // STRICT USER REQUIREMENT SEQUENCE (A to R)
+    const strictOrderKeys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"];
 
     const defaultDashboardData = {
       A576: {
         meta: { name: "Galaxy A576", ap: "Exynos 1480 Octa", status: "Mass Production", leadKorea: "HQ Team Lead", swVersion: "A576XXU1AXB2" },
         items: {
-          A: { title: "Basic Model Details", category: "General", icon: "fa-circle-info", tag: "SPEC", tags: ["Dimensions", "Battery Spec", "Tolerances"], filename: "A576_Basic_Spec.pdf", size: "12.4 MB" },
-          B: { title: "Circuit Diagram", category: "Schematics", icon: "fa-diagram-project", tag: "CIRCUIT", tags: ["Schematic Topologies", "PCB Sets"], subItems: [
+          A: { title: "Basic Model Details", category: "General", icon: "fa-circle-info", tag: "A: SPEC", tags: ["Dimensions", "Battery Spec", "Tolerances"], filename: "A576_Basic_Spec.pdf", size: "12.4 MB" },
+          B: { title: "Circuit Diagram", category: "Schematics", icon: "fa-diagram-project", tag: "B: CIRCUIT", tags: ["Schematic Topologies", "PCB Sets"], subItems: [
             { name: "Main PBA", filename: "A576_Main_PBA_Schematic.pdf", size: "68.5 MB" },
             { name: "SUB PBA", filename: "A576_Sub_PBA_Audio_Charge.pdf", size: "18.2 MB" }
           ]},
-          C: { title: "Process Flow Chart", category: "Process & Tech", icon: "fa-arrows-split-up-and-left", tag: "FLOW", tags: ["Assembly Nodes", "Screw Torques"], subItems: [
+          C: { title: "Process Flow Chart", category: "Process & Tech", icon: "fa-arrows-split-up-and-left", tag: "C: FLOW", tags: ["Assembly Nodes", "Screw Torques"], subItems: [
             { name: "Sub Assembly", filename: "A576_Sub_Assembly_Flow.xlsx", size: "8.4 MB" },
             { name: "Main Line", filename: "A576_Main_Line_SOP.xlsx", size: "14.1 MB" }
           ]},
-          D: { title: "Common & Exclusive Parts", category: "General", icon: "fa-cubes", tag: "BOM", tags: ["Shared BOM", "Exclusive Parts"], filename: "A576_Part_Matrix.xlsx", size: "15.8 MB" },
-          E: { title: "New Technology Introduced", category: "Process & Tech", icon: "fa-wand-magic-sparkles", tag: "TECH", tags: ["LDS Antenna", "Graphite Layer", "PMIC"], filename: "A576_New_Tech_Brief.pdf", size: "22.6 MB" },
-          F: { title: "Base Model Defect History", category: "Quality & SW", icon: "fa-bug", tag: "RCA", tags: ["Pred. Failures", "Field RCA Summary"], filename: "A576_Base_Defects_RCA.xlsx", size: "31.2 MB" },
-          G: { title: "Other Subsidiary Defect Details", category: "Quality & SW", icon: "fa-triangle-exclamation", tag: "DEFECTS", tags: ["SMT Scrap Rate", "AOI Optical Log"], filename: "A576_Subsidiary_Defects.xlsx", size: "19.7 MB" },
-          H: { title: "OPST Sheet", category: "Process & Tech", icon: "fa-clipboard-check", tag: "OPST", tags: ["Cycle Times", "Station Balancing"], filename: "A576_OPST_Master.xlsx", size: "11.5 MB" },
-          I: { title: "SOC Table", category: "Schematics", icon: "fa-microchip", tag: "SOC", tags: ["Pinout Matrix", "Power Rails", "BGA Ball Map"], filename: "A576_SOC_Pin_Table.xlsx", size: "28.3 MB" },
-          J: { title: "Key Parts Details", category: "Key Parts", icon: "fa-puzzle-piece", tag: "PARTS", tags: ["Vendor Specs", "Datasheets"], subItems: [
+          D: { title: "Common & Exclusive Parts", category: "General", icon: "fa-cubes", tag: "D: BOM", tags: ["Shared BOM", "Exclusive Parts"], filename: "A576_Part_Matrix.xlsx", size: "15.8 MB" },
+          E: { title: "New Technology Introduced", category: "Process & Tech", icon: "fa-wand-magic-sparkles", tag: "E: TECH", tags: ["LDS Antenna", "Graphite Layer", "PMIC"], filename: "A576_New_Tech_Brief.pdf", size: "22.6 MB" },
+          F: { title: "Base Model Defect History", category: "Quality & SW", icon: "fa-bug", tag: "F: RCA", tags: ["Pred. Failures", "Field RCA Summary"], filename: "A576_Base_Defects_RCA.xlsx", size: "31.2 MB" },
+          G: { title: "Other Subsidiary Defect Details", category: "Quality & SW", icon: "fa-triangle-exclamation", tag: "G: DEFECTS", tags: ["SMT Scrap Rate", "AOI Optical Log"], filename: "A576_Subsidiary_Defects.xlsx", size: "19.7 MB" },
+          H: { title: "OPST Sheet", category: "Process & Tech", icon: "fa-clipboard-check", tag: "H: OPST", tags: ["Cycle Times", "Station Balancing"], filename: "A576_OPST_Master.xlsx", size: "11.5 MB" },
+          I: { title: "SOC Table", category: "Schematics", icon: "fa-microchip", tag: "I: SOC", tags: ["Pinout Matrix", "Power Rails", "BGA Ball Map"], filename: "A576_SOC_Pin_Table.xlsx", size: "28.3 MB" },
+          J: { title: "Key Parts Details", category: "Key Parts", icon: "fa-puzzle-piece", tag: "J: PARTS", tags: ["Vendor Specs", "Datasheets"], subItems: [
             { name: "Display", filename: "A576_Display_Spec.pdf", size: "54.2 MB" },
             { name: "Camera", filename: "A576_Camera_OIS_Spec.pdf", size: "62.8 MB" },
             { name: "Speaker", filename: "A576_Speaker_Data.pdf", size: "14.6 MB" },
@@ -365,14 +352,14 @@
             { name: "Front", filename: "A576_Front_Glass.pdf", size: "16.7 MB" },
             { name: "Sensor", filename: "A576_6Axis_Sensor.pdf", size: "18.9 MB" }
           ]},
-          K: { title: "RF Port Map", category: "RF & Wireless", icon: "fa-network-wired", tag: "RF-PORT", tags: ["FEM Routing", "Switch Matrix", "Couplers"], filename: "A576_RF_Port_Mapping.pdf", size: "58.0 MB" },
-          L: { title: "Antenna Structure", category: "RF & Wireless", icon: "fa-tower-broadcast", tag: "ANTENNA", tags: ["3D Clearance", "MIMO / Sub-6", "Matching"], filename: "A576_Antenna_3D_Layout.dwg", size: "84.2 MB" },
-          M: { title: "Main and Roaming Bands", category: "RF & Wireless", icon: "fa-earth-americas", tag: "BANDS", tags: ["5G NR", "LTE FDD/TDD", "Global Bands"], filename: "A576_Bands_Master.xlsx", size: "9.2 MB" },
-          N: { title: "Work Specification", category: "General", icon: "fa-file-lines", tag: "STD", tags: ["Soldering Standard", "Inspection SOP"], filename: "A576_Work_Specification.pdf", size: "14.8 MB" },
-          O: { title: "Korea Member Details", category: "General", icon: "fa-id-card", tag: "HQ TEAM", tags: ["HQ Leads", "HW/RF Direct Lines"], filename: "A576_Korea_HQ_Roster.xlsx", size: "4.1 MB" },
-          P: { title: "MIPI Table", category: "Schematics", icon: "fa-bars-staggered", tag: "MIPI", tags: ["DSI / CSI", "Differential Length", "Timing"], filename: "A576_MIPI_Config.xlsx", size: "12.7 MB" },
-          Q: { title: "SW Log Process", category: "Quality & SW", icon: "fa-terminal", tag: "DEBUG", tags: ["Modem CP Dump", "Kernel Panic", "UART Guide"], filename: "A576_SW_Log_Guide.pdf", size: "17.4 MB" },
-          R: { title: "Common", category: "General", icon: "fa-folder-tree", tag: "ARCHIVE", tags: ["ECN Notices", "Regulatory Approvals"], filename: "A576_Common_Archive.zip", size: "95.0 MB" }
+          K: { title: "RF Port Map", category: "RF & Wireless", icon: "fa-network-wired", tag: "K: RF-PORT", tags: ["FEM Routing", "Switch Matrix", "Couplers"], filename: "A576_RF_Port_Mapping.pdf", size: "58.0 MB" },
+          L: { title: "Antenna Structure", category: "RF & Wireless", icon: "fa-tower-broadcast", tag: "L: ANTENNA", tags: ["3D Clearance", "MIMO / Sub-6", "Matching"], filename: "A576_Antenna_3D_Layout.dwg", size: "84.2 MB" },
+          M: { title: "Main and Roaming Bands", category: "RF & Wireless", icon: "fa-earth-americas", tag: "M: BANDS", tags: ["5G NR", "LTE FDD/TDD", "Global Bands"], filename: "A576_Bands_Master.xlsx", size: "9.2 MB" },
+          N: { title: "Work Specification", category: "General", icon: "fa-file-lines", tag: "N: STD", tags: ["Soldering Standard", "Inspection SOP"], filename: "A576_Work_Specification.pdf", size: "14.8 MB" },
+          O: { title: "Korea Member Details", category: "General", icon: "fa-id-card", tag: "O: HQ TEAM", tags: ["HQ Leads", "HW/RF Direct Lines"], filename: "A576_Korea_HQ_Roster.xlsx", size: "4.1 MB" },
+          P: { title: "MIPI Table", category: "Schematics", icon: "fa-bars-staggered", tag: "P: MIPI", tags: ["DSI / CSI", "Differential Length", "Timing"], filename: "A576_MIPI_Config.xlsx", size: "12.7 MB" },
+          Q: { title: "SW Log Process", category: "Quality & SW", icon: "fa-terminal", tag: "Q: DEBUG", tags: ["Modem CP Dump", "Kernel Panic", "UART Guide"], filename: "A576_SW_Log_Guide.pdf", size: "17.4 MB" },
+          R: { title: "Common", category: "General", icon: "fa-folder-tree", tag: "R: ARCHIVE", tags: ["ECN Notices", "Regulatory Approvals"], filename: "A576_Common_Archive.zip", size: "95.0 MB" }
         }
       }
     };
@@ -468,8 +455,8 @@
       const grid = document.getElementById("cardsGrid");
       grid.innerHTML = "";
       
-      // Use symmetricalDisplayOrder so identical categories stay together side-by-side
-      const orderedEntries = symmetricalDisplayOrder
+      // Strict sequence from A to R
+      const orderedEntries = strictOrderKeys
         .map(key => [key, appData[currentModel].items[key]])
         .filter(([key, item]) => item !== undefined);
 
@@ -535,7 +522,7 @@
         `).join("");
 
         const card = document.createElement("div");
-        card.className = `rd-card ${style.cardBg} rounded-xl border flex flex-col justify-between shadow-xs overflow-hidden h-[215px]`;
+        card.className = `rd-card ${style.cardBg} rounded-xl border flex flex-col justify-between shadow-xs overflow-hidden h-[220px]`;
         card.innerHTML = `
           <!-- Top Color Accent Stripe -->
           <div class="h-1.5 w-full ${style.topStripe}"></div>
@@ -548,7 +535,7 @@
                   <div class="w-7 h-7 rounded-lg ${style.iconBox} flex items-center justify-center text-xs shadow-xs">
                     <i class="fa-solid ${item.icon}"></i>
                   </div>
-                  <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-white text-slate-700 border border-slate-300 shadow-2xs">${item.tag || key}</span>
+                  <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-white text-slate-700 border border-slate-300 shadow-2xs">${item.tag}</span>
                 </div>
                 <span class="text-[10px] font-bold uppercase tracking-wider text-slate-600">${item.category}</span>
               </div>
@@ -608,7 +595,9 @@
     function populateAdminCategories() {
       const sel = document.getElementById("adminCategorySelect");
       sel.innerHTML = "";
-      Object.entries(appData[currentModel].items).forEach(([key, item]) => {
+      strictOrderKeys.forEach((key) => {
+        const item = appData[currentModel].items[key];
+        if (!item) return;
         if (item.subItems) {
           item.subItems.forEach((sub, idx) => {
             const opt = document.createElement("option");
