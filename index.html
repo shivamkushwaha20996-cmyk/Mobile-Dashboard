@@ -183,17 +183,17 @@
     </div>
   </header>
 
-  <!-- 3. Ultra-Wide High-Visibility Telemetry Console (Wider + Electric Amber/Cyan Model Display) -->
+  <!-- 3. Telemetry Console (Vertical Active Model + Responsive 2-Box Tile Layout) -->
   <section class="w-full bg-[#090e1a] border-b border-indigo-900/60 shadow-xl hero-glow-bg">
     <div class="w-full max-w-[2400px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 py-7 text-white" id="modelBanner">
-      <!-- Injected by JavaScript with Dynamic Telemetry Tiles -->
+      <!-- Injected by JavaScript with Vertical Active Model & Responsive 2-Box Telemetry Tiles -->
     </div>
   </section>
 
-  <!-- Main Workstation Area (Ultra-Wide Layout) -->
+  <!-- Main Workstation Area -->
   <div class="w-full max-w-[2400px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 py-5 space-y-4 flex-1">
 
-    <!-- Category Filter Tabs Bar (High Visibility) -->
+    <!-- Category Filter Tabs Bar -->
     <div class="flex items-center justify-between gap-4 border-b border-slate-200 pb-3">
       <div class="flex items-center gap-2.5 overflow-x-auto no-scrollbar" id="categoryTabs">
         <button data-cat="all" class="cat-btn active px-4 py-2 rounded-xl text-xs font-extrabold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 transition cursor-pointer">All Engineering Records (A-S)</button>
@@ -212,9 +212,9 @@
       </div>
     </div>
 
-    <!-- Desktop Grid: Strict A-S Order with Height-Matched Symmetrical Cards -->
+    <!-- Desktop Grid: 2 Boxes in One Row on Desktop, Dynamically Loading More Columns on Wider Screens -->
     <main>
-      <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
+      <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 min-[1920px]:grid-cols-4 min-[2400px]:grid-cols-5 gap-5">
         <!-- Injected Cards in Strict A to S Sequence -->
       </div>
     </main>
@@ -354,7 +354,7 @@
       });
     }
 
-    // SECTION PALETTES (Vibrant full-colored boxes, calm Indigo for quality)
+    // SECTION PALETTES
     const categoryStyles = {
       "Block Diagram": {
         cardBg: "bg-[#F0FDFA] border-teal-200",
@@ -407,7 +407,7 @@
       }
     };
 
-    // STRICT USER REQUIREMENT SEQUENCE (A to S with Block Diagram)
+    // STRICT USER REQUIREMENT SEQUENCE (A to S)
     const strictOrderKeys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S"];
 
     const defaultDashboardData = {
@@ -514,18 +514,18 @@
       }
     }
 
-    // High-Visibility Ultra-Wide Telemetry Console with Golden Amber Model Display
+    // High-Visibility Telemetry Console: Vertical Active Model + 2 Boxes In One Row Grid
     function renderBanner() {
       const meta = appData[currentModel].meta;
       document.getElementById("modelBanner").innerHTML = `
-        <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-6">
+        <div class="flex flex-col lg:flex-row items-start justify-between gap-6">
           
-          <!-- Left: Glowing Animated Project Model Badge (Electric Amber Color Theme) -->
-          <div class="flex items-center gap-5">
+          <!-- CHANGE 1: Active Model Row Changed from Horizontal to Vertical -->
+          <div class="flex flex-col items-start gap-3 shrink-0">
+            <!-- Radiant Amber Glowing Model Badge -->
             <div class="relative group">
-              <!-- Radiant Amber Glow Behind Active Model -->
               <div class="absolute -inset-1 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 rounded-2xl blur-md opacity-60 group-hover:opacity-100 transition duration-500"></div>
-              <div class="relative px-6 py-4 rounded-xl bg-gradient-to-br from-amber-950 via-slate-950 to-amber-950 border-2 border-amber-400 shadow-2xl flex flex-col justify-center">
+              <div class="relative px-6 py-3.5 rounded-xl bg-gradient-to-br from-amber-950 via-slate-950 to-amber-950 border-2 border-amber-400 shadow-2xl flex flex-col justify-center min-w-[170px]">
                 <span class="text-[10px] font-mono text-amber-400 font-extrabold tracking-widest flex items-center gap-1">
                   <i class="fa-solid fa-star text-[9px] text-amber-400"></i>
                   <span>ACTIVE MODEL</span>
@@ -534,13 +534,14 @@
               </div>
             </div>
             
-            <div class="space-y-1.5">
-              <div class="flex items-center gap-3">
+            <!-- Model Name & Metadata (Vertically Arranged Underneath Active Model) -->
+            <div class="space-y-1">
+              <div class="flex flex-wrap items-center gap-2.5">
                 <span class="text-lg sm:text-xl font-extrabold text-white tracking-tight">${meta.name}</span>
-                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 shadow-sm shadow-emerald-500/10">
-                  <span class="relative flex h-2.5 w-2.5">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 shadow-sm shadow-emerald-500/10">
+                  <span class="relative flex h-2 w-2">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
                   </span>
                   ${meta.status}
                 </span>
@@ -552,8 +553,8 @@
             </div>
           </div>
 
-          <!-- Center: 4 Floating Interactive Telemetry Tiles -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 flex-1 max-w-5xl">
+          <!-- CHANGE 2 (Telemetry Section): 2 Boxes In One Row on Desktop, Loads 4 on Wider Displays -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-4 gap-3.5 flex-1 max-w-5xl w-full">
             
             <!-- Tile 1: Processor -->
             <div class="telemetry-tile p-3.5 rounded-xl bg-slate-800/80 backdrop-blur-md border border-cyan-500/30 flex items-center gap-3 shadow-inner">
@@ -601,8 +602,8 @@
 
           </div>
 
-          <!-- Right: Executive Action Cluster with Shimmer -->
-          <div class="flex items-center gap-3 shrink-0">
+          <!-- Action Buttons -->
+          <div class="flex items-center gap-3 shrink-0 self-start lg:self-center">
             <button onclick="copyModelSummary()" title="Copy Specs" class="btn-shimmer px-4 py-2.5 bg-slate-800/90 hover:bg-slate-750 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold flex items-center gap-2 transition cursor-pointer shadow-md">
               <i class="fa-regular fa-copy text-xs text-amber-400"></i>
               <span class="hidden sm:inline">Copy Specs</span>
