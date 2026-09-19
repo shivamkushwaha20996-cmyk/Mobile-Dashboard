@@ -91,8 +91,8 @@
     }
     .telemetry-tile:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.2);
-      border-color: rgba(56, 189, 248, 0.6);
+      box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.25);
+      border-color: rgba(56, 189, 248, 0.7);
     }
 
     /* Card Elevation */
@@ -116,7 +116,7 @@
   <!-- 1. Top Animated Multi-Color Laser Line -->
   <div class="h-[4px] w-full laser-bar shadow-sm shadow-amber-500/20"></div>
 
-  <!-- 2. Desktop Navigation Header (Ultra-Wide Full Container) -->
+  <!-- 2. Desktop Navigation Header -->
   <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md text-white border-b border-slate-800 shadow-lg">
     <div class="w-full max-w-[2400px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 h-18 py-2.5 flex items-center justify-between gap-4">
       
@@ -143,10 +143,10 @@
         </div>
       </div>
 
-      <!-- Controls: Standout Colored Model Selector & Admin Lock -->
+      <!-- Controls: Target Model Selector & Quick Filter -->
       <div class="flex items-center gap-3.5 flex-1 max-w-2xl justify-end">
         
-        <!-- TARGET MODEL SELECTOR (Electric Amber/Gold Theme for Instant Visibility) -->
+        <!-- TARGET MODEL SELECTOR -->
         <div class="relative w-56 sm:w-60">
           <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-amber-400">
             <i class="fa-solid fa-mobile-screen-button text-sm"></i>
@@ -183,10 +183,10 @@
     </div>
   </header>
 
-  <!-- 3. Telemetry Console (Vertical Active Model + Responsive 2-Box Tile Layout) -->
+  <!-- 3. Telemetry Console (Vertical Model Left + Telemetry Tiles Moved to Horizontal Main Area) -->
   <section class="w-full bg-[#090e1a] border-b border-indigo-900/60 shadow-xl hero-glow-bg">
-    <div class="w-full max-w-[2400px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 py-7 text-white" id="modelBanner">
-      <!-- Injected by JavaScript with Vertical Active Model & Responsive 2-Box Telemetry Tiles -->
+    <div class="w-full max-w-[2400px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 py-6 text-white" id="modelBanner">
+      <!-- Injected by JavaScript -->
     </div>
   </section>
 
@@ -212,9 +212,9 @@
       </div>
     </div>
 
-    <!-- Desktop Grid: 2 Boxes in One Row on Desktop, Dynamically Loading More Columns on Wider Screens -->
+    <!-- Multi-Column Grid Optimized for Laptop Displays: 3-4 Boxes per Row -->
     <main>
-      <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 min-[1920px]:grid-cols-4 min-[2400px]:grid-cols-5 gap-5">
+      <div id="cardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 min-[2200px]:grid-cols-5 gap-4.5">
         <!-- Injected Cards in Strict A to S Sequence -->
       </div>
     </main>
@@ -514,18 +514,17 @@
       }
     }
 
-    // High-Visibility Telemetry Console: Vertical Active Model + 2 Boxes In One Row Grid
+    // High-Visibility Telemetry Console: Vertical Active Model Left + Horizontal Telemetry Cluster
     function renderBanner() {
       const meta = appData[currentModel].meta;
       document.getElementById("modelBanner").innerHTML = `
-        <div class="flex flex-col lg:flex-row items-start justify-between gap-6">
+        <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           
-          <!-- CHANGE 1: Active Model Row Changed from Horizontal to Vertical -->
-          <div class="flex flex-col items-start gap-3 shrink-0">
-            <!-- Radiant Amber Glowing Model Badge -->
+          <!-- Left Column: Active Model Block (Vertically Stacked) -->
+          <div class="flex flex-col items-start gap-2.5 shrink-0">
             <div class="relative group">
               <div class="absolute -inset-1 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 rounded-2xl blur-md opacity-60 group-hover:opacity-100 transition duration-500"></div>
-              <div class="relative px-6 py-3.5 rounded-xl bg-gradient-to-br from-amber-950 via-slate-950 to-amber-950 border-2 border-amber-400 shadow-2xl flex flex-col justify-center min-w-[170px]">
+              <div class="relative px-6 py-3 rounded-xl bg-gradient-to-br from-amber-950 via-slate-950 to-amber-950 border-2 border-amber-400 shadow-2xl flex flex-col justify-center min-w-[160px]">
                 <span class="text-[10px] font-mono text-amber-400 font-extrabold tracking-widest flex items-center gap-1">
                   <i class="fa-solid fa-star text-[9px] text-amber-400"></i>
                   <span>ACTIVE MODEL</span>
@@ -534,11 +533,10 @@
               </div>
             </div>
             
-            <!-- Model Name & Metadata (Vertically Arranged Underneath Active Model) -->
-            <div class="space-y-1">
-              <div class="flex flex-wrap items-center gap-2.5">
-                <span class="text-lg sm:text-xl font-extrabold text-white tracking-tight">${meta.name}</span>
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 shadow-sm shadow-emerald-500/10">
+            <div class="space-y-0.5">
+              <div class="flex items-center gap-2.5">
+                <span class="text-base sm:text-lg font-extrabold text-white tracking-tight">${meta.name}</span>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 shadow-sm shadow-emerald-500/10">
                   <span class="relative flex h-2 w-2">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
@@ -546,72 +544,77 @@
                   ${meta.status}
                 </span>
               </div>
-              <p class="text-xs text-slate-300 font-mono flex items-center gap-2">
-                <i class="fa-solid fa-microchip text-amber-400 text-[11px]"></i>
+              <p class="text-[11px] text-slate-300 font-mono flex items-center gap-1.5">
+                <i class="fa-solid fa-microchip text-amber-400 text-[10px]"></i>
                 <span>Hardware Master Specification & Verification Database</span>
               </p>
             </div>
           </div>
 
-          <!-- CHANGE 2 (Telemetry Section): 2 Boxes In One Row on Desktop, Loads 4 on Wider Displays -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-4 gap-3.5 flex-1 max-w-5xl w-full">
+          <!-- Main Center/Right Area: Blue Telemetry Tiles Moved Horizontally Across -->
+          <div class="flex-1 flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-4 w-full">
             
-            <!-- Tile 1: Processor -->
-            <div class="telemetry-tile p-3.5 rounded-xl bg-slate-800/80 backdrop-blur-md border border-cyan-500/30 flex items-center gap-3 shadow-inner">
-              <div class="w-9 h-9 rounded-lg bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 flex items-center justify-center text-base shrink-0 shadow-sm">
-                <i class="fa-solid fa-microchip"></i>
+            <!-- 4 Telemetry Tiles (Responsive Grid across the row) -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 flex-1">
+              
+              <!-- Tile 1: Processor -->
+              <div class="telemetry-tile p-3 rounded-xl bg-slate-800/85 backdrop-blur-md border border-cyan-500/35 flex items-center gap-3 shadow-inner">
+                <div class="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 flex items-center justify-center text-sm shrink-0 shadow-sm">
+                  <i class="fa-solid fa-microchip"></i>
+                </div>
+                <div class="truncate">
+                  <div class="text-[9px] uppercase font-bold text-cyan-300/80 font-mono tracking-wider">Processor</div>
+                  <div class="text-xs font-bold text-white font-mono truncate" title="${meta.ap}">${meta.ap}</div>
+                </div>
               </div>
-              <div class="truncate">
-                <div class="text-[10px] uppercase font-bold text-cyan-300/80 font-mono tracking-wider">Processor</div>
-                <div class="text-xs font-bold text-white font-mono truncate" title="${meta.ap}">${meta.ap}</div>
+
+              <!-- Tile 2: Modem / RF -->
+              <div class="telemetry-tile p-3 rounded-xl bg-slate-800/85 backdrop-blur-md border border-emerald-500/35 flex items-center gap-3 shadow-inner">
+                <div class="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 flex items-center justify-center text-sm shrink-0 shadow-sm">
+                  <i class="fa-solid fa-tower-broadcast"></i>
+                </div>
+                <div class="truncate">
+                  <div class="text-[9px] uppercase font-bold text-emerald-300/80 font-mono tracking-wider">Modem / RF</div>
+                  <div class="text-xs font-bold text-white font-mono truncate" title="${meta.modem}">${meta.modem}</div>
+                </div>
               </div>
+
+              <!-- Tile 3: SW Build -->
+              <div class="telemetry-tile p-3 rounded-xl bg-slate-800/85 backdrop-blur-md border border-indigo-500/35 flex items-center gap-3 shadow-inner">
+                <div class="w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 flex items-center justify-center text-sm shrink-0 shadow-sm">
+                  <i class="fa-solid fa-code-branch"></i>
+                </div>
+                <div class="truncate">
+                  <div class="text-[9px] uppercase font-bold text-indigo-300/80 font-mono tracking-wider">SW Build</div>
+                  <div class="text-xs font-bold text-white font-mono truncate" title="${meta.swVersion}">${meta.swVersion}</div>
+                </div>
+              </div>
+
+              <!-- Tile 4: HQ Lead -->
+              <div class="telemetry-tile p-3 rounded-xl bg-slate-800/85 backdrop-blur-md border border-slate-600/50 flex items-center gap-3 shadow-inner">
+                <div class="w-8 h-8 rounded-lg bg-slate-700/60 border border-slate-500/40 text-slate-300 flex items-center justify-center text-sm shrink-0 shadow-sm">
+                  <i class="fa-solid fa-user-tie"></i>
+                </div>
+                <div class="truncate">
+                  <div class="text-[9px] uppercase font-bold text-slate-400 font-mono tracking-wider">HQ Lead</div>
+                  <div class="text-xs font-bold text-white font-mono truncate" title="${meta.leadKorea}">${meta.leadKorea}</div>
+                </div>
+              </div>
+
             </div>
 
-            <!-- Tile 2: Modem / RF -->
-            <div class="telemetry-tile p-3.5 rounded-xl bg-slate-800/80 backdrop-blur-md border border-emerald-500/30 flex items-center gap-3 shadow-inner">
-              <div class="w-9 h-9 rounded-lg bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 flex items-center justify-center text-base shrink-0 shadow-sm">
-                <i class="fa-solid fa-tower-broadcast"></i>
-              </div>
-              <div class="truncate">
-                <div class="text-[10px] uppercase font-bold text-emerald-300/80 font-mono tracking-wider">Modem / RF</div>
-                <div class="text-xs font-bold text-white font-mono truncate" title="${meta.modem}">${meta.modem}</div>
-              </div>
+            <!-- Action Buttons Stacked Neatly Beside Tiles -->
+            <div class="flex items-center gap-2.5 shrink-0 self-end xl:self-center">
+              <button onclick="copyModelSummary()" title="Copy Specs" class="btn-shimmer px-3.5 py-2 bg-slate-800/90 hover:bg-slate-750 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-md">
+                <i class="fa-regular fa-copy text-xs text-amber-400"></i>
+                <span>Copy Specs</span>
+              </button>
+              <button onclick="downloadMasterBundle('${currentModel}')" class="btn-shimmer px-4 py-2 bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500 hover:from-amber-300 hover:to-orange-300 text-slate-950 font-black rounded-xl text-xs flex items-center gap-1.5 transition cursor-pointer shadow-lg shadow-amber-500/25">
+                <i class="fa-solid fa-file-zipper text-sm"></i>
+                <span>Export JSON</span>
+              </button>
             </div>
 
-            <!-- Tile 3: SW Build -->
-            <div class="telemetry-tile p-3.5 rounded-xl bg-slate-800/80 backdrop-blur-md border border-indigo-500/30 flex items-center gap-3 shadow-inner">
-              <div class="w-9 h-9 rounded-lg bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 flex items-center justify-center text-base shrink-0 shadow-sm">
-                <i class="fa-solid fa-code-branch"></i>
-              </div>
-              <div class="truncate">
-                <div class="text-[10px] uppercase font-bold text-indigo-300/80 font-mono tracking-wider">SW Build</div>
-                <div class="text-xs font-bold text-white font-mono truncate" title="${meta.swVersion}">${meta.swVersion}</div>
-              </div>
-            </div>
-
-            <!-- Tile 4: HQ Lead -->
-            <div class="telemetry-tile p-3.5 rounded-xl bg-slate-800/80 backdrop-blur-md border border-slate-600/50 flex items-center gap-3 shadow-inner">
-              <div class="w-9 h-9 rounded-lg bg-slate-700/60 border border-slate-500/40 text-slate-300 flex items-center justify-center text-base shrink-0 shadow-sm">
-                <i class="fa-solid fa-user-tie"></i>
-              </div>
-              <div class="truncate">
-                <div class="text-[10px] uppercase font-bold text-slate-400 font-mono tracking-wider">HQ Lead</div>
-                <div class="text-xs font-bold text-white font-mono truncate" title="${meta.leadKorea}">${meta.leadKorea}</div>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Action Buttons -->
-          <div class="flex items-center gap-3 shrink-0 self-start lg:self-center">
-            <button onclick="copyModelSummary()" title="Copy Specs" class="btn-shimmer px-4 py-2.5 bg-slate-800/90 hover:bg-slate-750 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold flex items-center gap-2 transition cursor-pointer shadow-md">
-              <i class="fa-regular fa-copy text-xs text-amber-400"></i>
-              <span class="hidden sm:inline">Copy Specs</span>
-            </button>
-            <button onclick="downloadMasterBundle('${currentModel}')" class="btn-shimmer px-5 py-2.5 bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500 hover:from-amber-300 hover:to-orange-300 text-slate-950 font-black rounded-xl text-xs flex items-center gap-2 transition cursor-pointer shadow-lg shadow-amber-500/25">
-              <i class="fa-solid fa-file-zipper text-sm"></i>
-              <span>Export JSON</span>
-            </button>
           </div>
 
         </div>
