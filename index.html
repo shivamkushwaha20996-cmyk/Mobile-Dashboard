@@ -48,7 +48,7 @@
       animation: laserFlow 5s ease infinite;
     }
 
-    /* Card Entrance Animation */
+    /* Subtle Card Entrance Animation */
     @keyframes cardFadeIn {
       from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
@@ -62,7 +62,7 @@
       background: radial-gradient(circle at 10% 25%, rgba(245, 158, 11, 0.18) 0%, transparent 45%),
                   radial-gradient(circle at 50% 10%, rgba(6, 182, 212, 0.2) 0%, transparent 50%),
                   radial-gradient(circle at 90% 80%, rgba(99, 102, 241, 0.18) 0%, transparent 45%),
-                  linear-gradient(180deg, #090e1a 0%, #0c1322 50%, #10182b 100%);
+                  linear-gradient(135deg, #090e1a 0%, #0c1322 50%, #10182b 100%);
     }
 
     /* Shimmer Effect on Action Buttons */
@@ -91,7 +91,7 @@
     }
     .telemetry-tile:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px -4px rgba(6, 182, 212, 0.25);
+      box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.25);
       border-color: rgba(56, 189, 248, 0.7);
     }
 
@@ -116,9 +116,9 @@
   <!-- 1. Top Animated Multi-Color Laser Line -->
   <div class="h-[4px] w-full laser-bar shadow-sm shadow-amber-500/20 shrink-0"></div>
 
-  <!-- 2. Navigation Header -->
+  <!-- 2. Desktop Navigation Header -->
   <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md text-white border-b border-slate-800 shadow-lg shrink-0">
-    <div class="w-full max-w-[2560px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+    <div class="w-full max-w-[2560px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 h-16 flex items-center justify-between gap-4">
       
       <!-- Brand & Illuminated Title -->
       <div class="flex items-center gap-3">
@@ -134,7 +134,7 @@
               <span class="px-2 py-0.5 rounded-md bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500 text-slate-950 font-black shadow-md shadow-amber-500/20 tracking-wider text-xs">R&D</span>
               <span class="text-slate-200">Engineering Portal</span>
             </h1>
-            <span class="text-[9px] font-mono font-extrabold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-xs hidden sm:inline-flex items-center gap-1.5">
+            <span class="text-[9px] font-mono font-extrabold px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-xs hidden sm:inline-flex items-center gap-1.5">
               <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
               ENTERPRISE LAB
             </span>
@@ -143,7 +143,7 @@
         </div>
       </div>
 
-      <!-- Controls: Target Model Selector & Quick Filter -->
+      <!-- Header Controls: Target Model & Search -->
       <div class="flex items-center gap-3 flex-1 max-w-xl justify-end">
         <div class="relative w-48 sm:w-56">
           <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-amber-400">
@@ -178,53 +178,40 @@
     </div>
   </header>
 
-  <!-- 3. Enterprise Workspace Container (Split: Left-Most Vertical Column + Main Cards Area) -->
-  <div class="flex-1 flex flex-col lg:flex-row w-full max-w-[2560px] mx-auto min-h-0">
-    
-    <!-- REQUIREMENT 1: Left-Most Vertical Column (Blue Marked Hero & Telemetry Section) -->
-    <aside class="w-full lg:w-80 xl:w-84 shrink-0 bg-[#090e1a] border-b lg:border-b-0 lg:border-r border-indigo-950/80 hero-glow-bg p-5 text-white flex flex-col justify-between shadow-xl">
-      <div id="modelBanner" class="space-y-5">
-        <!-- Injected by JavaScript into the Left Vertical Column -->
+  <!-- 3. Balanced Top Telemetry Console (Active Model Left + Telemetry Tiles Across Center + Action Buttons Right) -->
+  <section class="w-full bg-[#090e1a] border-b border-indigo-900/60 shadow-xl hero-glow-bg shrink-0">
+    <div class="w-full max-w-[2560px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-5 text-white" id="modelBanner">
+      <!-- Injected by JavaScript -->
+    </div>
+  </section>
+
+  <!-- Main Workstation Area -->
+  <div class="w-full max-w-[2560px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-5 space-y-4 flex-1">
+
+    <!-- Category Filter Tabs Bar -->
+    <div class="flex items-center justify-between gap-4 border-b border-slate-200 pb-3 shrink-0">
+      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar" id="categoryTabs">
+        <button data-cat="all" class="cat-btn active px-3.5 py-1.5 rounded-xl text-xs font-extrabold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 transition cursor-pointer">All Engineering Records (A-S)</button>
+        <button data-cat="Block Diagram" class="cat-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-cyan-50 border border-cyan-300 text-cyan-900 hover:bg-cyan-100 transition cursor-pointer">Block Diagram</button>
+        <button data-cat="Schematics" class="cat-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-50 border border-blue-200 text-blue-800 hover:bg-blue-100 transition cursor-pointer">Circuit & SOC</button>
+        <button data-cat="RF & Wireless" class="cat-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-50 border border-emerald-200 text-emerald-800 hover:bg-emerald-100 transition cursor-pointer">RF & Antenna</button>
+        <button data-cat="Process & Tech" class="cat-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-50 border border-amber-200 text-amber-800 hover:bg-amber-100 transition cursor-pointer">Process & OPST</button>
+        <button data-cat="Quality & SW" class="cat-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-50 border border-indigo-200 text-indigo-800 hover:bg-indigo-100 transition cursor-pointer">Defects & SW Logs</button>
+        <button data-cat="Key Parts" class="cat-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-purple-50 border border-purple-200 text-purple-800 hover:bg-purple-100 transition cursor-pointer">Key Parts</button>
+        <button data-cat="General" class="cat-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 border border-slate-300 text-slate-800 hover:bg-slate-200 transition cursor-pointer">Specs & Team</button>
       </div>
 
-      <!-- Engine Status Indicator at bottom of Left Column -->
-      <div class="pt-5 border-t border-slate-800/80 mt-6 hidden lg:block">
-        <div class="flex items-center gap-2 text-[10px] font-mono text-slate-400">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span>IndexedDB Binary Engine Active</span>
-        </div>
+      <div class="hidden xl:flex items-center gap-2 text-[11px] font-mono text-slate-600 bg-white px-3 py-1 rounded-xl border border-slate-200 shadow-2xs">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>IndexedDB Large-File Engine Active</span>
       </div>
-    </aside>
+    </div>
 
-    <!-- Main Workstation Area -->
-    <main class="flex-1 p-4 sm:p-5 lg:p-6 space-y-4 min-w-0 flex flex-col">
-
-      <!-- Category Filter Tabs Bar -->
-      <div class="flex items-center justify-between gap-4 border-b border-slate-200 pb-3 shrink-0">
-        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar" id="categoryTabs">
-          <button data-cat="all" class="cat-btn active px-3.5 py-1.5 rounded-xl text-xs font-extrabold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 transition cursor-pointer">All Engineering Records (A-S)</button>
-          <button data-cat="Block Diagram" class="cat-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-cyan-50 border border-cyan-300 text-cyan-900 hover:bg-cyan-100 transition cursor-pointer">Block Diagram</button>
-          <button data-cat="Schematics" class="cat-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-50 border border-blue-200 text-blue-800 hover:bg-blue-100 transition cursor-pointer">Circuit & SOC</button>
-          <button data-cat="RF & Wireless" class="cat-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-50 border border-emerald-200 text-emerald-800 hover:bg-emerald-100 transition cursor-pointer">RF & Antenna</button>
-          <button data-cat="Process & Tech" class="cat-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-50 border border-amber-200 text-amber-800 hover:bg-amber-100 transition cursor-pointer">Process & OPST</button>
-          <button data-cat="Quality & SW" class="cat-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-50 border border-indigo-200 text-indigo-800 hover:bg-indigo-100 transition cursor-pointer">Defects & SW Logs</button>
-          <button data-cat="Key Parts" class="cat-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-purple-50 border border-purple-200 text-purple-800 hover:bg-purple-100 transition cursor-pointer">Key Parts</button>
-          <button data-cat="General" class="cat-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 border border-slate-300 text-slate-800 hover:bg-slate-200 transition cursor-pointer">Specs & Team</button>
-        </div>
-
-        <div class="hidden xl:flex items-center gap-1.5 text-[11px] font-mono text-slate-500 bg-white px-3 py-1 rounded-xl border border-slate-200 shadow-2xs">
-          <span>Records:</span>
-          <span class="font-bold text-slate-800">19 Sections (A to S)</span>
-        </div>
+    <!-- Office Laptop Multi-Box Grid: 4 Boxes on Laptops (lg/xl), 5 Boxes on Wider Screens (2xl) -->
+    <main>
+      <div id="cardsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+        <!-- Injected Cards in Strict A to S Sequence -->
       </div>
-
-      <!-- REQUIREMENT 2: 4 to 5 Boxes per Row on Office Laptop Size -->
-      <div class="flex-1">
-        <div id="cardsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
-          <!-- Injected Cards in Strict A to S Sequence -->
-        </div>
-      </div>
-
     </main>
 
   </div>
@@ -317,8 +304,8 @@
   </div>
 
   <!-- Footer -->
-  <footer class="border-t border-slate-200 py-3 bg-white text-center text-xs text-slate-500 shrink-0">
-    <div class="w-full max-w-[2560px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+  <footer class="border-t border-slate-200 py-3.5 bg-white text-center text-xs text-slate-500 shrink-0">
+    <div class="w-full max-w-[2560px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 flex items-center justify-between">
       <span>Mobile R&D Engineering Portal</span>
       <span class="font-mono text-[11px]">Direct Binary Storage • IndexedDB Engine</span>
     </div>
@@ -522,95 +509,102 @@
       }
     }
 
-    // Render Left-Most Vertical Column (Active Model + Vertical Telemetry Stack)
+    // High-Visibility Telemetry Console: Active Model Left + Telemetry Tiles Across Center + Action Buttons Right
     function renderBanner() {
       const meta = appData[currentModel].meta;
       document.getElementById("modelBanner").innerHTML = `
-        <!-- Active Model Badge Stack -->
-        <div class="space-y-3">
-          <div class="relative group w-full">
-            <div class="absolute -inset-1 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 rounded-2xl blur-md opacity-60 group-hover:opacity-100 transition duration-500"></div>
-            <div class="relative p-4 rounded-xl bg-gradient-to-br from-amber-950 via-slate-950 to-amber-950 border-2 border-amber-400 shadow-2xl flex flex-col justify-center">
-              <span class="text-[9px] font-mono text-amber-400 font-extrabold tracking-widest flex items-center gap-1">
-                <i class="fa-solid fa-star text-[8px] text-amber-400"></i>
-                <span>ACTIVE MODEL</span>
-              </span>
-              <span class="text-3xl font-black font-mono tracking-tight text-white drop-shadow-[0_2px_10px_rgba(245,158,11,0.5)]">${currentModel}</span>
-            </div>
-          </div>
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5 w-full">
           
-          <div class="space-y-1">
-            <div class="flex items-center justify-between">
-              <span class="text-base font-extrabold text-white tracking-tight">${meta.name}</span>
-              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 shadow-sm">
-                <span class="relative flex h-1.5 w-1.5">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400"></span>
+          <!-- 1. LEFT: Compact Active Model Badge (Not Stretched) -->
+          <div class="flex items-center gap-4 shrink-0">
+            <div class="relative group shrink-0">
+              <div class="absolute -inset-1 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 rounded-2xl blur-md opacity-60 group-hover:opacity-100 transition duration-500"></div>
+              <div class="relative px-5 py-3 rounded-xl bg-gradient-to-br from-amber-950 via-slate-950 to-amber-950 border-2 border-amber-400 shadow-2xl flex flex-col justify-center min-w-[145px]">
+                <span class="text-[9px] font-mono text-amber-400 font-extrabold tracking-widest flex items-center gap-1">
+                  <i class="fa-solid fa-star text-[8px] text-amber-400"></i>
+                  <span>ACTIVE MODEL</span>
                 </span>
-                ${meta.status}
-              </span>
+                <span class="text-2xl sm:text-3xl font-black font-mono tracking-tight text-white drop-shadow-[0_2px_10px_rgba(245,158,11,0.5)]">${currentModel}</span>
+              </div>
             </div>
-            <p class="text-[10px] text-slate-400 font-mono leading-tight">Hardware Specification & Verification Base</p>
-          </div>
-        </div>
-
-        <!-- Vertical Stack of Telemetry Tiles -->
-        <div class="space-y-2.5 pt-1">
-          <!-- Tile 1: Processor -->
-          <div class="telemetry-tile p-2.5 rounded-xl bg-slate-850/90 border border-cyan-500/35 flex items-center gap-2.5 shadow-inner">
-            <div class="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 flex items-center justify-center text-xs shrink-0">
-              <i class="fa-solid fa-microchip"></i>
-            </div>
-            <div class="truncate">
-              <div class="text-[9px] uppercase font-bold text-cyan-300/80 font-mono tracking-wider">Processor</div>
-              <div class="text-xs font-bold text-white font-mono truncate" title="${meta.ap}">${meta.ap}</div>
-            </div>
-          </div>
-
-          <!-- Tile 2: Modem / RF -->
-          <div class="telemetry-tile p-2.5 rounded-xl bg-slate-850/90 border border-emerald-500/35 flex items-center gap-2.5 shadow-inner">
-            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 flex items-center justify-center text-xs shrink-0">
-              <i class="fa-solid fa-tower-broadcast"></i>
-            </div>
-            <div class="truncate">
-              <div class="text-[9px] uppercase font-bold text-emerald-300/80 font-mono tracking-wider">Modem / RF</div>
-              <div class="text-xs font-bold text-white font-mono truncate" title="${meta.modem}">${meta.modem}</div>
+            
+            <div class="space-y-0.5">
+              <div class="flex items-center gap-2">
+                <span class="text-sm sm:text-base font-extrabold text-white tracking-tight">${meta.name}</span>
+                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 shadow-sm">
+                  <span class="relative flex h-1.5 w-1.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400"></span>
+                  </span>
+                  ${meta.status}
+                </span>
+              </div>
+              <p class="text-[10px] text-slate-300 font-mono flex items-center gap-1">
+                <i class="fa-solid fa-microchip text-amber-400 text-[10px]"></i>
+                <span>Hardware Master Specification Database</span>
+              </p>
             </div>
           </div>
 
-          <!-- Tile 3: SW Build -->
-          <div class="telemetry-tile p-2.5 rounded-xl bg-slate-850/90 border border-indigo-500/35 flex items-center gap-2.5 shadow-inner">
-            <div class="w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 flex items-center justify-center text-xs shrink-0">
-              <i class="fa-solid fa-code-branch"></i>
+          <!-- 2. CENTER: 4 Telemetry Tiles Spread Horizontally Across Center -->
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 flex-1 max-w-4xl w-full">
+            <!-- Tile 1: Processor -->
+            <div class="telemetry-tile p-2.5 rounded-xl bg-slate-800/85 backdrop-blur-md border border-cyan-500/35 flex items-center gap-2.5 shadow-inner">
+              <div class="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 flex items-center justify-center text-xs shrink-0">
+                <i class="fa-solid fa-microchip"></i>
+              </div>
+              <div class="truncate">
+                <div class="text-[9px] uppercase font-bold text-cyan-300/80 font-mono tracking-wider">Processor</div>
+                <div class="text-xs font-bold text-white font-mono truncate" title="${meta.ap}">${meta.ap}</div>
+              </div>
             </div>
-            <div class="truncate">
-              <div class="text-[9px] uppercase font-bold text-indigo-300/80 font-mono tracking-wider">SW Build</div>
-              <div class="text-xs font-bold text-white font-mono truncate" title="${meta.swVersion}">${meta.swVersion}</div>
+
+            <!-- Tile 2: Modem / RF -->
+            <div class="telemetry-tile p-2.5 rounded-xl bg-slate-800/85 backdrop-blur-md border border-emerald-500/35 flex items-center gap-2.5 shadow-inner">
+              <div class="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 flex items-center justify-center text-xs shrink-0">
+                <i class="fa-solid fa-tower-broadcast"></i>
+              </div>
+              <div class="truncate">
+                <div class="text-[9px] uppercase font-bold text-emerald-300/80 font-mono tracking-wider">Modem / RF</div>
+                <div class="text-xs font-bold text-white font-mono truncate" title="${meta.modem}">${meta.modem}</div>
+              </div>
+            </div>
+
+            <!-- Tile 3: SW Build -->
+            <div class="telemetry-tile p-2.5 rounded-xl bg-slate-800/85 backdrop-blur-md border border-indigo-500/35 flex items-center gap-2.5 shadow-inner">
+              <div class="w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 flex items-center justify-center text-xs shrink-0">
+                <i class="fa-solid fa-code-branch"></i>
+              </div>
+              <div class="truncate">
+                <div class="text-[9px] uppercase font-bold text-indigo-300/80 font-mono tracking-wider">SW Build</div>
+                <div class="text-xs font-bold text-white font-mono truncate" title="${meta.swVersion}">${meta.swVersion}</div>
+              </div>
+            </div>
+
+            <!-- Tile 4: HQ Lead -->
+            <div class="telemetry-tile p-2.5 rounded-xl bg-slate-800/85 backdrop-blur-md border border-slate-600/50 flex items-center gap-2.5 shadow-inner">
+              <div class="w-8 h-8 rounded-lg bg-slate-700/60 border border-slate-500/40 text-slate-300 flex items-center justify-center text-xs shrink-0">
+                <i class="fa-solid fa-user-tie"></i>
+              </div>
+              <div class="truncate">
+                <div class="text-[9px] uppercase font-bold text-slate-400 font-mono tracking-wider">HQ Lead</div>
+                <div class="text-xs font-bold text-white font-mono truncate" title="${meta.leadKorea}">${meta.leadKorea}</div>
+              </div>
             </div>
           </div>
 
-          <!-- Tile 4: HQ Lead -->
-          <div class="telemetry-tile p-2.5 rounded-xl bg-slate-850/90 border border-slate-600/50 flex items-center gap-2.5 shadow-inner">
-            <div class="w-8 h-8 rounded-lg bg-slate-700/60 border border-slate-500/40 text-slate-300 flex items-center justify-center text-xs shrink-0">
-              <i class="fa-solid fa-user-tie"></i>
-            </div>
-            <div class="truncate">
-              <div class="text-[9px] uppercase font-bold text-slate-400 font-mono tracking-wider">HQ Lead</div>
-              <div class="text-xs font-bold text-white font-mono truncate" title="${meta.leadKorea}">${meta.leadKorea}</div>
-            </div>
+          <!-- 3. RIGHT: Action Buttons Cluster -->
+          <div class="flex items-center gap-2 shrink-0 self-start lg:self-center">
+            <button onclick="copyModelSummary()" title="Copy Specs" class="btn-shimmer px-3 py-2 bg-slate-800/90 hover:bg-slate-750 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-md">
+              <i class="fa-regular fa-copy text-xs text-amber-400"></i>
+              <span>Copy Specs</span>
+            </button>
+            <button onclick="downloadMasterBundle('${currentModel}')" class="btn-shimmer px-3.5 py-2 bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500 hover:from-amber-300 hover:to-orange-300 text-slate-950 font-black rounded-xl text-xs flex items-center gap-1.5 transition cursor-pointer shadow-lg shadow-amber-500/25">
+              <i class="fa-solid fa-file-zipper text-sm"></i>
+              <span>Export JSON</span>
+            </button>
           </div>
-        </div>
 
-        <!-- Action Cluster Buttons -->
-        <div class="grid grid-cols-2 gap-2 pt-1">
-          <button onclick="copyModelSummary()" title="Copy Specs" class="btn-shimmer px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition cursor-pointer shadow-md">
-            <i class="fa-regular fa-copy text-xs text-amber-400"></i>
-            <span>Copy</span>
-          </button>
-          <button onclick="downloadMasterBundle('${currentModel}')" class="btn-shimmer px-3 py-2 bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500 hover:from-amber-300 hover:to-orange-300 text-slate-950 font-black rounded-xl text-xs flex items-center justify-center gap-1.5 transition cursor-pointer shadow-lg shadow-amber-500/25">
-            <i class="fa-solid fa-file-zipper text-xs"></i>
-            <span>Export JSON</span>
-          </button>
         </div>
       `;
     }
@@ -647,7 +641,7 @@
           const isCompact = item.subItems.length > 2;
           bottomContent = `
             <div class="pt-2 border-t border-slate-200/80 mt-2">
-              <div class="grid ${isCompact ? 'grid-cols-2 gap-1.5' : 'grid-cols-1 gap-1.5'} max-h-24 overflow-y-auto pr-0.5">
+              <div class="grid ${isCompact ? 'grid-cols-2 gap-1.5' : 'grid-cols-1 gap-1.5'} max-h-28 overflow-y-auto pr-0.5">
                 ${item.subItems.map((sub, idx) => `
                   <div class="flex items-center justify-between p-1.5 px-2 rounded-md bg-white border border-slate-200 hover:border-slate-300 transition shadow-2xs">
                     <div class="truncate mr-1.5">
